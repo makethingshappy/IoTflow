@@ -523,7 +523,7 @@
         "id": "690c80c21b3ed82b",
         "type": "mqtt-broker",
         "name": "",
-        "broker": "Mac-3.broadband",
+        "broker": "x",
         "port": 1883,
         "clientid": "",
         "autoConnect": true,
