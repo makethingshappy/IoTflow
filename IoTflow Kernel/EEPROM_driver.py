@@ -1,4 +1,15 @@
 """
+Title: M24C08-R MicroPython EEPROM Driver
+Description: Driver for the M24C08-R 8-Kbit (1KB) I2C serial EEPROM,
+             supporting byte-level and page-level read/write operations,
+             device polling, erase utilities, and memory dump tools.
+
+Author: Arshia Keshvari
+Role: Independent Developer, Engineer, and Project Author
+Last Updated: 2025-11-16
+"""
+
+"""
 M24C08-R EEPROM Driver for MicroPython
 8-Kbit (1024 bytes) I2C Serial EEPROM
 
