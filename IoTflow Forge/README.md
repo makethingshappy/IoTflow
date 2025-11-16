@@ -252,4 +252,4 @@ Configurations are saved in JSON format:
 
 ## License
 
-This tool is part of the IoTextra project for Smart IoT Modular PCBs.
+This tool is part of the IoTflow project for Smart IoT Modular PCBs.
