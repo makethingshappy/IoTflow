@@ -1,10 +1,14 @@
 """
-IoTextra Digital I/O Mezzanine Configuration Tool
-A command-line interface for configuring digital I/O nodes and saving/loading configurations as JSON files.
+IoTflow Forge — I/O Configuration Tool
+---------------------------------------
+
+A command-line utility for creating, editing, and managing analog and digital
+I/O node configurations. Supports loading and saving configuration profiles
+in JSON format for seamless integration with IoTflow systems.
 
 Author: Arshia Keshvari
-Role: Author, Developer & Engineer
-Date: 2025-08-27
+Role: Independent Developer, Engineer, and Project Author
+Last Updated: 2025-11-16
 """
 
 import json
