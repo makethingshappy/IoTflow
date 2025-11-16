@@ -1,3 +1,17 @@
+"""
+==============================================================
+ IoTExtra Firmware Configuration
+--------------------------------------------------------------
+ This script defines all configuration parameters for Wi-Fi,
+ MQTT, hardware selection, ADC ranges, and channel definitions
+ used by the IoTExtra Raspberry Pi Pico firmware.
+
+ Author: Arshia Keshvari
+ Role: Independent Developer, Engineer, and Project Author
+ Last Updated: 2025-11-16
+==============================================================
+"""
+
 # Wi-Fi Network Credentials
 WIFI_SSID = ""
 WIFI_PASSWORD = ""
@@ -138,4 +152,5 @@ CHANNELS = [
       "shunt_resistance": 0.249,
       "adc_offset": 0.0
     }
+
 ]
