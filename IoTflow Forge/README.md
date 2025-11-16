@@ -135,7 +135,6 @@ Configurations are saved in JSON format:
 {
   "module_type": "IoTbase PICO",
   "mezzanine_type": "IoTextra Octal2",
-  "interface_type": "11",
   "channels": [
     {
       "name": "Relay1",
@@ -150,7 +149,7 @@ Configurations are saved in JSON format:
     "wifi_password": "MyWiFiPassword"
   },
   "mqtt": {
-    "broker": "192.168.1.100",
+    "broker": "your_broker",
     "port": 1883,
     "client_id": "pico-iotextra-controller-1",
     "base_topic": "iotextra/device_1"
@@ -163,10 +162,16 @@ Configurations are saved in JSON format:
     "i2c_device_addr": "0x3f",
     "eeprom_i2c_addr": "0x57",
     "eeprom_size": 1024,
+    "num_of_adcs": 2,
+    "adc_sampling_rate": 128,
     "gpio_host_pins": {
       "1": 10, "2": 11, "3": 12, "4": 13,
       "5": 14, "6": 15, "7": 18, "8": 19
-    }
+    },
+    "adc_i2c_addrs": [
+      "0x49",
+      "0x4B"
+    ]
   },
   "pin_config": "0b00001111",
   "status_update_interval_s": 30
