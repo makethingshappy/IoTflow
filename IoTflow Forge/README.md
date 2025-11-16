@@ -208,8 +208,6 @@ Configurations are saved in JSON format:
 ## EEPROM Requirements
 
 - **Minimum**: 8 Kbit (1024 bytes) EEPROM
-- **Estimated Usage**: Approximately 228 bytes for a full configuration (header, channels, network, hardware, etc.)
-- The tool provides an export function to calculate usage; actual EEPROM writing is handled by the device firmware after sending the configuration.
 
 ## Validation Rules
 
