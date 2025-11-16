@@ -469,5 +469,3 @@ This tool is part of the IoTflow project for IoTextra Hardware Modules.
 
 **Author**: Arshia Keshvari  
 **Role**: Independent Developer, Engineer, and Project Author
-
-For support, issues, or feature requests, please refer to the IoTflow project documentation.
