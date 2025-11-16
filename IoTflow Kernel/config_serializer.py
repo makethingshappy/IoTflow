@@ -1,3 +1,17 @@
+"""
+==============================================================
+ IoTExtra Configuration Serializer & Deserializer
+--------------------------------------------------------------
+ This module provides efficient binary serialization and
+ deserialization for IoTExtra firmware configuration data.
+ The format is compact, deterministic, and EEPROM-safe.
+
+ Author: Arshia Keshvari
+ Role: Independent Developer, Engineer, and Project Author
+ Last Updated: 2025-11-16
+==============================================================
+"""
+
 import struct
 
 # ----------------------------
