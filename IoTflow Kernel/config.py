@@ -4,7 +4,7 @@
 --------------------------------------------------------------
  This script defines all configuration parameters for Wi-Fi,
  MQTT, hardware selection, ADC ranges, and channel definitions
- used by the IoTExtra Raspberry Pi Pico firmware.
+ used by the IoTextra Hardware Modules
 
  Author: Arshia Keshvari
  Role: Independent Developer, Engineer, and Project Author
@@ -154,3 +154,4 @@ CHANNELS = [
     }
 
 ]
+
