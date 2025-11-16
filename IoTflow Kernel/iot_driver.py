@@ -1,5 +1,5 @@
 """
-Digital Driver – Hardware Abstraction Layer for Digital I/O
+iot_driver – Hardware Abstraction Layer for Digital I/O
 ------------------------------------------------------------
 This script provides a unified driver to control IoTextra Digital I/O hardware using
 either I2C (via a TCA9534 I/O expander) or GPIO mode through a HOST connector.
@@ -122,3 +122,4 @@ class IotDriver:
         
 
         return None
+
