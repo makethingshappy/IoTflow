@@ -12,14 +12,15 @@
         "type": "iotextra-input",
         "z": "3b7788ab57f07d54",
         "name": "",
-        "broker": "",
+        "broker": "690c80c21b3ed82b",
         "baseTopic": "iotextra/device_1",
         "channel": "1",
         "x": 520,
-        "y": 260,
+        "y": 200,
         "wires": [
             [
-                "4657228707fa251d"
+                "4657228707fa251d",
+                "6389f8274b6d6ff4"
             ]
         ]
     },
@@ -28,7 +29,7 @@
         "type": "ui_led",
         "z": "3b7788ab57f07d54",
         "order": 0,
-        "group": "4eb54806a7d14ee3",
+        "group": "fd6c84efc18a868c",
         "width": 0,
         "height": 0,
         "label": "",
@@ -51,7 +52,7 @@
         "showGlow": true,
         "name": "",
         "x": 790,
-        "y": 260,
+        "y": 200,
         "wires": []
     },
     {
@@ -59,14 +60,15 @@
         "type": "iotextra-input",
         "z": "3b7788ab57f07d54",
         "name": "",
-        "broker": "",
+        "broker": "690c80c21b3ed82b",
         "baseTopic": "iotextra/device_1",
         "channel": "2",
         "x": 520,
-        "y": 340,
+        "y": 280,
         "wires": [
             [
-                "1f91e220361f7af9"
+                "1f91e220361f7af9",
+                "1eef939ee44bd670"
             ]
         ]
     },
@@ -75,7 +77,7 @@
         "type": "ui_led",
         "z": "3b7788ab57f07d54",
         "order": 0,
-        "group": "3cbd74a6b05d79dd",
+        "group": "553bc32743e6cbee",
         "width": 0,
         "height": 0,
         "label": "",
@@ -98,7 +100,7 @@
         "showGlow": true,
         "name": "",
         "x": 790,
-        "y": 340,
+        "y": 280,
         "wires": []
     },
     {
@@ -106,14 +108,15 @@
         "type": "iotextra-input",
         "z": "3b7788ab57f07d54",
         "name": "",
-        "broker": "",
+        "broker": "690c80c21b3ed82b",
         "baseTopic": "iotextra/device_1",
         "channel": "3",
         "x": 520,
-        "y": 420,
+        "y": 360,
         "wires": [
             [
-                "df06d585eca856b9"
+                "df06d585eca856b9",
+                "37d9fe4e71cac2be"
             ]
         ]
     },
@@ -122,7 +125,7 @@
         "type": "ui_led",
         "z": "3b7788ab57f07d54",
         "order": 0,
-        "group": "381bc7fd671cbe53",
+        "group": "aab8493173dc53db",
         "width": 0,
         "height": 0,
         "label": "",
@@ -145,7 +148,7 @@
         "showGlow": true,
         "name": "",
         "x": 790,
-        "y": 420,
+        "y": 360,
         "wires": []
     },
     {
@@ -153,14 +156,15 @@
         "type": "iotextra-input",
         "z": "3b7788ab57f07d54",
         "name": "",
-        "broker": "",
+        "broker": "690c80c21b3ed82b",
         "baseTopic": "iotextra/device_1",
         "channel": "4",
         "x": 520,
-        "y": 500,
+        "y": 440,
         "wires": [
             [
-                "6d53970d856159f5"
+                "6d53970d856159f5",
+                "24857cc5ce5a06ac"
             ]
         ]
     },
@@ -169,7 +173,7 @@
         "type": "ui_led",
         "z": "3b7788ab57f07d54",
         "order": 0,
-        "group": "d0c969525157c689",
+        "group": "a8605611f31ba165",
         "width": 0,
         "height": 0,
         "label": "",
@@ -192,7 +196,7 @@
         "showGlow": true,
         "name": "",
         "x": 790,
-        "y": 500,
+        "y": 440,
         "wires": []
     },
     {
@@ -200,14 +204,15 @@
         "type": "iotextra-input",
         "z": "3b7788ab57f07d54",
         "name": "",
-        "broker": "",
+        "broker": "690c80c21b3ed82b",
         "baseTopic": "iotextra/device_1",
         "channel": "5",
         "x": 520,
-        "y": 560,
+        "y": 520,
         "wires": [
             [
-                "db8943f4b3a7e5b5"
+                "db8943f4b3a7e5b5",
+                "c3dd37b2d87ea047"
             ]
         ]
     },
@@ -216,7 +221,7 @@
         "type": "ui_led",
         "z": "3b7788ab57f07d54",
         "order": 0,
-        "group": "c252cfe7a48f5eb3",
+        "group": "610d3b85ec999a85",
         "width": 0,
         "height": 0,
         "label": "",
@@ -239,7 +244,7 @@
         "showGlow": true,
         "name": "",
         "x": 790,
-        "y": 560,
+        "y": 520,
         "wires": []
     },
     {
@@ -247,14 +252,15 @@
         "type": "iotextra-input",
         "z": "3b7788ab57f07d54",
         "name": "",
-        "broker": "",
+        "broker": "690c80c21b3ed82b",
         "baseTopic": "iotextra/device_1",
         "channel": "6",
         "x": 520,
-        "y": 620,
+        "y": 600,
         "wires": [
             [
-                "2145b0a67a30723f"
+                "2145b0a67a30723f",
+                "b02f8fd82e2f1284"
             ]
         ]
     },
@@ -263,7 +269,7 @@
         "type": "ui_led",
         "z": "3b7788ab57f07d54",
         "order": 0,
-        "group": "eee7eeb6f11aa5d1",
+        "group": "76856ccb5d0ceb6c",
         "width": 0,
         "height": 0,
         "label": "",
@@ -286,7 +292,7 @@
         "showGlow": true,
         "name": "",
         "x": 790,
-        "y": 620,
+        "y": 600,
         "wires": []
     },
     {
@@ -294,14 +300,15 @@
         "type": "iotextra-input",
         "z": "3b7788ab57f07d54",
         "name": "",
-        "broker": "",
+        "broker": "690c80c21b3ed82b",
         "baseTopic": "iotextra/device_1",
         "channel": "7",
         "x": 520,
         "y": 680,
         "wires": [
             [
-                "6e7637e58b7f37fc"
+                "6e7637e58b7f37fc",
+                "0abd5dc5f87dabca"
             ]
         ]
     },
@@ -310,7 +317,7 @@
         "type": "ui_led",
         "z": "3b7788ab57f07d54",
         "order": 0,
-        "group": "19b58aaf0ef9615c",
+        "group": "d4d067eadc763c4e",
         "width": 0,
         "height": 0,
         "label": "",
@@ -341,14 +348,15 @@
         "type": "iotextra-input",
         "z": "3b7788ab57f07d54",
         "name": "",
-        "broker": "",
+        "broker": "690c80c21b3ed82b",
         "baseTopic": "iotextra/device_1",
         "channel": "8",
         "x": 520,
-        "y": 740,
+        "y": 760,
         "wires": [
             [
-                "f8df7ad04916e1bf"
+                "f8df7ad04916e1bf",
+                "642085e3fcf3c4b3"
             ]
         ]
     },
@@ -357,7 +365,7 @@
         "type": "ui_led",
         "z": "3b7788ab57f07d54",
         "order": 0,
-        "group": "9ab534c18966c68a",
+        "group": "b40977a0c4316fc8",
         "width": 0,
         "height": 0,
         "label": "",
@@ -380,14 +388,141 @@
         "showGlow": true,
         "name": "",
         "x": 790,
-        "y": 740,
+        "y": 760,
         "wires": []
     },
     {
-        "id": "4eb54806a7d14ee3",
+        "id": "6389f8274b6d6ff4",
+        "type": "blynk-iot-out-write",
+        "z": "3b7788ab57f07d54",
+        "name": "Digital Input 1",
+        "pin": "0",
+        "pinmode": 0,
+        "client": "bcb0cbf8899628db",
+        "x": 820,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "1eef939ee44bd670",
+        "type": "blynk-iot-out-write",
+        "z": "3b7788ab57f07d54",
+        "name": "Digital Input 2",
+        "pin": "1",
+        "pinmode": 0,
+        "client": "bcb0cbf8899628db",
+        "x": 820,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "37d9fe4e71cac2be",
+        "type": "blynk-iot-out-write",
+        "z": "3b7788ab57f07d54",
+        "name": "Digital Input 3",
+        "pin": "2",
+        "pinmode": 0,
+        "client": "bcb0cbf8899628db",
+        "x": 820,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "24857cc5ce5a06ac",
+        "type": "blynk-iot-out-write",
+        "z": "3b7788ab57f07d54",
+        "name": "Digital Input 4",
+        "pin": "3",
+        "pinmode": 0,
+        "client": "bcb0cbf8899628db",
+        "x": 820,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "c3dd37b2d87ea047",
+        "type": "blynk-iot-out-write",
+        "z": "3b7788ab57f07d54",
+        "name": "Digital Input 5",
+        "pin": "4",
+        "pinmode": 0,
+        "client": "bcb0cbf8899628db",
+        "x": 820,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "b02f8fd82e2f1284",
+        "type": "blynk-iot-out-write",
+        "z": "3b7788ab57f07d54",
+        "name": "Digital Input 6",
+        "pin": "5",
+        "pinmode": 0,
+        "client": "bcb0cbf8899628db",
+        "x": 820,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "0abd5dc5f87dabca",
+        "type": "blynk-iot-out-write",
+        "z": "3b7788ab57f07d54",
+        "name": "Digital Input 7",
+        "pin": "6",
+        "pinmode": 0,
+        "client": "bcb0cbf8899628db",
+        "x": 820,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "642085e3fcf3c4b3",
+        "type": "blynk-iot-out-write",
+        "z": "3b7788ab57f07d54",
+        "name": "Digital Input 8",
+        "pin": "7",
+        "pinmode": 0,
+        "client": "bcb0cbf8899628db",
+        "x": 820,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "690c80c21b3ed82b",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "Arshias-MacBook-Pro-6.local",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "fd6c84efc18a868c",
         "type": "ui_group",
         "name": "Input on channel 1",
-        "tab": "3e4327f75179dc79",
+        "tab": "e0fd32b3b617da56",
         "order": 1,
         "disp": true,
         "width": 6,
@@ -395,10 +530,10 @@
         "className": ""
     },
     {
-        "id": "3cbd74a6b05d79dd",
+        "id": "553bc32743e6cbee",
         "type": "ui_group",
         "name": "Input on channel 2",
-        "tab": "3e4327f75179dc79",
+        "tab": "e0fd32b3b617da56",
         "order": 2,
         "disp": true,
         "width": 6,
@@ -406,10 +541,10 @@
         "className": ""
     },
     {
-        "id": "381bc7fd671cbe53",
+        "id": "aab8493173dc53db",
         "type": "ui_group",
         "name": "Input on channel 3",
-        "tab": "3e4327f75179dc79",
+        "tab": "e0fd32b3b617da56",
         "order": 3,
         "disp": true,
         "width": 6,
@@ -417,10 +552,10 @@
         "className": ""
     },
     {
-        "id": "d0c969525157c689",
+        "id": "a8605611f31ba165",
         "type": "ui_group",
         "name": "Input on channel 4",
-        "tab": "3e4327f75179dc79",
+        "tab": "e0fd32b3b617da56",
         "order": 4,
         "disp": true,
         "width": 6,
@@ -428,10 +563,10 @@
         "className": ""
     },
     {
-        "id": "c252cfe7a48f5eb3",
+        "id": "610d3b85ec999a85",
         "type": "ui_group",
         "name": "Input on channel 5",
-        "tab": "3e4327f75179dc79",
+        "tab": "e0fd32b3b617da56",
         "order": 5,
         "disp": true,
         "width": 6,
@@ -439,10 +574,10 @@
         "className": ""
     },
     {
-        "id": "eee7eeb6f11aa5d1",
+        "id": "76856ccb5d0ceb6c",
         "type": "ui_group",
         "name": "Input on channel 6",
-        "tab": "3e4327f75179dc79",
+        "tab": "e0fd32b3b617da56",
         "order": 6,
         "disp": true,
         "width": 6,
@@ -450,10 +585,10 @@
         "className": ""
     },
     {
-        "id": "19b58aaf0ef9615c",
+        "id": "d4d067eadc763c4e",
         "type": "ui_group",
         "name": "Input on channel 6",
-        "tab": "3e4327f75179dc79",
+        "tab": "e0fd32b3b617da56",
         "order": 7,
         "disp": true,
         "width": 6,
@@ -461,10 +596,10 @@
         "className": ""
     },
     {
-        "id": "9ab534c18966c68a",
+        "id": "b40977a0c4316fc8",
         "type": "ui_group",
         "name": "Input on channel 8",
-        "tab": "3e4327f75179dc79",
+        "tab": "e0fd32b3b617da56",
         "order": 8,
         "disp": true,
         "width": 6,
@@ -472,7 +607,23 @@
         "className": ""
     },
     {
-        "id": "3e4327f75179dc79",
+        "id": "bcb0cbf8899628db",
+        "type": "blynk-iot-client",
+        "name": "IoTextra Input",
+        "path": "blynk.cloud",
+        "key": "OCiIvdiy9LGnbTl66HS-DTYU5G2o87DB",
+        "tmpl": "TMPL5Z9r2iO3g",
+        "dbg_all": false,
+        "dbg_log": false,
+        "dbg_prop": false,
+        "dbg_sync": false,
+        "dbg_low": false,
+        "dbg_pins": "",
+        "multi_cmd": false,
+        "enabled": true
+    },
+    {
+        "id": "e0fd32b3b617da56",
         "type": "ui_tab",
         "name": "IoTExtra Input board",
         "icon": "dashboard",
@@ -480,13 +631,14 @@
         "hidden": false
     },
     {
-        "id": "cde47b08c09ff964",
+        "id": "4167dd1be3392b7a",
         "type": "global-config",
         "env": [],
         "modules": {
             "node-red-contrib-iotextra": "1.1.0",
             "node-red-contrib-ui-led": "0.4.11",
-            "node-red-dashboard": "3.6.5"
+            "node-red-contrib-blynk-iot": "1.0.1",
+            "node-red-dashboard": "3.6.6"
         }
     }
 ]

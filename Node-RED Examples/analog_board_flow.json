@@ -1,0 +1,181 @@
+[
+    {
+        "id": "9b2014b42981f1bd",
+        "type": "tab",
+        "label": "Flow 5",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c2be12b09bf72234",
+        "type": "debug",
+        "z": "9b2014b42981f1bd",
+        "name": "Ch1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "9b37f5c4b099a42c",
+        "type": "iotextra-analog",
+        "z": "9b2014b42981f1bd",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "0",
+        "x": 360,
+        "y": 200,
+        "wires": [
+            [
+                "c2be12b09bf72234"
+            ]
+        ]
+    },
+    {
+        "id": "be47a0eea2487de6",
+        "type": "iotextra-analog",
+        "z": "9b2014b42981f1bd",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "1",
+        "x": 360,
+        "y": 280,
+        "wires": [
+            [
+                "1c19c60b7d874046"
+            ]
+        ]
+    },
+    {
+        "id": "7bbb93238131971f",
+        "type": "iotextra-analog",
+        "z": "9b2014b42981f1bd",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "2",
+        "x": 360,
+        "y": 360,
+        "wires": [
+            [
+                "1bce14d5c863db31"
+            ]
+        ]
+    },
+    {
+        "id": "d65238f7aa112e29",
+        "type": "iotextra-analog",
+        "z": "9b2014b42981f1bd",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "3",
+        "x": 360,
+        "y": 440,
+        "wires": [
+            [
+                "cbe30f24081f7641"
+            ]
+        ]
+    },
+    {
+        "id": "1c19c60b7d874046",
+        "type": "debug",
+        "z": "9b2014b42981f1bd",
+        "name": "Ch2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "1bce14d5c863db31",
+        "type": "debug",
+        "z": "9b2014b42981f1bd",
+        "name": "Ch3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "cbe30f24081f7641",
+        "type": "debug",
+        "z": "9b2014b42981f1bd",
+        "name": "Ch4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "690c80c21b3ed82b",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "Schrodinger.local",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c216a7bea19b9be9",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-iotextra": "1.2.0"
+        }
+    }
+]

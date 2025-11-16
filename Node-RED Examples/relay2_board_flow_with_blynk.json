@@ -1,0 +1,660 @@
+[
+    {
+        "id": "65cebd02e6831641",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2db6ab0f69391ded",
+        "type": "iotextra-output",
+        "z": "65cebd02e6831641",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "1",
+        "x": 820,
+        "y": 160,
+        "wires": [
+            [
+                "9d1e29214df2f7a2"
+            ]
+        ]
+    },
+    {
+        "id": "9144932bbedde182",
+        "type": "iotextra-output",
+        "z": "65cebd02e6831641",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "2",
+        "x": 820,
+        "y": 220,
+        "wires": [
+            [
+                "5b60441cd7910441"
+            ]
+        ]
+    },
+    {
+        "id": "f7f1f8f607a162e4",
+        "type": "iotextra-output",
+        "z": "65cebd02e6831641",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "3",
+        "x": 820,
+        "y": 280,
+        "wires": [
+            [
+                "37db331c09c95cb5"
+            ]
+        ]
+    },
+    {
+        "id": "da8ba908b227a4b3",
+        "type": "iotextra-output",
+        "z": "65cebd02e6831641",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "4",
+        "x": 820,
+        "y": 340,
+        "wires": [
+            [
+                "6f7d58eb44896add"
+            ]
+        ]
+    },
+    {
+        "id": "9d1e29214df2f7a2",
+        "type": "ui_led",
+        "z": "65cebd02e6831641",
+        "order": 0,
+        "group": "c11f51a2c8c604c3",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 1010,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "b19ac85e969d9c4e",
+        "type": "ui_switch",
+        "z": "65cebd02e6831641",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "c11f51a2c8c604c3",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 630,
+        "y": 160,
+        "wires": [
+            [
+                "2db6ab0f69391ded"
+            ]
+        ]
+    },
+    {
+        "id": "5b60441cd7910441",
+        "type": "ui_led",
+        "z": "65cebd02e6831641",
+        "order": 0,
+        "group": "caeecfe2eeae3e2e",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 1010,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "9582c4c7326db888",
+        "type": "ui_switch",
+        "z": "65cebd02e6831641",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "caeecfe2eeae3e2e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 630,
+        "y": 220,
+        "wires": [
+            [
+                "9144932bbedde182"
+            ]
+        ]
+    },
+    {
+        "id": "9dfc39eb18155fc4",
+        "type": "ui_switch",
+        "z": "65cebd02e6831641",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "c4d7282568f9c4a7",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 630,
+        "y": 280,
+        "wires": [
+            [
+                "f7f1f8f607a162e4"
+            ]
+        ]
+    },
+    {
+        "id": "37db331c09c95cb5",
+        "type": "ui_led",
+        "z": "65cebd02e6831641",
+        "order": 0,
+        "group": "c4d7282568f9c4a7",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 1010,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "6f7d58eb44896add",
+        "type": "ui_led",
+        "z": "65cebd02e6831641",
+        "order": 0,
+        "group": "2d5bf652910a6287",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 1010,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "2e1d8bf0396f4012",
+        "type": "ui_switch",
+        "z": "65cebd02e6831641",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "2d5bf652910a6287",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 630,
+        "y": 340,
+        "wires": [
+            [
+                "da8ba908b227a4b3"
+            ]
+        ]
+    },
+    {
+        "id": "20d6e606c2d9dc0e",
+        "type": "blynk-iot-in-write",
+        "z": "65cebd02e6831641",
+        "name": "Digital Output 1",
+        "pin": "0",
+        "pin_all": 0,
+        "client": "77d8fef2679241c7",
+        "x": 220,
+        "y": 160,
+        "wires": [
+            [
+                "1726f34de1b62d78"
+            ]
+        ]
+    },
+    {
+        "id": "36a8600e8da3e4c0",
+        "type": "blynk-iot-in-write",
+        "z": "65cebd02e6831641",
+        "name": "Digital Output 2",
+        "pin": "1",
+        "pin_all": 0,
+        "client": "77d8fef2679241c7",
+        "x": 220,
+        "y": 220,
+        "wires": [
+            [
+                "0e426d28e75afbe3"
+            ]
+        ]
+    },
+    {
+        "id": "6ddddef57ccdf1cf",
+        "type": "blynk-iot-in-write",
+        "z": "65cebd02e6831641",
+        "name": "Digital Output 3",
+        "pin": "2",
+        "pin_all": 0,
+        "client": "77d8fef2679241c7",
+        "x": 220,
+        "y": 280,
+        "wires": [
+            [
+                "1f7457b4a458073c"
+            ]
+        ]
+    },
+    {
+        "id": "d0800be1ac31d426",
+        "type": "blynk-iot-in-write",
+        "z": "65cebd02e6831641",
+        "name": "Digital Output 4",
+        "pin": "3",
+        "pin_all": 0,
+        "client": "77d8fef2679241c7",
+        "x": 220,
+        "y": 340,
+        "wires": [
+            [
+                "a1d22a83700647e2"
+            ]
+        ]
+    },
+    {
+        "id": "1726f34de1b62d78",
+        "type": "change",
+        "z": "65cebd02e6831641",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0",
+                "fromt": "str",
+                "to": "false",
+                "tot": "bool"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "1",
+                "fromt": "str",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 160,
+        "wires": [
+            [
+                "b19ac85e969d9c4e"
+            ]
+        ]
+    },
+    {
+        "id": "0e426d28e75afbe3",
+        "type": "change",
+        "z": "65cebd02e6831641",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0",
+                "fromt": "str",
+                "to": "false",
+                "tot": "bool"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "1",
+                "fromt": "str",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 220,
+        "wires": [
+            [
+                "9582c4c7326db888"
+            ]
+        ]
+    },
+    {
+        "id": "1f7457b4a458073c",
+        "type": "change",
+        "z": "65cebd02e6831641",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0",
+                "fromt": "str",
+                "to": "false",
+                "tot": "bool"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "1",
+                "fromt": "str",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 280,
+        "wires": [
+            [
+                "9dfc39eb18155fc4"
+            ]
+        ]
+    },
+    {
+        "id": "a1d22a83700647e2",
+        "type": "change",
+        "z": "65cebd02e6831641",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "0",
+                "fromt": "str",
+                "to": "false",
+                "tot": "bool"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "1",
+                "fromt": "str",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 340,
+        "wires": [
+            [
+                "2e1d8bf0396f4012"
+            ]
+        ]
+    },
+    {
+        "id": "690c80c21b3ed82b",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "Arshias-MacBook-Pro-6.local",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c11f51a2c8c604c3",
+        "type": "ui_group",
+        "name": "Relay Out 1",
+        "tab": "8a457c098b44f9f3",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "caeecfe2eeae3e2e",
+        "type": "ui_group",
+        "name": "Relay Out 2",
+        "tab": "8a457c098b44f9f3",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c4d7282568f9c4a7",
+        "type": "ui_group",
+        "name": "Relay Out 3",
+        "tab": "8a457c098b44f9f3",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "2d5bf652910a6287",
+        "type": "ui_group",
+        "name": "Relay Out 4",
+        "tab": "8a457c098b44f9f3",
+        "order": 4,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "77d8fef2679241c7",
+        "type": "blynk-iot-client",
+        "name": "IoTextra Relay2",
+        "path": "blynk.cloud",
+        "key": "pS2F2--4fqAiSKOfB_7gyyjHiqBhY2vq",
+        "tmpl": "TMPL5BvtBZYFd",
+        "dbg_all": false,
+        "dbg_log": false,
+        "dbg_prop": false,
+        "dbg_sync": false,
+        "dbg_low": false,
+        "dbg_pins": "",
+        "multi_cmd": false,
+        "enabled": true
+    },
+    {
+        "id": "8a457c098b44f9f3",
+        "type": "ui_tab",
+        "name": "IoTextra Relay2",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "514e284d0657083d",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-iotextra": "1.1.0",
+            "node-red-contrib-ui-led": "0.4.11",
+            "node-red-dashboard": "3.6.6",
+            "node-red-contrib-blynk-iot": "1.0.1"
+        }
+    }
+]
