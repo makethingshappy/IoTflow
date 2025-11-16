@@ -347,7 +347,7 @@
         "id": "690c80c21b3ed82b",
         "type": "mqtt-broker",
         "name": "",
-        "broker": "Schrodinger.local",
+        "broker": "Your_Broker.local",
         "port": 1883,
         "clientid": "",
         "autoConnect": true,
