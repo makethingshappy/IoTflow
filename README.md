@@ -2,10 +2,11 @@
 
 ## Overview
 
-IoTflow is a lightweight orchestration layer designed to unify automation workflows across the IoTextra-Digital modules and IoTsmart MCU boards.  
-It provides structured Node-RED flow patterns, MQTT-friendly workflow organization, and a consistent method for synchronizing digital inputs, outputs, and automation logic across multiple devices.
+IoTflow is a lightweight orchestration layer designed to unify automation workflows across the IoTextra modules and IoTsmart MCU boards.
 
-IoTflow is not firmware and does not include device drivers — it is a **workflow framework** used to coordinate existing MQTT and Node-RED environments.
+It provides structured Node-RED flow patterns, MQTT-friendly workflow organization, and a consistent method for synchronizing digital or analog I/O, and automation logic across multiple devices.
+
+IoTflow is a **workflow framework** used to coordinate existing MQTT and Node-RED environments.
 
 ---
 
