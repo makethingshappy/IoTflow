@@ -59,7 +59,7 @@ Example: For PICO W - `https://micropython.org/download/RPI_PICO_W/`
 4. Copy the `firmware.uf2` file to this drive.
 5. Pico will reboot with the new firmware.
 
-- Above applies for RPI PICO W board but you can find detailed guides for other microcontrollers that support MicroPython via the offical `https://micropython.org` website.
+Above applies for RPI PICO W board but you can find detailed guides for other microcontrollers that support MicroPython via the offical `https://micropython.org` website.
 
 ---
 
