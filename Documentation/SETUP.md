@@ -227,5 +227,5 @@ The IoTextra modules communicate status, digital I/O, and analog readings via MQ
 
 ## Troubleshooting
 - **No connection to MQTT broker:**
-  - Check MQTT_BROKER address and Wi-Fi credentials in `config.py`
+  - Check MQTT_BROKER details and Wi-Fi credentials in `config.py` or check your `.JSON` configuration file from `IoTflow Forge.py`
   - Make sure the MQTT broker is running and accessible on the network
