@@ -11,8 +11,10 @@ A universal framework for integrating IoTextra module series with Node-RED or si
 - [Step 1: Hardware Setup](#step-1-hardware-setup)
 - [Step 2: Flashing MicroPython Firmware](#step-2-flashing-micropython-firmware)
 - [Step 3: Firmware Configuration](#step-3-firmware-configuration)
-- [Step 4: Node-RED Installation](#step-4-node-red-installation)
-- [Step 5: Importing the Example Dashboard](#step-5-importing-the-example-dashboard)
+- [Step 3: Utility Configuration I/O Tool (IoTflow Forge)](#step-4-Utility-Configuration-I/O-Tool)
+- [Step 5: Node-RED Installation](#step-5-node-red-installation)
+- 
+- [Step 6: Importing the Example Dashboard](#step-6-importing-the-example-dashboard)
 - [How It Works: MQTT Protocol](#how-it-works-mqtt-protocol)
 - [Troubleshooting](#troubleshooting)
 
