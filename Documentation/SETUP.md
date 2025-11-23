@@ -31,8 +31,9 @@ A universal framework for integrating IoTextra module series with Node-RED or si
 ---
 
 ## Hardware Requirements
-- 1 x IoTbase Module
+- 1 x IoTbase or IoTsmart Module
 - 1 x IoTextra Module
+- 1 x USB Cable
 - 1 x Microcontroller (ESP32-S3, PICO, PICO W, PICO 2W and etc)
 - *(Optional)* Computer to run Node-RED or a dedicated Edge device, e.g. Raspberry Pi 5
 
