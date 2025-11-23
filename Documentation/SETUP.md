@@ -31,7 +31,8 @@ A universal framework for integrating IoTextra module series with Node-RED or si
 ---
 
 ## Hardware Requirements
-- 1 x IoTbase or IoTsmart Module
+- 1 x IoTbase
+- 1 x Microcontroller or IoTsmart Module
 - 1 x IoTextra Module
 - 1 x USB Cable
 - 1 x Microcontroller (ESP32-S3, PICO, PICO W, PICO 2W and etc)
@@ -42,13 +43,39 @@ A universal framework for integrating IoTextra module series with Node-RED or si
 ## Software Requirements
 - **Thonny IDE** – for flashing firmware to your microcontroller
 - **Node-RED** – installed locally or on a Single Board Computer like Raspberry Pi
+
 ---
 
 ## Step 1: Hardware Setup
-- Attach MCU to the IoTbase
-- Connect power supply to the IoTbase via USB
+- Attach MCU to the IoTbase via the HOST connector / Header
+- Provide power to IoTbase via either connecting to USB slot of MCU or external supply
 - Connect USB to the MCU (for flashing the firmware or using the IoTflow Forge Configuration Tool)
 - Connect IoTbase and IoTextra module via HOST connector
+
+## IoTsmart System-on-Module (SOM) Microcontrollers
+
+Supported SOMs:
+
+- IoTsmart ESP32-S3
+- IoTsmart XIAO
+- IoTsmart SAMD21
+- IoTsmart RP2040
+
+**Steps:**
+
+1. **Normal Operation:** Insert the SOM into the **HOST connector slot** on the IoTbase.
+2. **Firmware Flashing / Configuration:** Use the **IoTsmart adapter cable**.
+3. **Power:** Connect USB to the IoTbase to supply power to the SOM and any attached modules.
+4. **USB Connection (via adapter cable):** Required for flashing firmware, using the **IoTflow Forge Configuration Tool**, or serial debugging.
+
+## IoTextra Mezzanine Modules
+
+IoTextra modules (Analog, Combo, Digital, etc.) connect **directly to the HOST connector slot** on the IoTbase.
+
+**Step:**
+
+- Insert the IoTextra module into the HOST connector / header slot.  
+  This provides power, I²C, and digital signals needed for the module to operate.
 
 ---
 
