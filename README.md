@@ -32,7 +32,7 @@ This repository includes pre-built Node-RED flow files in the `/Node-RED Example
 These flows demonstrate:
 
 - MQTT topic processing  
-- Digital input → event mapping  
+- Digital / Analog input → event mapping  
 - Digital output control logic  
 - Routing between multiple devices  
 - Trigger → action automations  
