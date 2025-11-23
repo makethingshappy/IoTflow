@@ -28,7 +28,6 @@ The tool creates configurations that can be stored in EEPROM on the device. The 
 - **IoTsmart XIAO** - Tiny Adaptor Board with Cable is required for flashing
 - **IoTsmart XIAO** - Tiny Adaptor Board with Cable is required for flashing
 
-
 *Note:*
 
 *Only MQTT over Wi-Fi is currently supported, so modules without Wi-Fi capabilities have limited use.*
