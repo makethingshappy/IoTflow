@@ -175,7 +175,7 @@ The IoTextra modules communicate status, digital I/O, and analog readings via MQ
 | **Digital Output**| `<MQTT_BASE_TOPIC>/output/<channel>/set`      | Command to change the output state                                                          | `1` (ON) / `0` (OFF)    |
 |                  | `<MQTT_BASE_TOPIC>/output/<channel>/state`    | Confirms the output state after command                                                     | `1` (ON) / `0` (OFF)    |
 | **Analog Channel**| `<MQTT_BASE_TOPIC>/analog/<channel>`          | Current reading of an analog channel                                                       | Numeric string (e.g., `"3.142"`) |
-|                  |                                                 | Unit is **V** (voltage) or **mA** (current) depending on channel configuration               | —                       |
+|                  |                                                 | Unit is **V** (voltage) or **mA** (current) depending on channel configuration               | N/A                       |
 
 - **Device status:**
   - `<MQTT_BASE_TOPIC>/status` – online/offline
