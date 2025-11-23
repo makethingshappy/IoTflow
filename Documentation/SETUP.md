@@ -26,7 +26,7 @@ A universal framework for integrating IoTextra module series with Node-RED or si
 - **Easy integration:** Custom Node-RED nodes for quicker set up.
 - **Dashboard examples:** Example flows for node-red are supplied for IoTextra Relay2, Input, Analog, Combo and Octal modules.
 - **Standardised firmware:** Universal firmware driver can be used with any IoTextra module out of the box.
-- **Simple configuration:** All 8 channels can be configured to be either input or output, as well as selecting interface type - iether I2C or GPIO (HOST connector) using a config file.
+- **Simple configuration:** All 8 channels can be configured to be either input or output, as well as selecting interface type either I2C or GPIO (HOST connector) using a config file.
 
 ---
 
