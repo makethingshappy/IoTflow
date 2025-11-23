@@ -14,6 +14,7 @@ A universal framework for integrating IoTextra module series with Node-RED or si
 - [Step 3: Utility Configuration I/O Tool (IoTflow Forge)](#step-4-Utility-Configuration-I/O-Tool)
 - [Step 5: Node-RED Installation](#step-5-node-red-installation)
 - [Step 6: Importing the Example Dashboard](#step-6-importing-the-example-dashboard)
+- [How to use iotextra custom Node-RED nodes](#How-to-use-iotextra-custom-Node-RED-nodes)
 - [How It Works: MQTT Protocol](#how-it-works-mqtt-protocol)
 - [Troubleshooting](#troubleshooting)
 
@@ -113,7 +114,7 @@ from your computer and close the `IoTflow Forge.py` program.
 
 ---
 
-## Step 7: How to use iotextra custom Node-RED nodes
+## How to use iotextra custom Node-RED nodes
 - **IoTextra Output for a selected channel:**
   - Accepts an incoming msg.payload in the format of either true/false or 1/0
   - This uses a broker to send the command to the mezzanine device
