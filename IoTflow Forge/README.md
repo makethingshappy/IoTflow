@@ -20,10 +20,10 @@ The tool creates configurations that can be stored in EEPROM on the device. The 
 
 ## Features
 
-### Supported Module Types
-- **IoTbase PICO** - Compatible with Raspberry Pi Pico W, Pico 2W
-- **IoTbase Nano**
-- **IoTsmart ESP32-S3**
+### Supported System On Module (SOM) Microcontrollers
+- **IoTbase PICO** - Compatible with Raspberry Pi Pico, Pico 2, Pico W, Pico 2W, Waveshare ESP32-S3 PICO
+- **IoTbase NANO** - Arduino Nano ESP32 or ESP32-S3
+- **IoTsmart ESP32-S3** - Tiny Adaptor Board with Cable is required for flashing
 
 *Note: Only MQTT over Wi-Fi is currently supported, so modules without Wi-Fi capabilities are not fully functional.*
 
@@ -42,10 +42,10 @@ The tool creates configurations that can be stored in EEPROM on the device. The 
 - **12** - GPIO and I2C via TCA9534 (future expansion)
 
 #### Analog Input Mezzanines
-- IoTextra Analog (2 ADCs)
-- IoTextra Combo (1 ADC + digital I/O)
-- IoTextra Analog V2 (2 ADCs)
-- IoTextra Analog V3 (2 ADCs)
+- IoTextra Analog (2x TI ADC1115 ADCs)
+- IoTextra Combo (1 TI ADC1115 ADC + digital I/O)
+- IoTextra Analog2 (2x TI ADC1115 ADCs)
+- IoTextra Analog3 (2x TI ADC1115 ADCs)
 - Custom analog mezzanines
 
 **Supported Analog Interface Types:**
