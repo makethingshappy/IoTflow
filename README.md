@@ -106,8 +106,6 @@ IoTflow/
 - **node-red-contrib-iotextra/** — Node-RED extension for IoTextra modules 
 - **IoTflow Forge/** — Configuration Utility Tool for I/O Modules (Experimental with upcoming assets)
 
-Versioning follows the unified structure defined in the Technical Specification (M1).
-
 ---
 
 ## Template Updates
