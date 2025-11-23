@@ -61,17 +61,32 @@ Example: For PICO W - `https://micropython.org/download/RPI_PICO_W/`
 
 ---
 
-## Step 3: Firmware Configuration
-1. Connect Microcontroller to your computer.
+## Step 3: Firmware Configuration (IoTflow Kernel)
+1. Connect microcontroller to your computer.
 2. Open Thonny IDE.
-3. Select interpreter: MicroPython (Your Microcontroller).
-4. Upload every .py file to the microcontroller. 
-5. Open the `config.py` file and fill in the required details
-6. Save the file (Ctrl+S). The device will restart and attempt to connect to the network.
+3. Select interpreter: MicroPython (Your microcontroller).
+4. Upload main.py file to the microcontroller.
+5. Upload every other .py file under a lib folder path.
+6. Open the `config.py` file and fill in your desired configuration.
+7. Save the file (Ctrl+S).
+8. Reboot or restart your device and it will attempt to connect to the network.
 
 ---
 
-## Step 4: Node-RED Installation
+---
+
+## Step 4: Utility Configuration I/O Tool (IoTflow Forge)
+1. Connect your microcontroller to your computer.
+2. Open 'IoTflow Forge.py' and run the python program.
+3. Make a new configuration or load a configuration.
+4. Send your configuration to your microcontroller (via USB).
+5. Await a few seconds for system response.
+6. If configuration matches your desired setup you may disconnect 
+from your computer and close the 'IoTflow Forge.py' program.
+
+---
+
+## Step 5: Node-RED Installation
 1. Install Node-RED (see the [official guide](https://nodered.org/docs/getting-started/)).
 2. Install the dashboard:
    - Open Node-RED in your browser (`http://127.0.0.1:1880`)
@@ -90,7 +105,7 @@ Example: For PICO W - `https://micropython.org/download/RPI_PICO_W/`
 
 ---
 
-## Step 5: Importing the Example Dashboard
+## Step 6: Importing the Example Dashboard
 1. Download the `node-red-examples` folder from the repository.
 2. In Node-RED: Menu → Import → select the `[your_board_name]_flow.json` file → Import
 3. Configure the MQTT broker address in the iotextra node if it differs from the default.
@@ -99,7 +114,7 @@ Example: For PICO W - `https://micropython.org/download/RPI_PICO_W/`
 
 ---
 
-## Step 6: How to use iotextra custom Node-RED nodes
+## Step 7: How to use iotextra custom Node-RED nodes
 - **IoTextra Output for a selected channel:**
   - Accepts an incoming msg.payload in the format of either true/false or 1/0
   - This uses a broker to send the command to the mezzanine device
