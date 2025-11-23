@@ -179,16 +179,28 @@ The IoTextra modules communicate status, digital I/O, and analog readings via MQ
 
 - **Device status:**
   - `<MQTT_BASE_TOPIC>/status` – online/offline
+  
+  Example:
+  `
+  Topic: home/iotextra/status
+  Payload: online
+  `
 - **Digital inputs:**
   - `<MQTT_BASE_TOPIC>/input/<channel>` – state of the input channel on the device 1 (ON) or 0 (OFF)
+  
+  Example:
+  `
+  Topic: home/iotextra/input/1
+  Payload: 1          # ON
+  `
+- **Digital outputs:**
+  - `<MQTT_BASE_TOPIC>/output/<channel>/set` – used to toggle the state of the output channel on the device -> 1 (ON) or 0 (OFF)
   
   Example:
   `
   Topic: home/iotextra/output/1/set
   Payload: 1          # Turn ON output channel 1
   `
-- **Digital outputs:**
-  - `<MQTT_BASE_TOPIC>/output/<channel>/set` – used to toggle the state of the output channel on the device -> 1 (ON) or 0 (OFF)
   - `<MQTT_BASE_TOPIC>/output/<channel>/state` – used for confirming that the command has been received by the device and state has indeed changeed -> 1 (ON) or 0 (OFF)
   
   Example:
