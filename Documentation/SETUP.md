@@ -1,4 +1,4 @@
-# IoTextra module series & Node-RED Integration
+# IoTflow Setup Guide for IoTextra module series & Node-RED
 
 A universal framework for integrating IoTextra module series with Node-RED or similar software via IoTsmart series devices.
 
