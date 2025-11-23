@@ -54,7 +54,7 @@ Features include:
 - Scalable multi-module workflows  
 - Compatibility with Mosquitto, EMQX, Aedes, and other brokers  
 
-This repository does **not** include MQTT client code — only the workflow structure used to organize automation logic.
+This repository does **not** include MQTT client code, only the workflow structure used to organize automation logic.
 
 ---
 
@@ -115,8 +115,8 @@ Future updates may include:
 - New workflow patterns  
 - Expanded MQTT routing schemes  
 - Additional IoTextra module integrations  
-- ESP32-S3 gateway flows  
-- Developer-friendly automation blocks  
+- Developer-friendly automation blocks
+- Secure Authentication for MQTT Communication
 
 All updates will maintain the structure required by the unified documentation and licensing rules.
 
