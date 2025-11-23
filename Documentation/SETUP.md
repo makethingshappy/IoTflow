@@ -165,6 +165,18 @@ from your computer and close the `IoTflow Forge.py` program.
 ---
 
 ## How MQTT Protocol is used to send/receive data from the IoTextra Modules 
+
+The IoTextra modules communicate status, digital I/O, and analog readings via MQTT. The topics follow a structured format using `<MQTT_BASE_TOPIC>` as the root.  
+
+| Category          | MQTT Topic                                      | Description                                                                                  | Values / Format          |
+|------------------|-------------------------------------------------|----------------------------------------------------------------------------------------------|-------------------------|
+| **Device Status** | `<MQTT_BASE_TOPIC>/status`                     | Indicates whether the device is online or offline                                           | `online` / `offline`    |
+| **Digital Input** | `<MQTT_BASE_TOPIC>/input/<channel>`           | State of a digital input channel                                                            | `1` (ON) / `0` (OFF)    |
+| **Digital Output**| `<MQTT_BASE_TOPIC>/output/<channel>/set`      | Command to change the output state                                                          | `1` (ON) / `0` (OFF)    |
+|                  | `<MQTT_BASE_TOPIC>/output/<channel>/state`    | Confirms the output state after command                                                     | `1` (ON) / `0` (OFF)    |
+| **Analog Channel**| `<MQTT_BASE_TOPIC>/analog/<channel>`          | Current reading of an analog channel                                                       | Numeric string (e.g., `"3.142"`) |
+|                  |                                                 | Unit is **V** (voltage) or **mA** (current) depending on channel configuration               | —                       |
+
 - **Device status:**
   - `<MQTT_BASE_TOPIC>/status` – online/offline
 - **Digital inputs:**
