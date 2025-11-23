@@ -383,7 +383,7 @@ Available sampling rates (maps to ADS1115/ADS1015 configuration):
 | 128 | 4 | 1600/128 samples per second **Default** - balanced |
 | 250 | 5 | 2400/250 samples per second |
 | 475 | 6 | 3300/475 samples per second |
-| 860 | 7 | 860 samples per Second - Fastest, higher noise |
+| 860 | 7 | -/860 samples per second - Fastest, higher noise |
 
 ## Calibration Guide
 
