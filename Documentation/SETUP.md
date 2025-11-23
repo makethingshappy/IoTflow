@@ -133,8 +133,6 @@ from your computer and close the `IoTflow Forge.py` program.
 - **Digital outputs:**
   - `<MQTT_BASE_TOPIC>/output/<channel>/set` – used to toggle the state of the output channel on the device -> 1 (ON) or 0 (OFF)
   - `<MQTT_BASE_TOPIC>/output/<channel>/state` – used for confirming that the command has been received by the device and state has indeed changeed -> 1 (ON) or 0 (OFF)
-- **Diagram:**
-  - For visual representation of the above information you may view `mezzanine-interface-diagram.pdf` file in the documentation
 
 ---
 
