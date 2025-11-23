@@ -190,7 +190,7 @@ The IoTextra modules communicate status, digital I/O, and analog readings via MQ
   - Values are updated periodically or change if deadband filtering is enabled within the software (Commented by DEFAULT)
 
 **Notes:**
-- Digital input/output channels provide instantaneous state updates.  
+- Analog and Digital input/output channels provide instantaneous state updates.  
 - Ensure that `<MQTT_BASE_TOPIC>` matches your device configuration for correct topic mapping.
 
 ---
