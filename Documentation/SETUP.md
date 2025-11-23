@@ -24,7 +24,7 @@ A universal framework for integrating IoTextra module series with Node-RED or si
 - **Versatile control:** Monitor analog and digital I/O channels.
 - **Wireless connectivity:** Wi-Fi and standard MQTT protocol.
 - **Easy integration:** Custom Node-RED nodes for quicker set up.
-- **Dashboard examples:** Example flows for node-red are supplied for IoTextra Relay2, Input and Octal modules.
+- **Dashboard examples:** Example flows for node-red are supplied for IoTextra Relay2, Input, Analog, Combo and Octal modules.
 - **Standardised firmware:** Universal firmware driver can be used with any IoTextra module out of the box.
 - **Simple configuration:** All 8 channels can be configured to be either input or output, as well as selecting interface type - iether I2C or GPIO (HOST connector) using a config file
 
@@ -34,12 +34,12 @@ A universal framework for integrating IoTextra module series with Node-RED or si
 - 1 x IoTbase Module
 - 1 x IoTextra Module
 - 1 x Microcontroller (ESP32-S3, PICO, PICO W, PICO 2W and etc)
-- *(Optional)* Computer to run Node-RED or a dedicated device, e.g. Raspberry Pi 5
+- *(Optional)* Computer to run Node-RED or a dedicated Edge device, e.g. Raspberry Pi 5
 
 ---
 
 ## Software Requirements
-- **Thonny IDE** – for flashing firmware to Pico
+- **Thonny IDE** – for flashing firmware to your microcontroller
 - **Node-RED** – installed locally or on a Single Board Computer like Raspberry Pi
 ---
 
