@@ -14,7 +14,7 @@ IoTflow is not firmware and does not include device drivers — it is a **workfl
 IoTflow is optimized for:
 
 - MQTT-based event automation  
-- Digital I/O routing across IoTextra and IoTsmart devices  
+- Digital and Analog I/O routing across IoTextra and IoTsmart devices  
 - Input-to-event mappings for Node-RED  
 - Multi-device orchestration workflows  
 - Edge automation using Raspberry Pi, Linux gateways, and ESP32-S3 boards  
