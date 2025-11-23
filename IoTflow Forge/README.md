@@ -26,7 +26,12 @@ The tool creates configurations that can be stored in EEPROM on the device. The 
 - **IoTsmart ESP32-S3** - Tiny Adaptor Board with Cable is required for flashing
 - **IoTsmart PICO** - Tiny Adaptor Board with Cable is required for flashing
 
-*Note: Only MQTT over Wi-Fi is currently supported, so modules without Wi-Fi capabilities are not fully functional.*
+*Note:*
+
+*Only MQTT over Wi-Fi is currently supported, so modules without Wi-Fi capabilities are not fully functional.*
+
+*IoTsmart modules are System-on-Module (SOM) microcontroller boards that provide the primary compute and control functionality for the system.
+Each module integrates a complete MCU environment, and different form factors (soldered SoM, slot-based modules such as the IoTsmart XIAO, etc.) are treated as implementation variations rather than separate device classes.*
 
 ### Supported Mezzanine Categories
 
