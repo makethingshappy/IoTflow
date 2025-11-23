@@ -1,4 +1,4 @@
-# The MIT License (MIT)
+# MIT License
 #
 # Copyright (c) 2025 makethingshappy,
 #               2025 Arshia Keshvari (@TeslaNeuro)
