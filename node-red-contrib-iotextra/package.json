@@ -3,7 +3,7 @@
     "version": "1.2.0",
     "description": "A set of Node-RED nodes to control and monitor IoTextra hardware modules.",
     "author": "Arshia Keshvari",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "keywords": [ "node-red", "iot", "iotextra", "mqtt", "relay", "gpio", "adc", "analog" ],
     "node-red": {
         "nodes": {
@@ -12,4 +12,5 @@
             "iotextra-analog": "iotextra-analog.js"
         }
     }
+
 }
