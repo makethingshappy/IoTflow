@@ -376,14 +376,14 @@ Available sampling rates (maps to ADS1115/ADS1015 configuration):
 
 | SPS | Config Code | Notes |
 |-----|-------------|-------|
-| 8 | 0 | Lowest noise, slowest |
-| 16 | 1 | |
-| 32 | 2 | |
-| 64 | 3 | |
-| 128 | 4 | **Default** - balanced |
-| 250 | 5 | |
-| 475 | 6 | |
-| 860 | 7 | Fastest, higher noise |
+| 8 | 0 | 128 /8 samples per second - Lowest noise, slowest |
+| 16 | 1 | 250 /16 samples per second |
+| 32 | 2 | 490 /32 samples per second |
+| 64 | 3 | 920 /64 samples per second |
+| 128 | 4 | 1600/128 samples per second **Default** - balanced |
+| 250 | 5 | 2400/250 samples per second |
+| 475 | 6 | 3300/475 samples per second |
+| 860 | 7 | 860 samples per Second - Fastest, higher noise |
 
 ## Calibration Guide
 
