@@ -78,7 +78,7 @@ Above applies for RPI PICO W board but you can find detailed guides for other mi
    - Save the file (**Ctrl+S**).  
 7. **Restart your device**:  
    - Reboot the microcontroller.  
-   - It will automatically attempt to connect to the network using your configuration.
+   - It will automatically attempt to connect to the network using your configuration (Subject to providing correct credentials or details).
 
 ---
 
