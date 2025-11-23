@@ -124,8 +124,10 @@ from your computer and close the `IoTflow Forge.py` program.
 - **IoTextra Input for a selected channel:**
   - If a change in the state of the input channel (pin AP0-AP7) is detected on the physical mezzanine device by the firmware - it publishes the observed state of the input channel (1 or 0)
   - IoTextra Input Node-RED node listens for changes on the channel and provides an outgoing msg.payload ('1' or '0') corresponding to the state of the input channel
+  
+---
 
-## How MQTT Protocol is used to send/receive data form the mezzanine 
+## How MQTT Protocol is used to send/receive data from the IoTextra Modules 
 - **Device status:**
   - `<MQTT_BASE_TOPIC>/status` – online/offline
 - **Digital inputs:**
