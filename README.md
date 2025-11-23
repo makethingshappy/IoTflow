@@ -129,11 +129,7 @@ All updates will maintain the structure required by the unified documentation an
 
 ## Licensing
 
-This repository uses separate licenses for code, documentation, and media.
-
-- **Code:** [`LICENSE_CODE.md`](./LICENSE_CODE.md)  
-- **Documentation:** [`LICENSE_DOCS.md`](./LICENSE_DOCS.md)  
-- **Media:** [`LICENSE_MEDIA.md`](./LICENSE_MEDIA.md)  
+This repository's code, documentation, media and all other content is licensed under [`LICENSE.md`](./LICENSE.md).
 
 IoTflow is a software-only repository; hardware licenses do not apply here.
 
