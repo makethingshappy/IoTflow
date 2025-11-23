@@ -79,7 +79,7 @@ These examples are **reference workflows**, not production applications.
 
 ## Installation & Quick Start
 
-For detailed installation & setup guides please review [`SETUP.md`](.Documentation/SETUP.md)
+For detailed installation & setup guides please review [`SETUP.md`](./Documentation/SETUP.md)
 
 1. Clone or download this repository.
 2. Upload IoTflow Kernel MicroPython files to your MCU using Thonny IDE or other IDE's.
