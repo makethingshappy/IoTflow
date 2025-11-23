@@ -74,8 +74,6 @@ Example: For PICO W - `https://micropython.org/download/RPI_PICO_W/`
 
 ---
 
----
-
 ## Step 4: Utility Configuration I/O Tool (IoTflow Forge)
 1. Connect your microcontroller to your computer.
 2. Open 'IoTflow Forge.py' and run the python program.
