@@ -172,6 +172,14 @@ from your computer and close the `IoTflow Forge.py` program.
 - **Digital outputs:**
   - `<MQTT_BASE_TOPIC>/output/<channel>/set` – used to toggle the state of the output channel on the device -> 1 (ON) or 0 (OFF)
   - `<MQTT_BASE_TOPIC>/output/<channel>/state` – used for confirming that the command has been received by the device and state has indeed changeed -> 1 (ON) or 0 (OFF)
+- **Analog channels:**
+  - `<MQTT_BASE_TOPIC>/analog/<channel>` – current reading of the analog channel, published as a string (e.g., "3.142")
+  - Units are V (voltage) or mA (current), depending on channel configuration
+  - Values are updated periodically or change if deadband filtering is enabled within the software (Commented by DEFAULT)
+
+**Notes:**
+- Digital input/output channels provide instantaneous state updates.  
+- Ensure that `<MQTT_BASE_TOPIC>` matches your device configuration for correct topic mapping.
 
 ---
 
