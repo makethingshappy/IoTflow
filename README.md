@@ -79,11 +79,16 @@ These examples are **reference workflows**, not production applications.
 
 ## Installation & Quick Start
 
-1. Install Node-RED on your Raspberry Pi, Linux host, or IoT gateway.  
-2. Clone or download this repository.  
-3. Open Node-RED → **Import** → Select a file from `/Node-RED Examples/`.  
-4. Configure your MQTT broker details inside Node-RED.  
-5. Deploy the flow to begin automation.
+For detailed installation & setup guides please review [`SETUP.md`](./SETUP.md)
+
+1. Clone or download this repository.
+2. Upload IoTflow Kernel MicroPython files to your MCU using Thonny IDE or other IDE's.
+3. Use IoTflow Forge to configure your desired configuration for your setup.
+4. Ensure your MQTT Broker is active and running within the same network.
+5. Install Node-RED on your Raspberry Pi, Linux host, or IoT gateway.  
+6. Open Node-RED → **Import** → Select a file from `/Node-RED Examples/`.  
+7. Configure your MQTT broker details inside Node-RED.  
+8. Deploy the flow to begin automation.
 
 IoTflow is intentionally lightweight and adapts to any existing MQTT + Node-RED stack.
 
