@@ -64,14 +64,21 @@ Above applies for RPI PICO W board but you can find detailed guides for other mi
 ---
 
 ## Step 3: Firmware Configuration (IoTflow Kernel)
-1. Connect microcontroller to your computer.
-2. Open Thonny IDE.
-3. Select interpreter: MicroPython (Your microcontroller).
-4. Upload main.py file to the microcontroller.
-5. Upload every other .py file under a lib folder path.
-6. Open the `config.py` file and fill in your desired configuration.
-7. Save the file (Ctrl+S).
-8. Reboot or restart your device and it will attempt to connect to the network.
+1. **Connect your microcontroller** to your computer via USB.  
+2. **Open an IDE of your choice** (e.g., Thonny, VS Code, or any IDE that supports MicroPython).  
+3. **Select the interpreter** for your device:  
+   - In your IDE, choose **MicroPython** and select your microcontroller.  
+4. **Upload the main script**:  
+   - Transfer `main.py` to the root directory of your microcontroller.  
+5. **Upload supporting libraries**:  
+   - Transfer all other `.py` files into a `lib` folder on the microcontroller.  
+6. **Configure settings**:  
+   - Open `config.py` on the microcontroller.  
+   - Update it with your desired configuration (Wi-Fi credentials, device settings, etc.).  
+   - Save the file (**Ctrl+S**).  
+7. **Restart your device**:  
+   - Reboot the microcontroller.  
+   - It will automatically attempt to connect to the network using your configuration.
 
 ---
 
