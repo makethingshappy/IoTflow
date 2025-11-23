@@ -47,7 +47,7 @@ A universal framework for integrating IoTextra module series with Node-RED or si
 ---
 
 ## Step 1: Hardware Setup
-- Attach MCU to the IoTbase via the HOST connector / Header
+- Attach MCU to the IoTbase via header connectors
 - Provide power to IoTbase via either connecting to USB slot of MCU or external supply
 - Connect USB to the MCU (for flashing the firmware or using the IoTflow Forge Configuration Tool)
 - Connect IoTbase and IoTextra module via HOST connector
