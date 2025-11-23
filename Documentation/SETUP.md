@@ -188,6 +188,12 @@ The IoTextra modules communicate status, digital I/O, and analog readings via MQ
   - `<MQTT_BASE_TOPIC>/analog/<channel>` – current reading of the analog channel, published as a string (e.g., "3.142")
   - Units are V (voltage) or mA (current), depending on channel configuration
   - Values are updated periodically or change if deadband filtering is enabled within the software (Commented by DEFAULT)
+  
+  Example: 
+  `
+  Topic: home/iotextra/analog/1
+  Payload: "3.142"    # Analog channel 1 reading in volts or mA
+  `
 
 **Notes:**
 - Analog and Digital input/output channels provide instantaneous state updates.  
