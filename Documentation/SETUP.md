@@ -76,12 +76,12 @@ Example: For PICO W - `https://micropython.org/download/RPI_PICO_W/`
 
 ## Step 4: Utility Configuration I/O Tool (IoTflow Forge)
 1. Connect your microcontroller to your computer.
-2. Open "IoTflow Forge.py" and run the python program.
+2. Open `IoTflow Forge.py` and run the python program.
 3. Make a new configuration or load a configuration.
 4. Send your configuration to your microcontroller (via USB).
 5. Await a few seconds for system response.
 6. If configuration matches your desired setup you may disconnect 
-from your computer and close the "IoTflow Forge.py" program.
+from your computer and close the `IoTflow Forge.py` program.
 
 ---
 
