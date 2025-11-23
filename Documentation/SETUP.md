@@ -1,6 +1,6 @@
 # IoTextra module series & Node-RED Integration
 
-A universal firmware for integrating IoTextra module series with Node-RED or similar software using embedded microcontroller.
+A universal framework for integrating IoTextra module series with Node-RED or similar software via IoTsmart series devices.
 
 ---
 
