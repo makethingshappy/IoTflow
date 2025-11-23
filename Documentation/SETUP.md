@@ -189,29 +189,6 @@ The IoTextra modules communicate status, digital I/O, and analog readings via MQ
   - Units are V (voltage) or mA (current), depending on channel configuration
   - Values are updated periodically or change if deadband filtering is enabled within the software (Commented by DEFAULT)
 
-<MQTT_BASE_TOPIC>/
-│
-├─ status # Device status
-│
-├─ input/
-│ ├─ 1 # Input channel 1
-│ ├─ 2 # Input channel 2
-│ └─ ... # Additional input channels
-│
-├─ output/
-│ ├─ 1/
-│ │ ├─ set # Command to set output
-│ │ └─ state # Confirmed output state
-│ ├─ 2/
-│ │ ├─ set
-│ │ └─ state
-│ └─ ...
-│
-└─ analog/
-├─ 1 # Analog channel 1 value (V or mA)
-├─ 2 # Analog channel 2 value
-└─ ...
-
 **Notes:**
 - Analog and Digital input/output channels provide instantaneous state updates.  
 - Ensure that `<MQTT_BASE_TOPIC>` matches your device configuration for correct topic mapping.
