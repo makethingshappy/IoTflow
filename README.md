@@ -94,7 +94,7 @@ IoTflow is intentionally lightweight and adapts to any existing MQTT + Node-RED 
 
 ---
 
-## Folder Structure & Versioning
+## Folder Structure
 
 ```
 IoTflow/
