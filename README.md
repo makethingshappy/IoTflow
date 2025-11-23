@@ -99,11 +99,11 @@ IoTflow/
  └─ node-red-contrib-iotextra/
 ```
 
-- **Documentation/** — Workflow descriptions and system architecture  
-- **IoTflow Kernel/** — Core orchestration structure  
-- **Node-RED Examples/** — Importable flow files  
-- **node-red-contrib-iotextra/** — Node-RED extension for IoTextra modules  
-- **IoTflow Forge/** — Experimental and upcoming assets  
+- **Documentation/** — Workflow descriptions, system architecture and setup guides
+- **IoTflow Kernel/** — Core orchestration structure (Main firmware)
+- **Node-RED Examples/** — Importable flow files for demonstration purposes
+- **node-red-contrib-iotextra/** — Node-RED extension for IoTextra modules 
+- **IoTflow Forge/** — Configuration Utility Tool for I/O Modules (Experimental with upcoming assets)
 
 Versioning follows the unified structure defined in the Technical Specification (M1).
 
