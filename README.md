@@ -106,7 +106,7 @@ IoTflow/
  └─ node-red-contrib-iotextra/
 ```
 
-- **Documentation/** — Workflow descriptions, system architecture and setup guides
+- **[`Documentation`](./Documentation)** — Workflow descriptions, system architecture and setup guides
 - **IoTflow Forge/** — Configuration Utility Tool for I/O Modules (Experimental with upcoming assets)
 - **IoTflow Kernel/** — Core orchestration structure (Main firmware)
 - **Media/** — Video Demonstrations and Images
