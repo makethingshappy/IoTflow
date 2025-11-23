@@ -18,7 +18,7 @@ IoTflow is optimized for:
 - Digital and Analog I/O routing across IoTextra and IoTsmart devices  
 - Input-to-event mappings for Node-RED  
 - Multi-device orchestration workflows  
-- Edge automation using Raspberry Pi, Linux gateways, and ESP32-S3 boards  
+- Edge automation using Raspberry Pi, Linux gateways, and etc.
 - Clean, scalable, repeatable automation patterns  
 
 These workflows enable developers to assemble industrial or home-automation logic without complex manual configuration.
