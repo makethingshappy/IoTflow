@@ -2,7 +2,7 @@
 
 ## Overview
 
-**IoTflow** is a lightweight workflow orchestration engine designed to unify automation across IoTextra-Digital modules and IoTsmart MCU nodes.  
+**IoTflow** is a lightweight workflow orchestration engine designed to unify automation across IoTextra modules and IoTsmart MCU nodes.  
 
 It enables **no-code programming for distributed MCU nodes**, providing a consistent structure for MQTT-driven messaging and Node-RED workflow automation.
 
