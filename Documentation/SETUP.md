@@ -59,7 +59,7 @@ Supported SOMs:
 - IoTsmart ESP32-S3
 - IoTsmart XIAO
 - IoTsmart SAMD21
-- IoTsmart RP2040
+- IoTsmart RP2040 or RP2350A
 
 **Steps:**
 
