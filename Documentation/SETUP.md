@@ -57,13 +57,12 @@ A universal framework for integrating IoTextra module series with Node-RED or si
 Supported SOMs:
 
 - IoTsmart ESP32-S3
-- IoTsmart XIAO
-- IoTsmart SAMD21
 - IoTsmart RP2040 or RP2350A
+- IoTsmart XIAO (Future)
 
 **Steps:**
 
-1. **Normal Operation:** Insert the SOM into the **HOST connector slot** on the IoTbase.
+1. **Normal Operation:** Insert the SOM into the **HOST connector slot** on the IoTbase or just connect it directly to a IoTextra module via a HOST connector.
 2. **Firmware Flashing / Configuration:** Use the **IoTsmart adapter cable**.
 3. **Power:** Connect USB to the IoTbase to supply power to the SOM and any attached modules.
 4. **USB Connection (via adapter cable):** Required for flashing firmware, using the **IoTflow Forge Configuration Tool**, or serial debugging.
