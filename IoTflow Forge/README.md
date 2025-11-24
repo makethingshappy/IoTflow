@@ -100,6 +100,7 @@ Each analog channel can have individual calibration parameters:
   - Can be positive or negative to compensate for systematic errors
 
 *Maximum 8 channels per node (digital, analog, or mixed for combo boards).*
+*In a typical configuration for analog or combo boards the firmware expects maximum of 4 channels per node.*
 
 ### Network Configuration
 - **Wi-Fi SSID and Password**: Device network connectivity settings
