@@ -161,7 +161,15 @@ from your computer and close the `IoTflow Forge.py` program.
 - **IoTextra Input for a selected channel:**
   - If a change in the state of the input channel (pin AP0-AP7) is detected on the physical mezzanine device by the firmware - it publishes the observed state of the input channel (1 or 0)
   - IoTextra Input Node-RED node listens for changes on the channel and provides an outgoing msg.payload ('1' or '0') corresponding to the state of the input channel
-  
+- **IoTextra Analog for a selected channel:**
+- The IoTextra Analog modules (Combo Included) continously detect differential ADC input channels (A0-A1, A2-A3) data on the physical mezzanine device by the firmware - it publishes the converted voltage or current from raw ADC data of the differential input channels sequentially
+- User can change the firmware so that it only publishes data when the previous value has changed. (This includes some deadband filtering)
+- IoTextra Analog Node-RED node listens for data on each channel and provides an outgoing string msg.payload ("3.124") corresponding to the differential input channel of an ADC
+- If you are using multiple ADCs (for example, the IoT Extra Analog modules), the firmware processes them in the order of their I²C addresses. The array of I²C addresses determines the sequence: the first address in the list is treated as ADC 1, the second as ADC 2, and so on. Each ADC provides two differential input channels (A0–A1 and A2–A3). So with two ADCs, you effectively have:
+  - ADC 1: Differential channels A0–A1 and A2–A3
+  - ADC 2: Differential channels A0–A1 and A2–A3
+The firmware always reads from the lowest-indexed (first) I²C address first, then proceeds through the rest of the list.
+
 ---
 
 ## How MQTT Protocol is used to send/receive data from the IoTextra Modules 
