@@ -36,7 +36,7 @@ It handles:
 
 Author: Arshia Keshvari
 Role: Independent Developer, Engineer, and Project Author
-Last Updated: 2025-11-23
+Last Updated: 2025-11-24
 """
 
 import time
@@ -397,7 +397,7 @@ def main():
 
         while True:
             # Check for serial input
-            events = poller.poll(0)  # 5ms timeout for responsiveness
+            events = poller.poll(0)  # You can place a timeout for responsiveness
             
             if events:  # Serial data is available
                 # Keep processing serial input until buffer is empty
@@ -480,13 +480,6 @@ def main():
                     if mqtt:
                         mqtt.publish(f"{config_dict['MQTT_BASE_TOPIC']}/status", "online")
                     last_status_update = time.time()
-#             else:
-#                 if DEBUG:
-#                     print("Wi-Fi connection lost. Attempting to reconnect...")
-#                 MqttManager.connect_wifi(config_dict['WIFI_SSID'], config_dict['WIFI_PASSWORD'])
-#                 if mqtt and mqtt.connect():
-#                     command_topic = f"{config_dict['MQTT_BASE_TOPIC']}/output/+/set"
-#                     mqtt.subscribe(command_topic)
             else:
                 # --- Wi-Fi reconnect watchdog ---
                 if not wifi_retry_stop:
@@ -495,7 +488,7 @@ def main():
                         if DEBUG:
                             print("Wi-Fi lost, starting retry timer")
 
-                    # Attempt reconnect only while <30 s from first retry
+                    # Attempt reconnect only while <20 s from first retry
                     if time.time() - wifi_retry_start < 20:
                         if DEBUG:
                             print("Attempting Wi-Fi reconnect...")
