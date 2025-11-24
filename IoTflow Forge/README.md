@@ -22,7 +22,7 @@ The tool creates configurations that can be stored in EEPROM on the device. The 
 
 ### Supported Microcontrollers and System On Module (SOM) Microcontrollers
 - **IoTbase PICO** - Compatible with Raspberry Pi Pico, Pico 2, Pico W, Pico 2W, Waveshare ESP32-S3 PICO
-- **IoTbase NANO** - Arduino Nano ESP32 or ESP32-S3
+- **IoTbase NANO** - Arduino Nano ESP32 or ESP32-S3 or Waveshare ESP32-S3 Nano
 - **IoTsmart ESP32-S3** - Tiny Adaptor Board with Cable is required for flashing
 - **IoTsmart RP2040 or RP2350** - Tiny Adaptor Board with Cable is required for flashing
 - **IoTsmart XIAO** - Tiny Adaptor Board with Cable is required for flashing
