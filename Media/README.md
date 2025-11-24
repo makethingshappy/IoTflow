@@ -1,6 +1,6 @@
 # Media Assets
 
-This directory contains media assets used throughout the project, such as demonstration videos, and supporting images.
+This directory contains media assets used throughout the IoTflow project, such as demonstration videos, and supporting images.
 
 ## 📦 Purpose
 
