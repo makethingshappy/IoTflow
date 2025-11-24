@@ -1,6 +1,6 @@
 # IoTflow Forge Configuration Tool
 
-A comprehensive command-line interface tool for configuring digital and analog I/O nodes for IoTextra mezzanines, managing configurations as JSON files, and communicating with devices via serial.
+A comprehensive command-line interface tool for configuring digital and analog I/O nodes for IoTextra modules, managing configurations as JSON files, and communicating with devices via serial.
 
 ## Overview
 
