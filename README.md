@@ -3,6 +3,7 @@
 ## Overview
 
 **IoTflow** is a lightweight workflow orchestration engine designed to unify automation across IoTextra-Digital modules and IoTsmart MCU nodes.  
+
 It enables **no-code programming for distributed MCU nodes**, providing a consistent structure for MQTT-driven messaging and Node-RED workflow automation.
 
 IoTflow is not firmware in itself; rather, it acts as a **workflow layer** that coordinates communication, event routing, and automation logic across supported devices.
@@ -57,7 +58,7 @@ Core features include:
 - Scalable multi-module messaging patterns  
 - Compatibility with Mosquitto, EMQX, Aedes, and similar brokers  
 
-This repository does **not** include standalone MQTT client code — only the orchestration structure used to implement automation logic.
+This repository does **not** include standalone MQTT client code, only the orchestration structure used to implement automation logic.
 
 ---
 
@@ -175,5 +176,5 @@ All code, documentation, images, and media in this repository are licensed under
 
 📄 **[`LICENSE`](./LICENSE)**
 
-IoTflow is a software-only repository — hardware licenses do not apply here.
+IoTflow is a software-only repository, hardware licenses do not apply here.
 
