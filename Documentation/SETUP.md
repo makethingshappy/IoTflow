@@ -168,7 +168,7 @@ from your computer and close the `IoTflow Forge.py` program.
 - If you are using multiple ADCs (for example, the IoT Extra Analog modules), the firmware processes them in the order of their I²C addresses. The array of I²C addresses determines the sequence: the first address in the list is treated as ADC 1, the second as ADC 2, and so on. Each ADC provides two differential input channels (A0–A1 and A2–A3). So with two ADCs, you effectively have:
   - ADC 1: Differential channels A0–A1 and A2–A3
   - ADC 2: Differential channels A0–A1 and A2–A3
-The firmware always reads from the lowest-indexed (first) I²C address first, then proceeds through the rest of the list.
+- The firmware always reads from the lowest-indexed (first) I²C address first, then proceeds through the rest of the list.
 
 ---
 
