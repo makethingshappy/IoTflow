@@ -70,7 +70,7 @@ This repository does **not** provide standalone MQTT client code — only the **
 
 ## ⚡ Event-Driven Automation Examples
 
-Examples are stored inside:
+Examples are stored inside the repository:
 
 ```
 /Node-RED Examples/
@@ -114,24 +114,11 @@ IoTflow is intentionally lightweight and compatible with any MQTT + Node-RED sta
 ```
 IoTflow/
  ├─ Documentation/
- │   ├─ MQTT Guide.pdf
- │   ├─ Blynk Integration.pdf
- │   ├─ SETUP.md
- │
  ├─ IoTflow Forge/
- │   ├─ (configuration tools, JSON generator)
- │
  ├─ IoTflow Kernel/
- │   ├─ (MicroPython orchestration engine)
- │
  ├─ Node-RED Examples/
- │   ├─ (import-ready Node-RED flows)
- │
  ├─ node-red-contrib-iotextra/
- │   ├─ (Node-RED extension for IoTextra modules)
- │
  └─ Media/
-     ├─ (images, diagrams, demos)
 ```
 
 ### Directory Overview
@@ -149,21 +136,16 @@ IoTflow/
 
 ### GPIO Examples for Device Integration
 
-GPIO examples are located in the hardware repositories:
-
-- **IoTextra-Digital Examples**  
-  https://github.com/makethingshappy/IoTextra-Digital/tree/main/examples
-
-- **IoTsmart Examples**  
-  https://github.com/makethingshappy/IoTsmart/tree/main/examples
+GPIO reference examples for IoTextra and IoTsmart will be added in future updates by the development team.  
+These examples are not yet part of the hardware repositories.
 
 ### Pinout Diagrams (MCU Hosts)
 
 Available inside each IoTsmart module folder:
 
-- `RP2040/v1.02/docs/`  
-- `RP2350A/v1.02/docs/`  
-- `ESP32-S3/v1.02/docs/`  
+- `RP2040/docs/`  
+- `RP2350A/docs/`  
+- `ESP32-S3/docs/`  
 
 ### SKU & Ordering Files
 
