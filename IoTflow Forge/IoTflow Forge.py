@@ -276,6 +276,14 @@ class Configuration:
     # Pin configuration (input/output channels)
     pin_config: str = "0b00001111"  # Default: channels 0-3 are outputs, 4-7 are inputs
     status_update_interval_s: int = 30
+
+    def get_max_channels(self):
+        """Get maximum allowed channels based on mezzanine type"""
+        # Combo and analog mezzanines limited to 4 channels
+        if self.mezzanine_type in ["IoTextra Combo", "IoTextra Analog", "IoTextra Analog V2", "IoTextra Analog V3"]:
+            return 4
+        # Digital mezzanines allow 8 channels
+        return 8
     
     def __post_init__(self):
         if self.channels is None:
@@ -290,9 +298,10 @@ class Configuration:
         if self.hardware is None:
             self.hardware = HardwareConfig()
         
-        # Validate number of channels
-        if len(self.channels) > 8:
-            raise ValueError("Maximum 8 channels allowed")
+        # Validate number of channels based on mezzanine type
+        max_channels = self.get_max_channels()
+        if len(self.channels) > max_channels:
+            raise ValueError(f"Maximum {max_channels} channels allowed for {self.mezzanine_type}")
         
         # Note: interface codes are specified per-channel. Top-level interface
         # is not stored. Validate I2C device address if any channel uses I2C.
@@ -697,9 +706,10 @@ class Configurator:
     
     def configure_channels(self):
         """Configure channels for the node"""
+        max_channels = self.config.get_max_channels()
         print(f"\n=== Configuring Channels ===")
-        print(f"Maximum 8 channels allowed. Current: {len(self.config.channels)}")
-        
+        print(f"Maximum {max_channels} channels allowed for {self.config.mezzanine_type}. Current: {len(self.config.channels)}")
+ 
         while True:
             action = input("\nChannel actions:\n1. Add channel\n2. Edit channel\n3. Remove channel\n4. View channels\n5. Done\nSelect (1-5): ").strip()
             
@@ -740,8 +750,9 @@ class Configurator:
 
     def add_channel(self):
         """Add a new channel"""
-        if len(self.config.channels) >= 8:
-            print("Maximum 8 channels reached. Cannot add more.")
+        max_channels = self.config.get_max_channels()
+        if len(self.config.channels) >= max_channels:
+            print(f"Maximum {max_channels} channels reached for {self.config.mezzanine_type}. Cannot add more.")
             return
         
         print(f"\n--- Adding Channel {len(self.config.channels) + 1} ---")
