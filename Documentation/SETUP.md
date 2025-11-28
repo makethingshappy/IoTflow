@@ -15,7 +15,7 @@ A universal framework for integrating IoTextra module series with Node-RED or si
 - [Step 5: Node-RED Installation](#step-5-node-red-installation)
 - [Step 6: Importing the Example Dashboard](#step-6-importing-the-example-dashboard)
 - [How to use iotextra custom Node-RED nodes](#How-to-use-iotextra-custom-Node-RED-nodes)
-- [How It Works: MQTT Protocol](#how-it-works-mqtt-protocol)
+- [How MQTT Protocol is used to send/receive data from the IoTextra Modules](#how-mqtt-protocol-is-used-to-sendreceive-data-from-the-iotextra-modules)
 - [Troubleshooting](#troubleshooting)
 
 ---
