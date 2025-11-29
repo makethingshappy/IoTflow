@@ -2,9 +2,9 @@
 
 This directory contains media assets used throughout the IoTflow project, such as demonstration videos, and supporting images.
 
-All media for this project is stored under: 
+All media for this project is stored under a dropbox folder linked below: 
 
-[IoTflow Media](https://www.dropbox.com/scl/fo/o67j767gz24ix3gfk6asp/AGPga2MsDv3LMrRHnIcA7s8?rlkey=7o0toagh7purzneq10twsif4w&st=a3971s8b&dl=0)
+[MakeThingsHappy IoTflow Media](https://www.dropbox.com/scl/fo/o67j767gz24ix3gfk6asp/AGPga2MsDv3LMrRHnIcA7s8?rlkey=7o0toagh7purzneq10twsif4w&st=a3971s8b&dl=0)
 
 ## 📦 Purpose
 
