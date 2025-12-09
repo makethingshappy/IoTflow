@@ -44,24 +44,28 @@ These workflows allow developers to build stable systems without custom firmware
 
 ---
 
-## 🧱 Node-RED Flow Structure
+## 🧱 Node-RED Flow & Event-Driven Automation Structure
 
-Import-ready Node-RED flows are provided inside:
+IoTflow provides import-ready Node-RED flows demonstrating how to implement reliable, event-driven automation across IoTextra and IoTsmart modules:
+
+### The flows demonstrate:
+
+- State-change detection and conditional logic
+- Input → event → output control logic and mapping  
+- MQTT communication handling and topic parsing
+- Multi-device orchestration and routing patterns  
+- Timed action automations, triggers, notifications and actuator chains
+- Integration of IoTextra Digital, Analog and Combo modules with IoTsmart and IoTbase MCU nodes
+
+### Event-Driven Automation Examples
+
+Examples are stored inside the repository:
 
 ```
 /Node-RED Examples/
 ```
 
-These example flows demonstrate:
-
-- MQTT topic parsing  
-- Input → event mapping  
-- Output control logic  
-- Multi-device routing patterns  
-- Trigger → action automations  
-- Integration of IoTextra-Digital modules with IoTsmart MCUs  
-
-All flows are compatible with any Node-RED environment.
+These flows are compatible with any Node-RED environment and illustrate how to structure topics, triggers, and actions for predictable, scalable automation. Ideal for learning and rapid prototyping.
 
 ---
 
@@ -76,27 +80,7 @@ MQTT is the core transport layer used by IoTflow.
 - Consistent multi-module routing  
 - Compatibility with Mosquitto, EMQX, Aedes, and similar brokers  
 
-This repository does **not** provide standalone MQTT client code — only the **automation structure** used to implement workflows.
-
----
-
-## ⚡ Event-Driven Automation Examples
-
-Examples are stored inside the repository:
-
-```
-/Node-RED Examples/
-```
-
-They include:
-
-- State-change detection  
-- Conditional logic  
-- Multi-module orchestration  
-- Timed actions and triggers  
-- Notification + actuator chains  
-
-These examples are ideal for learning and rapid prototyping.
+This repository does **not** provide standalone MQTT client code, only the **automation structure** used to implement workflows.
 
 ---
 
