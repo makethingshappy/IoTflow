@@ -12,7 +12,7 @@ To unify these hardware options on the software side, we created **IoTflow**, a 
 
 ## 🧩 What Is IoTflow?
 
-**IoTflow** is a lightweight workflow orchestration system designed to unify automation across **IoTextra-Digital, Analog and Combo I/O modules** and **IoTsmart oe IoTbase MCU nodes**.
+**IoTflow** is a lightweight workflow orchestration system designed to unify automation across **IoTextra Digital, Analog and Combo I/O modules** and **IoTsmart or IoTbase MCU nodes**.
 
 It enables **no-code programming for distributed MCU nodes**, providing a consistent structure for MQTT-based communication and Node-RED automation.
 
@@ -24,7 +24,7 @@ IoTflow is not firmware itself, it is an orchestration layer that defines:
 - Topic conventions  
 - Node-RED flow organization  
 
-This ensures reliable, scalable, and easily maintainable automation across multiple IoTextra and IoTsmart devices.
+This ensures reliable, scalable, and easily maintainable automation across multiple IoTextra, IoTsmart and IoTbase devices.
 
 ---
 
