@@ -41,7 +41,7 @@ This ensures reliable, scalable, and easily maintainable automation across multi
 Each module integrates a complete MCU environment, and different form factors (soldered SoM, slot-based modules such as the IoTsmart XIAO, etc.) are treated as implementation variations rather than separate device classes.*
 
 ### Supported IoTextra Platform Categories
-=======
+==
 
 #### Digital I/O Boards
 - IoTextra Input
