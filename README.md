@@ -28,6 +28,35 @@ This ensures reliable, scalable, and easily maintainable automation across multi
 
 ---
 
+## Supported Hardware
+
+### Microcontrollers and System On Module (SOM) Microcontrollers
+- **IoTbase PICO** - Compatible with Raspberry Pi Pico, Pico 2, Pico W, Pico 2W, Waveshare ESP32-S3 PICO
+- **IoTbase NANO** - Arduino Nano ESP32 or ESP32-S3 or Waveshare ESP32-S3 Nano
+- **IoTsmart ESP32-S3** - Tiny Adaptor Board with Cable is required for flashing
+- **IoTsmart RP2040 or RP2350** - Tiny Adaptor Board with Cable is required for flashing
+- **IoTsmart XIAO** - Tiny Adaptor Board with Cable is required for flashing
+
+*IoTsmart modules are System-on-Module (SOM) microcontroller boards that provide the primary compute and control functionality for the system.
+Each module integrates a complete MCU environment, and different form factors (soldered SoM, slot-based modules such as the IoTsmart XIAO, etc.) are treated as implementation variations rather than separate device classes.*
+
+### Supported Mezzanine Categories
+
+#### Digital I/O Mezzanines
+- IoTextra Input
+- IoTextra Octal
+- IoTextra Relay
+- IoTextra SSR Small
+- Custom digital mezzanines
+
+#### Analog I/O Mezzanines
+- IoTextra Analog
+- IoTextra Analog 2
+- IoTextra Analog 3
+- IoTextra Combo
+
+---
+
 ## 🚀 Supported IIoT Workflows
 
 IoTflow is optimized for:
