@@ -210,4 +210,4 @@ All IoTflow code, documentation, and media are licensed under:
 
 📄 **[`LICENSE`](./LICENSE)**
 
-Hardware licenses do not apply — this is a software-only repository.
+Hardware licenses do not apply, this is a software-only repository.
