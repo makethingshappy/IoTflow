@@ -40,7 +40,7 @@ This ensures reliable, scalable, and easily maintainable automation across multi
 *IoTsmart modules are System-on-Module (SOM) microcontroller boards that provide the primary compute and control functionality for the system.
 Each module integrates a complete MCU environment, and different form factors (soldered SoM, slot-based modules such as the IoTsmart XIAO, etc.) are treated as implementation variations rather than separate device classes.*
 
-### <u> Supported IoTextra Platform Categories </u>
+### Supported IoTextra Platform Categories
 
 #### Digital I/O Boards
 - IoTextra Input
