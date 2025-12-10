@@ -114,6 +114,16 @@ This repository does **not** provide standalone MQTT client code, only the **aut
 
 ---
 
+## Demo Videos
+
+### IoTflow Hardware Demo
+[▶️ IoTflow Hardware Demo](https://www.dropbox.com/scl/fi/gh2ayz765uzzub0qnvc7k/IoTflow-Hardware-Demo.mp4?rlkey=9mnycb9m6u3poh50sm6aa0dpr&st=f5g3q0o4&dl=0)
+
+### IoTflow Workflow Demo
+[▶️ IoTflow Workflow Demo](https://www.dropbox.com/scl/fi/atgzmuy7ajhsmuw4sqc7i/IoTflow-Workflow-Demo.mp4?rlkey=ppsb8ndn80kvq4qvpla13oyqx&st=e5rdytaj&dl=0)
+
+---
+
 ## 📥 Installation & Quick Start
 
 See full setup instructions in:
