@@ -12,7 +12,7 @@ To unify these hardware options on the software side, we created **IoTflow**, a 
 
 ## 🧩 What Is IoTflow?
 
-**IoTflow** is a lightweight workflow orchestration system designed to unify automation across **IoTextra-Digital I/O modules** and **IoTsmart MCU nodes**.
+**IoTflow** is a lightweight workflow orchestration system designed to unify automation across **IoTextra-Digital, Analog and Combo I/O modules** and **IoTsmart oe IoTbase MCU nodes**.
 
 It enables **no-code programming for distributed MCU nodes**, providing a consistent structure for MQTT-based communication and Node-RED automation.
 
@@ -63,7 +63,7 @@ Each module integrates a complete MCU environment, and different form factors (s
 IoTflow is optimized for:
 
 - MQTT-driven event automation  
-- Multi-module digital/analog I/O routing  
+- Multi-module digital, analog and combo I/O routing  
 - Structured topic hierarchies for distributed MCU nodes  
 - Node-RED automation flows (import-ready)  
 - State-change event pipelines  
@@ -105,9 +105,9 @@ MQTT is the core transport layer used by IoTflow.
 
 ### Features include:
 - Well-defined, hierarchical MQTT topics  
-- Event-driven reporting from IoTsmart nodes  
-- Structured commands for digital outputs  
-- Consistent multi-module routing  
+- Event-driven reporting from IoTsmart and IoTbase nodes  
+- Structured commands for digital, analog and combo I/O
+- Consistent multi-module routing
 - Compatibility with Mosquitto, EMQX, Aedes, and similar brokers  
 
 This repository does **not** provide standalone MQTT client code, only the **automation structure** used to implement workflows.
