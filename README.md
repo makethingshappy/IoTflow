@@ -49,7 +49,7 @@ Each module integrates a complete MCU environment, and different form factors (s
 - IoTextra SSR Small
 - Custom digital mezzanines
 
-#### Analog I/O Boards
+#### Analog or Combo I/O Boards
 - IoTextra Analog
 - IoTextra Analog 2
 - IoTextra Analog 3
