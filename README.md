@@ -171,6 +171,7 @@ IoTflow/
 ### GPIO Examples for Device Integration
 
 GPIO reference examples for IoTextra and IoTsmart will be added in future updates by the development team.  
+
 These examples are not yet part of the hardware repositories.
 
 ### Pinout Diagrams (MCU Hosts)
@@ -184,7 +185,7 @@ Available inside each IoTsmart module folder:
 ### SKU & Ordering Files
 
 - **[IoTextra-Digital:](https://github.com/makethingshappy/IoTextra-Digital/tree/main)** `SKU Digital IoTextra.pdf`  
-- **[IoTsmart:](https://github.com/makethingshappy/IoTsmart)** `SKU IoTsmart.pdf`  
+- **[IoTsmart:](https://github.com/makethingshappy/IoTsmart)** `SKU IoTsmart.pdf`
 
 (Located in each repository root.)
 
