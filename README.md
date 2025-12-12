@@ -1,5 +1,5 @@
 # 🌐 IoTflow  
-**A Workflow Engine for MQTT & Node-RED Automation**
+**A no-code workflow automation engine for distributed MCU nodes**
 
 ## 🌱 Make Things Happy Platform Philosophy
 Modern prototyping tools make it easy to build a demo but extremely hard to transition that prototype into a stable, maintainable industrial product. Teams often redesign hardware from the ground up after using Raspberry Pi, Arduino, or similar prototyping boards, a costly and time-consuming process that burdens long-term support.
