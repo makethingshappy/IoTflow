@@ -5,7 +5,7 @@ A comprehensive command-line interface tool for configuring digital and analog I
 ## Overview
 
 IoTflow Forge enables you to:
-- Create configurations for both **digital I/O** and **analog input** nodes interactively
+- Create configurations for **digital I/O**, **analog I/O** and **Combo I/O** nodes interactively
 - Configure up to 8 channels per node with specific interface types and measurement ranges
 - Set network (Wi-Fi) and MQTT communication parameters
 - Configure hardware settings (GPIO/I2C modes, EEPROM, ADC settings, pin mappings)
@@ -24,7 +24,7 @@ The tool creates configurations that can be stored in EEPROM on the device. The 
 - **IoTbase PICO** - Compatible with Raspberry Pi Pico, Pico 2, Pico W, Pico 2W, Waveshare ESP32-S3 PICO
 - **IoTbase NANO** - Arduino Nano ESP32 or ESP32-S3 or Waveshare ESP32-S3 Nano
 - **IoTsmart ESP32-S3** - Tiny Adaptor Board with Cable is required for flashing
-- **IoTsmart RP2040 or RP2350** - Tiny Adaptor Board with Cable is required for flashing
+- **IoTsmart RP2040 or RP2350A** - Tiny Adaptor Board with Cable is required for flashing
 - **IoTsmart XIAO** - Tiny Adaptor Board with Cable is required for flashing
 
 *Note:*
@@ -48,7 +48,7 @@ Each module integrates a complete MCU environment, and different form factors (s
 - **11** - I2C via TCA9534 I/O expander
 - **12** - GPIO and I2C via TCA9534 (future expansion)
 
-#### Analog Input Mezzanines
+#### Analog or Combo I/O Mezzanines
 - IoTextra Analog (2x TI ADC1115 ADCs)
 - IoTextra Combo (1 TI ADC1115 ADC + digital I/O)
 - IoTextra Analog2 (Coming Soon)
