@@ -140,6 +140,8 @@ IoTflow is intentionally lightweight and compatible with any MQTT + Node-RED sta
 - [▶️ IoTflow Hardware Demo](https://www.dropbox.com/scl/fi/gh2ayz765uzzub0qnvc7k/IoTflow-Hardware-Demo.mp4?rlkey=9mnycb9m6u3poh50sm6aa0dpr&st=f5g3q0o4&dl=0)
 
 - [▶️ IoTflow Workflow Demo](https://www.dropbox.com/scl/fi/atgzmuy7ajhsmuw4sqc7i/IoTflow-Workflow-Demo.mp4?rlkey=ppsb8ndn80kvq4qvpla13oyqx&st=e5rdytaj&dl=0)
+- [▶️ IoTflow Workflow Demo - IoTextra Analog](https://www.dropbox.com/scl/fi/hog6ox1hzt8s2kkawctb7/IoTflow-Workflow-Demo-For-IoTextra-Analog.mp4?rlkey=s55yf7espb3sadozpikpseyho&st=9bzq40kh&dl=0)
+- [▶️ IoTflow Workflow Demo - IoTextra Combo](https://www.dropbox.com/scl/fi/28luxncf9qnmf3eb881hh/IoTflow-Workflow-Demo-For-IoTextra-Combo.mp4?rlkey=7sj6cerq4y7huaza27wcb2p41&st=48x82bbj&dl=0)
 
 ---
 
