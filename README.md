@@ -33,6 +33,7 @@ This ensures reliable, scalable, and easily maintainable automation across multi
 ## 🛠️ Supported Hardware
 
 ### Microcontrollers and System On Modules (SoM)
+* [**IoTbase PICO**](https://makethingshappy.io/products/iotbase-pico) - - Compatible with Raspberry Pi Pico, Pico 2, Pico W, Pico 2W, Waveshare ESP32-S3 PICO
 - **IoTbase PICO** - Compatible with Raspberry Pi Pico, Pico 2, Pico W, Pico 2W, Waveshare ESP32-S3 PICO
 - **IoTbase NANO** - Arduino Nano ESP32 or ESP32-S3 or Waveshare ESP32-S3 Nano
 - **IoTsmart ESP32-S3** - Tiny Adaptor Board with Cable is required for flashing
