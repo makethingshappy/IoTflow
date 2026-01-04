@@ -45,7 +45,7 @@ Each module integrates a complete MCU environment, and different form factors (s
 #### Digital I/O Boards
 - IoTextra Input
 - IoTextra Octal
-- IoTextra Relay
+- IoTextra Relay2
 - IoTextra SSR Small
 - Custom digital mezzanines
 
