@@ -45,7 +45,7 @@ Each module integrates a complete MCU environment, and different form factors (s
 ### Supported IoTextra Board Categories
 
 #### Digital I/O Boards
-- IoTextra Input
+* [**IoTextra Input**](https://makethingshappy.io/products/iotextra-input)
 - IoTextra Octal2
 - IoTextra Relay2
 - IoTextra SSR Small
