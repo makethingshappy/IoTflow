@@ -34,7 +34,7 @@ This ensures reliable, scalable, and easily maintainable automation across multi
 - **IoTbase PICO** - Compatible with Raspberry Pi Pico, Pico 2, Pico W, Pico 2W, Waveshare ESP32-S3 PICO
 - **IoTbase NANO** - Arduino Nano ESP32 or ESP32-S3 or Waveshare ESP32-S3 Nano
 - **IoTsmart ESP32-S3** - Tiny Adaptor Board with Cable is required for flashing
-- **IoTsmart RP2040 or RP2350A** - Tiny Adaptor Board with Cable is required for flashing
+- **IoTsmart RP2040 or IoTsmart RP2350A** - Tiny Adaptor Board with Cable is required for flashing
 - **IoTsmart XIAO** - Tiny Adaptor Board with Cable is required for flashing
 
 *IoTsmart modules are System-on-Module (SOM) microcontroller boards that provide the primary compute and control functionality for the system.
@@ -44,7 +44,7 @@ Each module integrates a complete MCU environment, and different form factors (s
 
 #### Digital I/O Boards
 - IoTextra Input
-- IoTextra Octal
+- IoTextra Octal2
 - IoTextra Relay2
 - IoTextra SSR Small
 - Custom digital mezzanines
