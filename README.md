@@ -1,7 +1,7 @@
 # 🌐 IoTflow  
 **A Simple, Scalable Automation Engine**
 
-[Official Website & Docs](https://makethingshappy.io/pages/iotflow)
+[Official Website ](https://makethingshappy.io/pages/iotflow)
 
 ## 🌱 Make Things Happy Platform Philosophy
 Modern prototyping tools make it easy to build a demo but extremely hard to transition that prototype into a stable, maintainable industrial product. Teams often redesign hardware from the ground up after using Raspberry Pi, Arduino, or similar prototyping boards, a costly and time-consuming process that burdens long-term support.
