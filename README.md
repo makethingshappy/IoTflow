@@ -53,8 +53,8 @@ Each module integrates a complete MCU environment, and different form factors (s
 
 #### Analog or Combo I/O Boards
 * [**IoTextra Analog**](https://makethingshappy.io/products/iotextra-analog)
-* **IoTextra Analog 2**
-* **IoTextra Analog 3**
+* [**IoTextra Analog 2**](https://makethingshappy.io/products/iotextra-analog)
+* [**IoTextra Analog 3**](https://makethingshappy.io/products/iotextra-analog3)
 * [**IoTextra Combo**](https://makethingshappy.io/products/iotextra-combo)
 * Custom analog mezzanines
 
