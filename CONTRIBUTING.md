@@ -1,6 +1,6 @@
 # Contributing
 
-This repository is maintained by @makethingshappy and @TeslaNeuro, and direct write access to branches is restricted.
+This repository is maintained by **@makethingshappy** & **@TeslaNeuro**, direct write access to branches is restricted.
 We still welcome contributions from the community.
 
 ## Reporting issues
