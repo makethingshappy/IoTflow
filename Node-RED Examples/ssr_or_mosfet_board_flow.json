@@ -1,0 +1,795 @@
+[
+    {
+        "id": "be0c1f0cb2cdee5e",
+        "type": "tab",
+        "label": "Flow 7",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "dff24517909a908e",
+        "type": "iotextra-output",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "1",
+        "x": 560,
+        "y": 200,
+        "wires": [
+            [
+                "1b5137a60f8a6c4e"
+            ]
+        ]
+    },
+    {
+        "id": "0d4673a5a130a9b8",
+        "type": "iotextra-output",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "2",
+        "x": 560,
+        "y": 260,
+        "wires": [
+            [
+                "e33a286cf222c7c9"
+            ]
+        ]
+    },
+    {
+        "id": "567ea42677b7a80f",
+        "type": "iotextra-output",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "3",
+        "x": 560,
+        "y": 320,
+        "wires": [
+            [
+                "083e0e78148d1fcf"
+            ]
+        ]
+    },
+    {
+        "id": "9db1ed4d099ea33d",
+        "type": "iotextra-output",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "4",
+        "x": 560,
+        "y": 380,
+        "wires": [
+            [
+                "fc9150432caacd17"
+            ]
+        ]
+    },
+    {
+        "id": "1b5137a60f8a6c4e",
+        "type": "ui_led",
+        "z": "be0c1f0cb2cdee5e",
+        "order": 0,
+        "group": "c11f51a2c8c604c3",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 750,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "9dbf9f494c9d3f96",
+        "type": "ui_switch",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "c11f51a2c8c604c3",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 370,
+        "y": 200,
+        "wires": [
+            [
+                "dff24517909a908e"
+            ]
+        ]
+    },
+    {
+        "id": "e33a286cf222c7c9",
+        "type": "ui_led",
+        "z": "be0c1f0cb2cdee5e",
+        "order": 0,
+        "group": "caeecfe2eeae3e2e",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 750,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "487cee9fb5d05ac3",
+        "type": "ui_switch",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "caeecfe2eeae3e2e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 370,
+        "y": 260,
+        "wires": [
+            [
+                "0d4673a5a130a9b8"
+            ]
+        ]
+    },
+    {
+        "id": "4096bb60b268c789",
+        "type": "ui_switch",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "c4d7282568f9c4a7",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "567ea42677b7a80f"
+            ]
+        ]
+    },
+    {
+        "id": "083e0e78148d1fcf",
+        "type": "ui_led",
+        "z": "be0c1f0cb2cdee5e",
+        "order": 0,
+        "group": "c4d7282568f9c4a7",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 750,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "fc9150432caacd17",
+        "type": "ui_led",
+        "z": "be0c1f0cb2cdee5e",
+        "order": 0,
+        "group": "2d5bf652910a6287",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 750,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ebe2e339130461eb",
+        "type": "ui_switch",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "2d5bf652910a6287",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 370,
+        "y": 380,
+        "wires": [
+            [
+                "9db1ed4d099ea33d"
+            ]
+        ]
+    },
+    {
+        "id": "68d8f65e9126d949",
+        "type": "iotextra-output",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "5",
+        "x": 560,
+        "y": 460,
+        "wires": [
+            [
+                "5aa3aa95b5b4f2f5"
+            ]
+        ]
+    },
+    {
+        "id": "fa2caaed7b7b2bac",
+        "type": "iotextra-output",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "6",
+        "x": 560,
+        "y": 520,
+        "wires": [
+            [
+                "ca666b9e6f4d5eb2"
+            ]
+        ]
+    },
+    {
+        "id": "b129c42ab42183ca",
+        "type": "iotextra-output",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "7",
+        "x": 560,
+        "y": 580,
+        "wires": [
+            [
+                "ed0d9c74188a83ac"
+            ]
+        ]
+    },
+    {
+        "id": "d91db987ec2965e2",
+        "type": "iotextra-output",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "8",
+        "x": 560,
+        "y": 640,
+        "wires": [
+            [
+                "3e6917a46c7f53e0"
+            ]
+        ]
+    },
+    {
+        "id": "5aa3aa95b5b4f2f5",
+        "type": "ui_led",
+        "z": "be0c1f0cb2cdee5e",
+        "order": 0,
+        "group": "06956921301a33cc",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 750,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "35c8602eeb3dab3a",
+        "type": "ui_switch",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "06956921301a33cc",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 370,
+        "y": 460,
+        "wires": [
+            [
+                "68d8f65e9126d949"
+            ]
+        ]
+    },
+    {
+        "id": "ca666b9e6f4d5eb2",
+        "type": "ui_led",
+        "z": "be0c1f0cb2cdee5e",
+        "order": 0,
+        "group": "10be5ed0b8b8b6df",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 750,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "b40dd4a7df7bca64",
+        "type": "ui_switch",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "10be5ed0b8b8b6df",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 370,
+        "y": 520,
+        "wires": [
+            [
+                "fa2caaed7b7b2bac"
+            ]
+        ]
+    },
+    {
+        "id": "787d812fa517162f",
+        "type": "ui_switch",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "248fdbf6749f8070",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 370,
+        "y": 580,
+        "wires": [
+            [
+                "b129c42ab42183ca"
+            ]
+        ]
+    },
+    {
+        "id": "ed0d9c74188a83ac",
+        "type": "ui_led",
+        "z": "be0c1f0cb2cdee5e",
+        "order": 0,
+        "group": "248fdbf6749f8070",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 750,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "3e6917a46c7f53e0",
+        "type": "ui_led",
+        "z": "be0c1f0cb2cdee5e",
+        "order": 0,
+        "group": "bcc9c691d40b422d",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 750,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "bb455adc052a0cba",
+        "type": "ui_switch",
+        "z": "be0c1f0cb2cdee5e",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "bcc9c691d40b422d",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 370,
+        "y": 640,
+        "wires": [
+            [
+                "d91db987ec2965e2"
+            ]
+        ]
+    },
+    {
+        "id": "690c80c21b3ed82b",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "YOUR_MQTT_BROKER_HOST",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c11f51a2c8c604c3",
+        "type": "ui_group",
+        "name": "Relay Out 1",
+        "tab": "8a457c098b44f9f3",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "caeecfe2eeae3e2e",
+        "type": "ui_group",
+        "name": "Relay Out 2",
+        "tab": "8a457c098b44f9f3",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c4d7282568f9c4a7",
+        "type": "ui_group",
+        "name": "Relay Out 3",
+        "tab": "8a457c098b44f9f3",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "2d5bf652910a6287",
+        "type": "ui_group",
+        "name": "Relay Out 4",
+        "tab": "8a457c098b44f9f3",
+        "order": 4,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "06956921301a33cc",
+        "type": "ui_group",
+        "name": "Relay Out 5",
+        "tab": "8a457c098b44f9f3",
+        "order": 5,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "10be5ed0b8b8b6df",
+        "type": "ui_group",
+        "name": "Relay Out 6",
+        "tab": "8a457c098b44f9f3",
+        "order": 6,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "248fdbf6749f8070",
+        "type": "ui_group",
+        "name": "Relay Out 7",
+        "tab": "8a457c098b44f9f3",
+        "order": 7,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "bcc9c691d40b422d",
+        "type": "ui_group",
+        "name": "Relay Out 8",
+        "tab": "8a457c098b44f9f3",
+        "order": 8,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8a457c098b44f9f3",
+        "type": "ui_tab",
+        "name": "IoTextra Relay2",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "46103aef3f2d44e8",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-iotextra": "1.2.0",
+            "node-red-contrib-ui-led": "0.4.11",
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
