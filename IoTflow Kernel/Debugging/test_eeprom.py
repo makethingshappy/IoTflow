@@ -204,11 +204,11 @@ cfg = {
     }
   ],
   "network": {
-    "wifi_ssid": "vodafone0D3826",
-    "wifi_password": "hRZPPZZmygccaP76"
+    "wifi_ssid": "example_ssid",
+    "wifi_password": "example_password"
   },
   "mqtt": {
-    "broker": "Schrodinger.local",
+    "broker": "example.local",
     "port": 1883,
     "client_id": "pico-iotextra-controller-1",
     "base_topic": "iotextra/device_1"
