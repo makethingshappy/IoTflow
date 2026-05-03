@@ -1,0 +1,47 @@
+# MIT License
+#
+# Copyright (c) 2025 makethingshappy,
+#               2025 Arshia Keshvari (@TeslaNeuro)
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+"""
+Title: I2C Scan
+Description: Checking I2C bus addresses.
+
+Author: Arshia Keshvari
+Role: Independent Developer, Engineer, and Project Author
+Last Updated: 2026-05-03
+"""
+
+from machine import Pin, I2C
+
+# Initialize I2C (bus 0, SDA=5, SCL=6, 400kHz)
+i2c = I2C(0, scl=Pin(15), sda=Pin(16), freq=400000)
+
+print("Scanning I2C bus...")
+
+devices = i2c.scan()
+
+if devices:
+    print("I2C devices found:", len(devices))
+    for device in devices:
+        print("Address:", hex(device))
+else:
+    print("No I2C devices found")
