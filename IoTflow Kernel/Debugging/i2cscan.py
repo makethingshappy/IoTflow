@@ -32,7 +32,7 @@ Last Updated: 2026-05-03
 
 from machine import Pin, I2C
 
-# Initialize I2C (bus 0, SDA=5, SCL=6, 400kHz)
+# Initialize I2C (bus, SDA, SCL, frequency)
 i2c = I2C(0, scl=Pin(15), sda=Pin(16), freq=400000)
 
 print("Scanning I2C bus...")
