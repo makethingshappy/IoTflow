@@ -29,7 +29,7 @@ Description: Driver for the M24C08-R 8-Kbit (1KB) I2C serial EEPROM,
 
 Author: Arshia Keshvari
 Role: Independent Developer, Engineer, and Project Author
-Last Updated: 2025-11-23
+Last Updated: 2026-05-03
 """
 
 """
@@ -86,9 +86,9 @@ class EEPROM:
         """
         # Extract A9 and A8 from memory address
         a9_a8 = (memory_address >> 8) & 0x03
+        base = self.base_address & ~0x03  # Example: 0x57 & 0xFC = 0x54
+        device_addr = base | a9_a8
         
-        # Build device select code: 1010 E2 A9 A8 (without R/W bit)
-        device_addr = 0x57 | (self.e2_bit << 2) | a9_a8
         return device_addr
     
     def _is_device_present(self):
