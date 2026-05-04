@@ -36,7 +36,7 @@ It handles:
 
 Author: Arshia Keshvari
 Role: Independent Developer, Engineer, and Project Author
-Last Updated: 2025-11-24
+Last Updated: 2026-05-04
 """
 
 import time
@@ -72,6 +72,7 @@ last_input_state = -1
 last_analog_values = {}  # Track last published analog values for deadband filtering
 buffer = ''
 config_dict = {
+    'MEZZANINE_TYPE': config.MEZZANINE_TYPE,
     'WIFI_SSID': config.WIFI_SSID,
     'WIFI_PASSWORD': config.WIFI_PASSWORD,
     'MQTT_BROKER': config.MQTT_BROKER,
@@ -96,7 +97,7 @@ def send_data_back(data):
     try:
         json_str = ujson.dumps(data)
         sys.stdout.write(f"{START_MARKER}{json_str}{END_MARKER}\n")
-#         sys.stdout.flush()
+        # sys.stdout.flush()
     except Exception as e:
         if DEBUG:
             print("Error serializing/sending data:", e)
@@ -113,6 +114,7 @@ def update_config(new_config):
         
         # Update config_dict       
         config_dict.update({
+            'MEZZANINE_TYPE': new_config.get('mezzanine_type', ''),
             'WIFI_SSID': new_config['network']['wifi_ssid'],
             'WIFI_PASSWORD': new_config['network']['wifi_password'],
             'MQTT_BROKER': new_config['mqtt']['broker'],
@@ -155,6 +157,7 @@ def update_config(new_config):
         
         # Build config for AnalogDriver with required fields
         analog_config = {
+            'mezzanine_type': new_config.get('mezzanine_type', ''),
             'channels': config_dict.get('CHANNELS', []),
             'hardware': {
                 'adc_i2c_addrs': config_dict.get('ADC_I2C_ADDRS', []),
@@ -334,7 +337,7 @@ def main():
         # Initialize I2C and EEPROM
         i2c = machine.I2C(config_dict['I2C_BUS_ID'], scl=machine.Pin(config_dict['I2C_SCL_PIN']), sda=machine.Pin(config_dict['I2C_SDA_PIN']), freq=400000)
         eeprom = EEPROM(i2c, EEPROM_ADDR)
-        print("Pico script started")
+        print("IoTflow script started")
 
         # Read EEPROM configuration and update config_dict
         eeprom_config = read_eeprom_config()
@@ -350,7 +353,8 @@ def main():
         else:
             MqttManager.connect_wifi(config_dict['WIFI_SSID'], config_dict['WIFI_PASSWORD'])
         
-#         print(config_dict)
+        # print(config_dict)
+
         # Initialize Wi-Fi, IotDriver, and MqttManager
         driver = IotDriver(
             config_dict['I2C_BUS_ID'],
@@ -364,6 +368,7 @@ def main():
         
         # Build config for AnalogDriver with required fields
         analog_config = {
+            'mezzanine_type': config_dict.get('MEZZANINE_TYPE', ''),
             'channels': config_dict.get('CHANNELS', []),
             'hardware': {
                 'adc_i2c_addrs': config_dict.get('ADC_I2C_ADDRS', []),
@@ -459,8 +464,8 @@ def main():
                                     if DEBUG:
                                         print("Unexpected error:", e)
                 
-                # Finished processing all available serial input
-                # Go back to top of loop to check for more serial or do background tasks
+                # Finished processing all available USB serial input
+                # Go back to the top of the loop to check for more USB serial data or do background tasks
                 time.sleep(0.001)  # 1ms - let buffer refill
                 continue
 

@@ -31,7 +31,7 @@ in JSON format for seamless integration with IoTflow systems.
 
 Author: Arshia Keshvari
 Role: Independent Developer, Engineer, and Project Author
-Last Updated: 2025-11-16
+Last Updated: 2026-05-04
 """
 
 import json
@@ -61,7 +61,7 @@ MEZZANINE_ADC_COUNT: Dict[str, int] = {
     "IoTextra Analog": 2,
     "IoTextra Combo": 1,
     "IoTextra Analog V2": 2,
-    "IoTextra Analog V3": 2,
+    "IoTextra Analog V3": 1,
 }
 
 CHANNEL_TYPE_LABELS: Dict[str, str] = {
@@ -87,6 +87,15 @@ ANALOG_RANGE_LOOKUP: Dict[str, str] = {code: label for code, label in ANALOG_MEA
 DIGITAL_INTERFACE_CODES = set(DIGITAL_INTERFACE_LABELS.keys())
 ANALOG_INTERFACE_CODES = set(ANALOG_INTERFACE_LABELS.keys())
 
+# Mezzanines that do NOT support configurable ADC sampling rate
+UNCONFIGURABLE_ADC_SAMPLING_RATE_MEZZANINES = {
+    "IoTextra Analog V3",
+    "IoT Analog 3",
+}
+
+def mezzanine_supports_configurable_adc_sampling_rate(mezzanine_type: str) -> bool:
+    return mezzanine_type not in UNCONFIGURABLE_ADC_SAMPLING_RATE_MEZZANINES
+
 # ADC sampling rate selection mapping (display value -> config code)
 ADC_SAMPLING_RATES: Dict[int, int] = {
     8: 0,    # 128/8 SPS for ADS1115/ADS1015
@@ -109,6 +118,7 @@ class ModuleType(Enum):
     """Supported module types"""
     IOTBASE_PICO = "IoTbase PICO"
     IOTBASE_NANO = "IoTbase Nano"
+    IOTBASE_FEATHER = "IoTbase Feather"
     IOTSMART_ESP32S3 = "IoTsmart ESP32-S3"
 
 
@@ -280,7 +290,7 @@ class Configuration:
     def get_max_channels(self):
         """Get maximum allowed channels based on mezzanine type"""
         # Combo and analog mezzanines limited to 4 channels
-        if self.mezzanine_type in ["IoTextra Combo", "IoTextra Analog", "IoTextra Analog V2", "IoTextra Analog V3"]:
+        if self.mezzanine_type in ["IoTextra Combo", "IoTextra Analog", "IoTextra Analog V2"]:
             return 4
         # Digital mezzanines allow 8 channels
         return 8
@@ -372,6 +382,7 @@ class Configurator:
                 "IoTextra Octal",
                 "IoTextra Relay",
                 "IoTextra SSR Small",
+                "IoTextra MOSFET",
             ]
 
         print("\nAvailable mezzanine types:")
@@ -594,33 +605,39 @@ class Configurator:
                             print("Please enter a valid hexadecimal address (e.g., 0x49)")
                 
                 # --- ADC runtime options: sampling rate, hardware gain, shunt, offset ---
-                try:
-                    rates = sorted(ADC_SAMPLING_RATES.keys())
-                except NameError:
-                    rates = [8, 16, 32, 64, 128, 250, 475, 860]
-
-                print("\nADC Sampling Rate options:")
-                for idx, r in enumerate(rates, 1):
-                    marker = " (current)" if r == self.config.hardware.adc_sampling_rate else ""
-                    print(f"  {idx}. {r} SPS{marker}")
-
-                sr_choice = input(f"Select ADC sampling rate (1-{len(rates)}) or enter value in SPS (default: {self.config.hardware.adc_sampling_rate}): ").strip()
-                if sr_choice:
+                if mezzanine_supports_configurable_adc_sampling_rate(self.config.mezzanine_type):
                     try:
-                        idx = int(sr_choice) - 1
-                        if 0 <= idx < len(rates):
-                            self.config.hardware.adc_sampling_rate = rates[idx]
-                        else:
-                            val = int(sr_choice)
-                            if val in rates:
-                                self.config.hardware.adc_sampling_rate = val
-                    except ValueError:
+                        rates = sorted(ADC_SAMPLING_RATES.keys())
+                    except NameError:
+                        rates = [8, 16, 32, 64, 128, 250, 475, 860]
+
+                    print("\nADC Sampling Rate options:")
+                    for idx, r in enumerate(rates, 1):
+                        marker = " (current)" if r == self.config.hardware.adc_sampling_rate else ""
+                        print(f"  {idx}. {r} SPS{marker}")
+
+                    sr_choice = input(
+                        f"Select ADC sampling rate (1-{len(rates)}) or enter value in SPS (default: {self.config.hardware.adc_sampling_rate}): "
+                    ).strip()
+                    if sr_choice:
                         try:
-                            val = int(sr_choice)
-                            if val in rates:
-                                self.config.hardware.adc_sampling_rate = val
+                            idx = int(sr_choice) - 1
+                            if 0 <= idx < len(rates):
+                                self.config.hardware.adc_sampling_rate = rates[idx]
+                            else:
+                                val = int(sr_choice)
+                                if val in rates:
+                                    self.config.hardware.adc_sampling_rate = val
                         except ValueError:
-                            print("Invalid sampling rate selection, keeping default.")
+                            try:
+                                val = int(sr_choice)
+                                if val in rates:
+                                    self.config.hardware.adc_sampling_rate = val
+                            except ValueError:
+                                print("Invalid sampling rate selection, keeping default.")
+                else:
+                    # Keep internal default but don't present as a configurable option
+                    print("\nADC sampling rate is fixed on this mezzanine (not configurable).")
                 # (hardware-level gain/shunt/offset were removed; per-channel calibration is used)
         
         # GPIO Host Pins (always configurable)
@@ -1250,6 +1267,10 @@ class Configurator:
         try:
             # Convert configuration to dictionary
             hardware_dict = asdict(self.config.hardware)
+
+            # Some mezzanines have fixed/unconfigurable sampling rate; omit from saved JSON
+            if not mezzanine_supports_configurable_adc_sampling_rate(self.config.mezzanine_type):
+                hardware_dict.pop('adc_sampling_rate', None)
             
             # Convert ADC addresses dictionary to a list for JSON compatibility
             # JSON will include 'adc_i2c_addrs': [addr1, addr2, ...] if any addresses are present
@@ -1482,6 +1503,10 @@ class Configurator:
         try:
             # Serialize configuration to JSON
             hardware_dict = asdict(self.config.hardware)
+
+            # Some mezzanines have fixed/unconfigurable sampling rate; omit from transmitted JSON
+            if not mezzanine_supports_configurable_adc_sampling_rate(self.config.mezzanine_type):
+                hardware_dict.pop('adc_sampling_rate', None)
             
             # Convert ADC addresses dictionary to a list for JSON compatibility
             adc_addrs = hardware_dict.pop('adc_i2c_addresses', {})

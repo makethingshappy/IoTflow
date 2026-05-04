@@ -27,29 +27,56 @@ IoTextra Analog Driver Module
 ================================================================================
 
 Author: Arshia Keshvari
-Last Updated: 2025/11/23
+Last Updated: 2026/05/04
 
 Description:
-This module provides a driver for managing multiple ADS1115 ADCs for analog
-input measurements. It handles configuration based on measurement ranges,
-hardware gains, and shunt resistances from JSON configuration.
+This module provides a unified driver for managing multiple external ADCs
+(ADS1115 and ADS7828) for analog input acquisition in embedded systems. 
 
-Features:
-- Multiple ADC support (up to 4 ADCs per I2C bus)
-- Per-channel configuration (measurement range, hardware gain, offset)
+It abstracts raw ADC sampling into calibrated engineering measurements,
+supporting both voltage and current sensing through configurable hardware
+front-ends (gain stages, shunt resistors, and offset correction).
+
+It handles configuration based on measurement ranges, hardware gains,
+and shunt resistances from JSON configuration.
+
+The driver supports two hardware modes:
+
+1. ADS1115 Mode (Differential Input ADC)
+   - 16-bit precision ADC over I2C
+   - Differential measurement pairs (A0–A1, A2–A3, etc.)
+   - Programmable gain amplifier (PGA)
+   - Used for higher accuracy voltage/current measurements
+   - Supports bipolar and unipolar input ranges
+
+2. ADS7828 Mode (Single-Ended Input ADC)
+   - 12-bit precision ADC with internal 2.5V reference
+   - 8 single-ended channels (CH0–CH7)
+   - Fixed reference scaling (no programmable gain)
+   - Used for simpler multi-channel voltage / current measurements
+
+Key Features:
+- Multi-ADC support (multiple devices per I2C bus)
+- Per-channel configuration from JSON
+- Automatic gain selection (ADS1115)
+- Hardware scaling (op-amp / front-end correction factor)
+- Current measurement via shunt resistor conversion
+- Safe clamping to configured engineering ranges
 - Voltage measurements (0-0.5V, 0-5V, 0-10V, ±0.5V, ±5V, ±10V)
 - Current measurements (0-20mA, 4-20mA, ±20mA, 0-40mA)
-- Automatic ADS1115 gain selection based on measurement range
-- Configurable sampling rates
+- Unified interface across ADS1115 and ADS7828
 
 Dependencies:
-- ads1x15.py library for ADS1115 communication
-- MicroPython machine module (I2C)
+- ads1x15.py (ADS1115 driver) library for ADS1115 communication
+- ads7828.py (ADS7828 driver)
+- MicroPython machine.I2C
+- time
 ================================================================================
 """
 
 from machine import I2C
 import ads1x15
+import ads7828
 import time
 
 class AnalogDriver:
@@ -68,6 +95,9 @@ class AnalogDriver:
         self.config = config
         self.adcs = []
         self.channel_configs = {}
+
+        mezzanine_type = (self.config.get('mezzanine_type') or '').strip()
+        self._use_ads7828 = mezzanine_type == "IoTextra Analog V3"
         
         # Rate mapping (SPS to rate index for ADS1x15 driver)
         self.rate_map = {
@@ -118,10 +148,15 @@ class AnalogDriver:
         for addr_str in adc_addrs:
             try:
                 addr = int(addr_str, 16)
-                # Initialize with default gain=1, will be set per channel later
-                adc = ads1x15.ADS1115(self.i2c, addr, gain=1)
-                self.adcs.append({'address': addr, 'instance': adc})
-                print(f"Initialized ADS1115 at address {addr_str}")
+                if self._use_ads7828:
+                    adc = ads7828.ADS7828(self.i2c, addr)
+                    self.adcs.append({'address': addr, 'instance': adc})
+                    print(f"Initialized ADS7828 at address {addr_str}")
+                else:
+                    # Initialize with default gain=1, will be set per channel read
+                    adc = ads1x15.ADS1115(self.i2c, addr, gain=1)
+                    self.adcs.append({'address': addr, 'instance': adc})
+                    print(f"Initialized ADS1115 at address {addr_str}")
             except Exception as e:
                 print(f"Error initializing ADC at {addr_str}: {e}")
     
@@ -167,23 +202,36 @@ class AnalogDriver:
         """
         Determine which ADC handles a given channel.
         
-        Channel mapping:
-        - Channel 0-1: ADC 0 (differential pairs A0-A1, A2-A3)
-        - Channel 2-3: ADC 1 (differential pairs A0-A1, A2-A3)
-        - Channel 4-5: ADC 2 (differential pairs A0-A1, A2-A3)
-        - Channel 6-7: ADC 3 (differential pairs A0-A1, A2-A3)
+        ADS1115 mapping (differential pairs):
+        - Channel 0-1: ADC 0 (A0-A1, A2-A3)
+        - Channel 2-3: ADC 1 (A0-A1, A2-A3)
+        - Channel 4-5: ADC 2 (A0-A1, A2-A3)
+        - Channel 6-7: ADC 3 (A0-A1, A2-A3)
+
+        ADS7828 mapping (single-ended):
+        - Channel 0-7: ADC 0 (CH0..CH7)
         
         Returns:
-            tuple: (adc_instance, adc_channel_pair) where adc_channel_pair is (ch1, ch2)
+            tuple: (adc_instance, channel_spec)
+              - ADS1115: channel_spec is (ch1, ch2) differential pair
+              - ADS7828: channel_spec is (ch, None) single-ended channel
         """
+        if self._use_ads7828:
+            adc_index = channel_number // 8
+            ch = channel_number % 8
+            if adc_index >= len(self.adcs):
+                return None, None
+            adc = self.adcs[adc_index]['instance']
+            return adc, (ch, None)
+
         adc_index = channel_number // 2
         pair_index = channel_number % 2
-        
+
         if adc_index >= len(self.adcs):
             return None, None
-        
+
         adc = self.adcs[adc_index]['instance']
-        
+
         # Map to differential pairs: 0 -> (0,1), 1 -> (2,3)
         if pair_index == 0:
             return adc, (0, 1)
@@ -195,23 +243,38 @@ class AnalogDriver:
         Read raw ADC value from specified channel.
         
         Args:
-            channel_number: Channel number (0-7 based on ADC configuration)
+            channel_number: Channel number (global index based on ADC configuration)
             
         Returns:
             int: Raw ADC value, or None on error
         """
         adc, channels = self._get_adc_for_channel(channel_number)
+
         if adc is None:
             print(f"Error: No ADC configured for channel {channel_number}")
             return None
-        
-        # Get sampling rate
-        sampling_rate = self.config.get('hardware', {}).get('adc_sampling_rate', 128)
-        rate_idx = self.rate_map.get(sampling_rate, 4)  # Default to 128 SPS
-        
+
         try:
-            raw_value = adc.read(rate=rate_idx, channel1=channels[0], channel2=channels[1])
-            return raw_value
+            # ADS7828 (single-ended)
+            if self._use_ads7828:
+                return adc.read_channel(channels[0])
+
+            # ADS1115: apply per-channel gain before reading (shared ADC)
+            ch_cfg = self.channel_configs.get(channel_number)
+            if ch_cfg is not None:
+                adc.gain = ch_cfg.get('ads_gain', adc.gain)
+
+            # Get sampling rate
+            sampling_rate = self.config.get('hardware', {}).get('adc_sampling_rate', 128)
+            rate_idx = self.rate_map.get(sampling_rate, 4)  # Default to 128 SPS
+
+            # Perform differential read
+            return adc.read(
+                rate=rate_idx,
+                channel1=channels[0],
+                channel2=channels[1]
+            )
+
         except Exception as e:
             print(f"Error reading channel {channel_number}: {e}")
             return None
@@ -299,6 +362,10 @@ class AnalogDriver:
             channel_number: Channel number
             gain_index: Gain index (0-5)
         """
+        if self._use_ads7828:
+            print("Warning: ADS7828 does not support programmable gain")
+            return
+
         adc_index = channel_number // 2
         if adc_index >= len(self.adcs):
             print(f"Error: No ADC for channel {channel_number}")

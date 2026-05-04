@@ -31,9 +31,12 @@
 
  Author: Arshia Keshvari
  Role: Independent Developer, Engineer, and Project Author
- Last Updated: 2025/11/23
+ Last Updated: 2026/05/04
 ==============================================================
 """
+
+# Mezzanine Type
+MEZZANINE_TYPE = "IoTextra x"
 
 # Wi-Fi Network Credentials
 WIFI_SSID = ""
@@ -57,7 +60,7 @@ HARDWARE_MODE = "i2c" # either "i2c" or "gpio"
 I2C_BUS_ID = 0     
 I2C_SDA_PIN = 11 
 I2C_SCL_PIN = 12
-I2C_DEVICE_ADDR = 0x3f # The I2C address of the IoTExtra module
+I2C_DEVICE_ADDR = 0x3f # The I2C address of the I/O Expander for IoTextra digital modules
 
 # EEPROM Configuration
 EEPROM_I2C_ADDR = 0x57  # EEPROM I2C address (different from IoTExtra module) can be 0x27
@@ -73,8 +76,7 @@ EEPROM_CONFIG_ADDR = 0   # Starting address for configuration storage
 # | SCL                   | `0x4B`              |
 
 ADC_I2C_ADDRS = [0x49, 0x4B]  # use a list for multiple ADCs
-ADC_SAMPLING_RATE = 128        # Hz or whatever your firmware expects
-
+ADC_SAMPLING_RATE = 128        # ADC SPS
 
 # Voltage Ranges
 # | Binary Code  | Range   | Polarity |

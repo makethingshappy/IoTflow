@@ -145,26 +145,26 @@ print("Packed size:", len(packed), "bytes")
 # # Setup I2C and EEPROM
 i2c = I2C(0, scl=15, sda=16, freq=400000)
 eeprom = EEPROM(i2c, 0x57)
-
-# Write packed config
-eeprom.write_bytes(0x002, packed)
-
-# Read it back
-raw = eeprom.read_bytes(0x002, len(packed))
-
-length_bytes = struct.pack(">H", len(packed))   # 2 bytes, big-endian length
-
-eeprom.write_bytes(0x000, length_bytes)   # <-- writes to address 0x000
-
-
-data = eeprom.read_bytes(0, 2)
-print([hex(b) for b in data])
-
-restored = unpack_config(raw)
-
-print("Restored config:")
-print(ujson.dumps(restored))
+# 
+# # Write packed config
+# eeprom.write_bytes(0x002, packed)
+# 
+# # Read it back
+# raw = eeprom.read_bytes(0x002, len(packed))
+# 
+# length_bytes = struct.pack(">H", len(packed))   # 2 bytes, big-endian length
+# 
+# eeprom.write_bytes(0x000, length_bytes)   # <-- writes to address 0x000
+# 
+# 
+# data = eeprom.read_bytes(0, 2)
+# print([hex(b) for b in data])
+# 
+# restored = unpack_config(raw)
+# 
+# print("Restored config:")
+# print(ujson.dumps(restored))
 
 # ERASE FIRST
-# print("Erasing EEPROM...")
-# eeprom.erase_all()
+print("Erasing EEPROM...")
+eeprom.erase_all()

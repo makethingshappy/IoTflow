@@ -1,0 +1,313 @@
+[
+    {
+        "id": "aa5de9b1f3ae4640",
+        "type": "tab",
+        "label": "Flow 7",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f75ca35778701fab",
+        "type": "debug",
+        "z": "aa5de9b1f3ae4640",
+        "name": "Ch1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "e3ed1dba68f766d2",
+        "type": "iotextra-analog",
+        "z": "aa5de9b1f3ae4640",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "0",
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "f75ca35778701fab"
+            ]
+        ]
+    },
+    {
+        "id": "66355b6543b3cd5e",
+        "type": "iotextra-analog",
+        "z": "aa5de9b1f3ae4640",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "1",
+        "x": 380,
+        "y": 200,
+        "wires": [
+            [
+                "e6a4c06b42f0dd61"
+            ]
+        ]
+    },
+    {
+        "id": "f00f357860ba0cb6",
+        "type": "iotextra-analog",
+        "z": "aa5de9b1f3ae4640",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "2",
+        "x": 380,
+        "y": 280,
+        "wires": [
+            [
+                "2c98fa8547d7d21b"
+            ]
+        ]
+    },
+    {
+        "id": "4020acfbbc7293f6",
+        "type": "iotextra-analog",
+        "z": "aa5de9b1f3ae4640",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "3",
+        "x": 380,
+        "y": 360,
+        "wires": [
+            [
+                "84e2d05cf4fe5a38"
+            ]
+        ]
+    },
+    {
+        "id": "e6a4c06b42f0dd61",
+        "type": "debug",
+        "z": "aa5de9b1f3ae4640",
+        "name": "Ch2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "2c98fa8547d7d21b",
+        "type": "debug",
+        "z": "aa5de9b1f3ae4640",
+        "name": "Ch3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "84e2d05cf4fe5a38",
+        "type": "debug",
+        "z": "aa5de9b1f3ae4640",
+        "name": "Ch4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "a32d8dc6649d9fe8",
+        "type": "debug",
+        "z": "aa5de9b1f3ae4640",
+        "name": "Ch5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "f58d504897b233e7",
+        "type": "iotextra-analog",
+        "z": "aa5de9b1f3ae4640",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "4",
+        "x": 380,
+        "y": 440,
+        "wires": [
+            [
+                "a32d8dc6649d9fe8"
+            ]
+        ]
+    },
+    {
+        "id": "f8eb905f6dab8b7f",
+        "type": "iotextra-analog",
+        "z": "aa5de9b1f3ae4640",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "5",
+        "x": 380,
+        "y": 520,
+        "wires": [
+            [
+                "e82a0a1cd4bc9dad"
+            ]
+        ]
+    },
+    {
+        "id": "82e36572085fcdb8",
+        "type": "iotextra-analog",
+        "z": "aa5de9b1f3ae4640",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "6",
+        "x": 380,
+        "y": 600,
+        "wires": [
+            [
+                "28a68dcd0e7a3024"
+            ]
+        ]
+    },
+    {
+        "id": "960e060a95798f09",
+        "type": "iotextra-analog",
+        "z": "aa5de9b1f3ae4640",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "7",
+        "x": 380,
+        "y": 680,
+        "wires": [
+            [
+                "20528e3da41d5298"
+            ]
+        ]
+    },
+    {
+        "id": "e82a0a1cd4bc9dad",
+        "type": "debug",
+        "z": "aa5de9b1f3ae4640",
+        "name": "Ch6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "28a68dcd0e7a3024",
+        "type": "debug",
+        "z": "aa5de9b1f3ae4640",
+        "name": "Ch7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "20528e3da41d5298",
+        "type": "debug",
+        "z": "aa5de9b1f3ae4640",
+        "name": "Ch8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "690c80c21b3ed82b",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "Schrodinger-7.local",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "f6e8dc0623bcd395",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-iotextra": "1.2.0"
+        }
+    }
+]
