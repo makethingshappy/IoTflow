@@ -1,6 +1,6 @@
 {
   "module_type": "IoTbase PICO",
-  "mezzanine_type": "IoTextra Octal",
+  "mezzanine_type": "IoTextra Octal2",
   "channels": [
     {
       "name": "LED 1",
