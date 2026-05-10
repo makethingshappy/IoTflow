@@ -382,7 +382,7 @@ class Configurator:
                 "IoTextra Octal",
                 "IoTextra Relay",
                 "IoTextra SSR Small",
-                "IoTextra MOSFET",
+                "IoTextra MOSFET 2",
             ]
 
         print("\nAvailable mezzanine types:")
