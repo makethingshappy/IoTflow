@@ -1,5 +1,5 @@
 {
-  "module_type": "IoTsmart ESP32S3",
+  "module_type": "IoTsmart ESP32-S3",
   "mezzanine_type": "IoTextra Analog 2",
   "channels": [
     {
