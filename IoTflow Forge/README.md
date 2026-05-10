@@ -92,7 +92,7 @@ Each analog channel can have individual calibration parameters:
   - Custom values supported for specialized configurations
 - **Shunt Resistance**: Current measurement shunt value in Ohms
   - Default: 0.249Ω
-  - IoTextra Analog V1 boards typically use 0.12Ω (120 Ohms)
+  - Old verions of IoTextra Analog boards typically use 0.12Ω (120 Ohms)
   - Custom values supported if you want to change the hardware
 - **ADC Offset**: Voltage offset compensation in volts
   - Default: 0.0V
