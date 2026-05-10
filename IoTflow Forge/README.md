@@ -52,7 +52,7 @@ Each module integrates a complete MCU environment, and different form factors (s
 - IoTextra Analog (2x TI ADC1115 ADCs)
 - IoTextra Combo (1 TI ADC1115 ADC + digital I/O)
 - IoTextra Analog2 (Coming Soon)
-- IoTextra Analog3 (Future)
+- IoTextra Analog3 (1 TI ADS7828 ADC)
 - Custom analog mezzanines
 
 **Supported Analog Interface Types:**
