@@ -28,11 +28,17 @@ ADS7828 I2C Analog-to-Digital Converter Driver
 ================================================================================
 
 Author: Arshia Keshvari
-Last Updated: 2026/05/04
+Last Updated: 2026/05/10
 
 Description:
 This module provides a MicroPython driver for the ADS7828 12-bit, 8-channel
 analog-to-digital converter (ADC) communicating over I2C.
+
+I²C bus mode note:
+The ADS7828 datasheet refers to “F/S mode” as the I²C **Fast/Standard bus mode**
+(400 kHz / 100 kHz). IoTflow initializes the I²C bus at **400 kHz (Fast mode)**,
+so ADS7828 reads occur in fast mode in this driver, unless the platform’s I²C 
+frequency is reconfigured elsewhere.
 
 The ADS7828 is a low-power, single-ended input ADC with an internal 2.5V
 reference. It supports up to 8 multiplexed analog input channels and is

@@ -53,13 +53,15 @@ Each module integrates a complete MCU environment, and different form factors (s
 - IoTextra Combo (1 TI ADC1115 ADC + digital I/O)
 - IoTextra Analog2 (Coming Soon)
 - IoTextra Analog3 (1 TI ADS7828 ADC)
+- Note: IoTflow configures the I²C bus at **400 kHz (Fast mode)** by default.
 - Custom analog mezzanines
 
 **Supported Analog Interface Types:**
 - **01** - IoTextra Analog
 - **21** - IoTextra Combo
-- **02** - IoT Analog 2
-- **03** - IoT Analog 3
+- **02** - IoTextra Analog 2
+- **03** - IoTextra Analog 3
+- Note: IoTextra Analog 3 (ADS7828 ADC) I²C bus is configured at **400 kHz (Fast mode)** by default
 
 ### Channel Configuration
 
@@ -118,6 +120,7 @@ Each analog channel can have individual calibration parameters:
   - SDA pin (default: 20)
   - SCL pin (default: 21)
   - Device address for I/O expander (default: 0x3f or 0x27)
+  - Bus frequency: IoTflow firmware initializes I²C at **400 kHz** by default (I²C Fast mode / F/S mode @ 400 kHz)
 - **EEPROM Settings**: 
   - I2C address (default: 0x57)
   - Size in bytes (default: 1024)
