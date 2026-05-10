@@ -52,16 +52,16 @@ DIGITAL_INTERFACE_LABELS: Dict[str, str] = {
 ANALOG_INTERFACE_LABELS: Dict[str, str] = {
     "01": "IoTextra Analog",
     "21": "IoTextra Combo",
-    "02": "IoT Analog 2",
-    "03": "IoT Analog 3",
+    "02": "IoTextra Analog 2",
+    "03": "IoTextra Analog 3",
 }
 
 # Map common mezzanine names to their typical ADC count (used for analog modules)
 MEZZANINE_ADC_COUNT: Dict[str, int] = {
     "IoTextra Analog": 2,
     "IoTextra Combo": 1,
-    "IoTextra Analog V2": 2,
-    "IoTextra Analog V3": 1,
+    "IoTextra Analog 2": 2,
+    "IoTextra Analog 3": 1,
 }
 
 CHANNEL_TYPE_LABELS: Dict[str, str] = {
@@ -89,7 +89,7 @@ ANALOG_INTERFACE_CODES = set(ANALOG_INTERFACE_LABELS.keys())
 
 # Mezzanines that do NOT support configurable ADC sampling rate
 UNCONFIGURABLE_ADC_SAMPLING_RATE_MEZZANINES = {
-    "IoTextra Analog V3",
+    "IoTextra Analog 3",
     "IoT Analog 3",
 }
 
@@ -290,7 +290,7 @@ class Configuration:
     def get_max_channels(self):
         """Get maximum allowed channels based on mezzanine type"""
         # Combo and analog mezzanines limited to 4 channels
-        if self.mezzanine_type in ["IoTextra Combo", "IoTextra Analog", "IoTextra Analog V2"]:
+        if self.mezzanine_type in ["IoTextra Combo", "IoTextra Analog", "IoTextra Analog 2"]:
             return 4
         # Digital mezzanines allow 8 channels
         return 8
@@ -373,8 +373,8 @@ class Configurator:
             mezzanine_menu = [
                 "IoTextra Analog",
                 "IoTextra Combo",
-                "IoTextra Analog V2",
-                "IoTextra Analog V3",
+                "IoTextra Analog 2",
+                "IoTextra Analog 3",
             ]
         else:
             mezzanine_menu = [
