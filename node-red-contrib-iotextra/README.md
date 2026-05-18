@@ -18,7 +18,7 @@ Sends ON/OFF commands to a digital output channel. Accepts `msg.payload` as `tru
 
 ### iotextra-analog — analog input
 
-Subscribes to analog readings from differential ADC channels (e.g. A0–A1, A2–A3 on Analog and Combo modules). The firmware publishes converted voltage or current as a numeric string (e.g. `"3.124"`). Each message becomes `msg.payload` for use in gauges, charts, or logic nodes.
+Subscribes to analog readings from single-ended to differential ADC channels (e.g. A0–A1, A2–A3 on Analog and Combo modules). The firmware publishes converted voltage or current as a numeric string (e.g. `"3.124"`). Each message becomes `msg.payload` for use in gauges, charts, or logic nodes.
 
 > **Tip:** For full wiring, firmware, and broker setup, see the [setup guide](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) in the IoTflow repository.
 
