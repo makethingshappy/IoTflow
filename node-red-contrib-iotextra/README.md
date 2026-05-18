@@ -76,4 +76,4 @@ Ensure the **base topic** in each node matches your device configuration.
 
 ## License
 
-MIT — see [package.json](./package.json).
+MIT — see [LICENSE](https://github.com/makethingshappy/IoTflow/blob/main/LICENSE).
