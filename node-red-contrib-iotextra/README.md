@@ -24,7 +24,7 @@ Subscribes to analog readings from differential ADC channels (e.g. A0â€“A1, A2â€
 
 ## Compatible hardware
 
-These nodes work with IoTextra mezzanine modules connected via the IoTbase HOST connector and running IoTflow firmware:
+These nodes work with IoTextra mezzanine modules connected via the IoTbase or IoTsmart HOST connector and running IoTflow:
 
 | Family | Description |
 |--------|-------------|
