@@ -5,6 +5,14 @@
     "author": "Arshia Keshvari",
     "license": "MIT",
     "keywords": [ "node-red", "iot", "iotextra", "mqtt", "relay", "gpio", "adc", "analog" ],
+    "homepage": "https://makethingshappy.io",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/makethingshappy/IoTflow"
+    },
+    "bugs": {
+        "url": "https://github.com/makethingshappy/IoTflow/issues"
+    },
     "node-red": {
         "nodes": {
             "iotextra-input": "iotextra-input.js",
@@ -12,5 +20,5 @@
             "iotextra-analog": "iotextra-analog.js"
         }
     }
-
 }
+
