@@ -1,4 +1,4 @@
-# node-red-contrib-iotextra
+# 🚨 node-red-contrib-iotextra
 
 Connect Node-RED to **IoTextra** mezzanine modules—stackable I/O boards for digital relays, GPIO inputs, and analog measurements. This package adds three custom nodes that speak MQTT to your IoTextra hardware, so you can build dashboards, automations, and integrations without writing firmware.
 
