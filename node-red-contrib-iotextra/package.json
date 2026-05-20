@@ -3,6 +3,11 @@
     "version": "1.2.0",
     "description": "A set of Node-RED nodes to control and monitor IoTextra hardware modules.",
     "author": "Arshia Keshvari",
+    "contributors": [
+        {
+            "name": "MTH LLC"
+        }
+    ],
     "license": "MIT",
     "keywords": [ "node-red", "iot", "iotextra", "mqtt", "relay", "gpio", "adc", "analog" ],
     "homepage": "https://makethingshappy.io",
@@ -12,6 +17,9 @@
     },
     "bugs": {
         "url": "https://github.com/makethingshappy/IoTflow/issues"
+    },
+    "peerDependencies": {
+        "node-red": ">=2.0.0"
     },
     "node-red": {
         "nodes": {
