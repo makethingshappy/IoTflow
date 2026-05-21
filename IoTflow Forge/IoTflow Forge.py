@@ -380,6 +380,7 @@ class Configurator:
             mezzanine_menu = [
                 "IoTextra Input",
                 "IoTextra Octal",
+                "IoTextra Quadro",
                 "IoTextra Relay",
                 "IoTextra SSR Small",
                 "IoTextra MOSFET 2",
@@ -678,7 +679,8 @@ class Configurator:
         print("\nExamples:")
         print("IoTExtra Relay2: 0b11110000 (P4-P7 i.e. channels 5-8 are unused, 1-4 are outputs)")
         print("IoTExtra Input:  0b11111111 (all channels are inputs)")
-        print("IoTExtra Octal:  0b00001111 (channels 0-3 outputs, 4-7 inputs)")
+        print("IoTExtra Octal:  0b00001111 (channels 4-7 outputs, 0-3 inputs)")
+        print("IoTextra Quadro: 0b11001111 (channels 0-3 and 6-7 inputs, 4-5 outputs)")
         
         # Get new configuration
         while True:

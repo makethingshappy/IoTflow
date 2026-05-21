@@ -39,8 +39,10 @@ Each module integrates a complete MCU environment, and different form factors (s
 #### Digital I/O Mezzanines
 - IoTextra Input
 - IoTextra Octal
+- IoTextra Quadro
 - IoTextra Relay
 - IoTextra SSR Small
+- IoTextra MOSFET 2
 - Custom digital mezzanines
 
 **Supported Digital Interface Types:**
@@ -141,7 +143,8 @@ Each analog channel can have individual calibration parameters:
   - Examples:
     - IoTExtra Relay2: "0b11110000" (channels 1-4 outputs, 5-8 unused)
     - IoTExtra Input: "0b11111111" (all inputs)
-    - IoTExtra Octal: "0b00001111" (channels 0-3 outputs, 4-7 inputs)
+    - IoTExtra Octal: "0b00001111" (channels 4-7 outputs, 0-3 inputs)
+    - IoTextra Quadro: "0b11001111" (channels 0-3 and 6-7 inputs, 4-5 outputs)
 - **Status Update Interval**: Frequency for publishing status updates in seconds (default: 30)
 
 ### Serial Communication

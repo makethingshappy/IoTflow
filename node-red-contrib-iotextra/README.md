@@ -28,8 +28,8 @@ These nodes work with IoTextra mezzanine modules connected via the IoTbase or Io
 
 | Family | Description |
 |--------|-------------|
-| [Digital IoTextra](https://makethingshappy.io/collections/digital-iotextra) | Digital inputs and relay outputs |
-| [Analog IoTextra](https://makethingshappy.io/collections/analog-iotextra) | Differential ADC channels (voltage/current) |
+| [Digital IoTextra](https://makethingshappy.io/collections/digital-iotextra) | Digital inputs and outputs |
+| [Analog IoTextra](https://makethingshappy.io/collections/analog-iotextra) | Differential or Single-ended ADC channels (voltage/current) |
 | [Combo IoTextra](https://makethingshappy.io/collections/combo-iotextra) | Digital and analog I/O on one module |
 
 You will also need an IoTbase with compatible SoM or IoTsmart module, and MQTT broker access on your network.
@@ -70,7 +70,7 @@ Ensure the **base topic** in each node matches your device configuration.
 ## Links
 
 - [Full setup guide](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) — hardware, firmware, Forge config, and Node-RED
-- [Node-RED flow examples](https://github.com/makethingshappy/IoTflow/tree/main/Node-RED%20Examples) — importable flows for Relay, Input, Analog, Combo, and Octal boards
+- [Node-RED flow examples](https://github.com/makethingshappy/IoTflow/tree/main/Node-RED%20Examples) — importable flows for Relay, Input, Analog, Combo, Octal, MOSFET and Quadro boards
 - [Make Things Happy](https://makethingshappy.io) — IoTextra products and documentation
 - [GitHub — IoTflow](https://github.com/makethingshappy/IoTflow) — source repository
 
