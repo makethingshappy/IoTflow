@@ -31,7 +31,7 @@
 
  Author: Arshia Keshvari
  Role: Independent Developer, Engineer, and Project Author
- Last Updated: 2026/05/04
+ Last Updated: 2026/05/21
 ==============================================================
 """
 
@@ -126,6 +126,7 @@ GPIO_HOST_PINS = {
 # IoTExtra Octal -> 0b00001111
 # IoTExtra Combo -> 0b11000000
 # IoTExtra Analog -> 0b00000000
+# IoTextra Quadro -> 0b11001111
 PIN_CONFIG = 0b00001111
 
 
