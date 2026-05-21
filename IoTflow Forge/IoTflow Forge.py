@@ -31,7 +31,7 @@ in JSON format for seamless integration with IoTflow systems.
 
 Author: Arshia Keshvari
 Role: Independent Developer, Engineer, and Project Author
-Last Updated: 2026-05-04
+Last Updated: 2026-05-21
 """
 
 import json
