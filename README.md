@@ -33,30 +33,41 @@ This ensures reliable, scalable, and easily maintainable automation across multi
 ## 🛠️ Supported Hardware
 
 ### Microcontrollers and System On Modules (SoM)
+
 * [**IoTbase PICO**](https://makethingshappy.io/products/iotbase-pico) - Compatible with Raspberry Pi Pico, Pico 2, Pico W, Pico 2W, Waveshare ESP32-S3 PICO
 * [**IoTbase NANO**](https://makethingshappy.io/products/iotbase-nano) - Arduino Nano ESP32 or ESP32-S3 or Waveshare ESP32-S3 Nano
+* **IoTbase Feather** - Coming Soon
 * [**IoTsmart ESP32-S3**](https://makethingshappy.io/products/iotsmart-esp32-s3) - Tiny Adaptor Board with Cable is required for flashing
 * [**IoTsmart RP2040**](https://makethingshappy.io/products/iotsmart-rp2040) or [**IoTsmart RP2350A**](https://makethingshappy.io/products/iotsmart-rp2350) - Tiny Adaptor Board with Cable is required for flashing
-* [**IoTsmart XIAO**](https://makethingshappy.io/products/iotsmart-xiao) - Tiny Adaptor Board with Cable is required for flashing
+* [**IoTsmart XIAO**](https://makethingshappy.io/products/iotsmart-xiao) - Supports multiple Seeed XIAO-compatible SoMs — Coming Soon
 
 *IoTsmart modules are System-on-Module (SOM) microcontroller boards that provide the primary compute and control functionality for the system.
 Each module integrates a complete MCU environment, and different form factors (soldered SoM, slot-based modules such as the IoTsmart XIAO, etc.) are treated as implementation variations rather than separate device classes.*
 
 ### Supported IoTextra Board Categories
 
-#### Digital I/O Boards
+**Digital I/O Boards**
 * [**IoTextra Input**](https://makethingshappy.io/products/iotextra-input)
-* [**IoTextra Octal2**](https://makethingshappy.io/products/iotextra-octal2)
 * [**IoTextra Relay2**](https://makethingshappy.io/products/iotextra-relay2)
 * [**IoTextra SSR Small**](https://makethingshappy.io/products/iotextra-ssr-small)
+* [**IoTextra MOSFET2**](https://makethingshappy.io/products/iotextra-mosfet2)
+* **IoTextra Quadro** — Planned
+* [**IoTextra Octal**](https://makethingshappy.io/products/iotextra-octal)
+* [**IoTextra Octal2**](https://makethingshappy.io/products/iotextra-octal2)
+* **IoTextra Octal3** — Planned
 * Custom digital mezzanines
 
-#### Analog or Combo I/O Boards
+**Analog I/O Boards**
 * [**IoTextra Analog**](https://makethingshappy.io/products/iotextra-analog)
-* [**IoTextra Analog 2**](https://makethingshappy.io/products/iotextra-analog)
-* [**IoTextra Analog 3**](https://makethingshappy.io/products/iotextra-analog3)
-* [**IoTextra Combo**](https://makethingshappy.io/products/iotextra-combo)
+* **IoTextra Analog2** — Coming Soon
+* **IoTextra Analog3** — Coming Soon
 * Custom analog mezzanines
+
+**Combo I/O Boards**
+
+* [**IoTextra Combo**](https://makethingshappy.io/products/iotextra-combo)
+* **IoTextra Combo2** — Coming Soon
+* Custom combo mezzanines
 
 ---
 
