@@ -2,7 +2,7 @@
 
 Connect Node-RED to **IoTextra** mezzanine modules—stackable I/O boards for digital relays, GPIO inputs, and analog measurements. This package adds three custom nodes that speak MQTT to your IoTextra hardware, so you can build dashboards, automations, and integrations without writing firmware.
 
-IoTextra modules run on the [IoTflow](https://github.com/makethingshappy/IoTflow) framework (MicroPython firmware on an IoTsmart or compatible MCU). Once your device is on the network and publishing to an MQTT broker, these nodes let you read inputs, drive outputs, and stream analog values directly in your flows.
+IoTextra modules run on the [IoTflow](https://github.com/makethingshappy/IoTflow) framework (MicroPython firmware on an IoTsmart or IoTbase with compatible SoM). Once your device is on the network and publishing to an MQTT broker, these nodes let you read inputs, drive outputs, and stream analog values directly in your flows.
 
 ## Included nodes
 
@@ -32,7 +32,7 @@ These nodes work with IoTextra mezzanine modules connected via the IoTbase or Io
 | [Analog IoTextra](https://makethingshappy.io/collections/analog-iotextra) | Differential ADC channels (voltage/current) |
 | [Combo IoTextra](https://makethingshappy.io/collections/combo-iotextra) | Digital and analog I/O on one module |
 
-You will also need an IoTbase, a compatible microcontroller or IoTsmart module, and MQTT broker access on your network.
+You will also need an IoTbase with compatible SoM or IoTsmart module, and MQTT broker access on your network.
 
 ## Installation
 
