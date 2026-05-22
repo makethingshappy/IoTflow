@@ -6,7 +6,7 @@ IoTextra modules run on the [IoTflow](https://github.com/makethingshappy/IoTflow
 
 ## Included nodes
 
-All three nodes appear in the **network** category in the Node-RED editor. Each node is configured with an MQTT broker, a base topic (matching your device’s `MQTT_BASE_TOPIC`), and a channel number.
+All three nodes appear in the **network** category in the Node-RED editor. Each node is configured with an MQTT broker, a base topic (matching your device's `MQTT_BASE_TOPIC`), and a channel number.
 
 ### iotextra-input — digital input
 
@@ -73,6 +73,13 @@ Ensure the **base topic** in each node matches your device configuration.
 - [Node-RED flow examples](https://github.com/makethingshappy/IoTflow/tree/main/Node-RED%20Examples) — importable flows for Relay, Input, Analog, Combo, Octal, MOSFET and Quadro boards
 - [Make Things Happy](https://makethingshappy.io) — IoTextra products and documentation
 - [GitHub — IoTflow](https://github.com/makethingshappy/IoTflow) — source repository
+
+## Full compatibility table
+
+The following table shows all IoTextra modules and their Node-RED flow availability:
+
+<!-- IOTEXTRA_NODERED_COMPATIBILITY_START -->
+<!-- IOTEXTRA_NODERED_COMPATIBILITY_END -->
 
 ## License
 
