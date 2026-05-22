@@ -1,0 +1,367 @@
+[
+    {
+        "id": "333a11262bf69e97",
+        "type": "tab",
+        "label": "Flow 11",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c957849824b87020",
+        "type": "ui_switch",
+        "z": "333a11262bf69e97",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "c11f51a2c8c604c3",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 250,
+        "y": 160,
+        "wires": [
+            [
+                "ece5037b56b8195f"
+            ]
+        ]
+    },
+    {
+        "id": "4c1b091defe5cc85",
+        "type": "ui_switch",
+        "z": "333a11262bf69e97",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "caeecfe2eeae3e2e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 250,
+        "y": 220,
+        "wires": [
+            [
+                "092ae6a6019d5042"
+            ]
+        ]
+    },
+    {
+        "id": "ece5037b56b8195f",
+        "type": "iotextra-output",
+        "z": "333a11262bf69e97",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "5",
+        "x": 440,
+        "y": 160,
+        "wires": [
+            [
+                "7af796f6014fd0b6"
+            ]
+        ]
+    },
+    {
+        "id": "092ae6a6019d5042",
+        "type": "iotextra-output",
+        "z": "333a11262bf69e97",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "6",
+        "x": 440,
+        "y": 220,
+        "wires": [
+            [
+                "dc8b32272c89ff76"
+            ]
+        ]
+    },
+    {
+        "id": "7af796f6014fd0b6",
+        "type": "ui_led",
+        "z": "333a11262bf69e97",
+        "order": 0,
+        "group": "c11f51a2c8c604c3",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 630,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "dc8b32272c89ff76",
+        "type": "ui_led",
+        "z": "333a11262bf69e97",
+        "order": 0,
+        "group": "caeecfe2eeae3e2e",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 630,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "901447423dd919d1",
+        "type": "ui_led",
+        "z": "333a11262bf69e97",
+        "order": 0,
+        "group": "fd6c84efc18a868c",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "0",
+                "valueType": "str"
+            },
+            {
+                "color": "#008000",
+                "value": "1",
+                "valueType": "str"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 590,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "473af1f2f6a575e2",
+        "type": "iotextra-input",
+        "z": "333a11262bf69e97",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "1",
+        "x": 320,
+        "y": 300,
+        "wires": [
+            [
+                "901447423dd919d1"
+            ]
+        ]
+    },
+    {
+        "id": "3775b2e2014575bf",
+        "type": "iotextra-input",
+        "z": "333a11262bf69e97",
+        "name": "",
+        "broker": "690c80c21b3ed82b",
+        "baseTopic": "iotextra/device_1",
+        "channel": "2",
+        "x": 320,
+        "y": 380,
+        "wires": [
+            [
+                "a558bfb61344b280"
+            ]
+        ]
+    },
+    {
+        "id": "a558bfb61344b280",
+        "type": "ui_led",
+        "z": "333a11262bf69e97",
+        "order": 0,
+        "group": "553bc32743e6cbee",
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "0",
+                "valueType": "str"
+            },
+            {
+                "color": "#008000",
+                "value": "1",
+                "valueType": "str"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 590,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "c11f51a2c8c604c3",
+        "type": "ui_group",
+        "name": "Relay Out 1",
+        "tab": "8a457c098b44f9f3",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "caeecfe2eeae3e2e",
+        "type": "ui_group",
+        "name": "Relay Out 2",
+        "tab": "8a457c098b44f9f3",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "690c80c21b3ed82b",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "your_mqtt_broker",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "fd6c84efc18a868c",
+        "type": "ui_group",
+        "name": "Input on channel 1",
+        "tab": "e0fd32b3b617da56",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "553bc32743e6cbee",
+        "type": "ui_group",
+        "name": "Input on channel 2",
+        "tab": "e0fd32b3b617da56",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8a457c098b44f9f3",
+        "type": "ui_tab",
+        "name": "IoTextra Relay2",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e0fd32b3b617da56",
+        "type": "ui_tab",
+        "name": "IoTExtra Input board",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "778e1c910c7d9f34",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "node-red-contrib-iotextra": "1.2.0",
+            "node-red-contrib-ui-led": "0.4.11"
+        }
+    }
+]
