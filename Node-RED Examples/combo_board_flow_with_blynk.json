@@ -174,9 +174,9 @@
         "type": "blynk-iot-in-write",
         "z": "b557adcced9a7890",
         "name": "Digital Output 1",
-        "pin": "0",
+        "pin": "2",
         "pin_all": 0,
-        "client": "77d8fef2679241c7",
+        "client": "63828a4d830c3f91",
         "x": 280,
         "y": 160,
         "wires": [
@@ -190,9 +190,9 @@
         "type": "blynk-iot-in-write",
         "z": "b557adcced9a7890",
         "name": "Digital Output 2",
-        "pin": "1",
+        "pin": "3",
         "pin_all": 0,
-        "client": "77d8fef2679241c7",
+        "client": "63828a4d830c3f91",
         "x": 280,
         "y": 220,
         "wires": [
@@ -306,7 +306,8 @@
         "y": 320,
         "wires": [
             [
-                "2f2a5cbfc8502bb4"
+                "2f2a5cbfc8502bb4",
+                "f29565286fb517ab"
             ]
         ]
     },
@@ -324,7 +325,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 550,
-        "y": 380,
+        "y": 440,
         "wires": []
     },
     {
@@ -336,10 +337,85 @@
         "baseTopic": "iotextra/device_1",
         "channel": "1",
         "x": 340,
+        "y": 440,
+        "wires": [
+            [
+                "0b44c0886a48fcf5",
+                "2b0fc9490893e358"
+            ]
+        ]
+    },
+    {
+        "id": "8ed8e67a07ad7292",
+        "type": "blynk-iot-out-write",
+        "z": "b557adcced9a7890",
+        "name": "Analog Input 2",
+        "pin": "1",
+        "pinmode": 0,
+        "client": "63828a4d830c3f91",
+        "x": 780,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "4526fcf188885c2b",
+        "type": "blynk-iot-out-write",
+        "z": "b557adcced9a7890",
+        "name": "Analog Input 1",
+        "pin": "0",
+        "pinmode": 0,
+        "client": "63828a4d830c3f91",
+        "x": 780,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "f29565286fb517ab",
+        "type": "delay",
+        "z": "b557adcced9a7890",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "30",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 560,
         "y": 380,
         "wires": [
             [
-                "0b44c0886a48fcf5"
+                "4526fcf188885c2b"
+            ]
+        ]
+    },
+    {
+        "id": "2b0fc9490893e358",
+        "type": "delay",
+        "z": "b557adcced9a7890",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "30",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 560,
+        "y": 500,
+        "wires": [
+            [
+                "8ed8e67a07ad7292"
             ]
         ]
     },
@@ -347,7 +423,7 @@
         "id": "690c80c21b3ed82b",
         "type": "mqtt-broker",
         "name": "",
-        "broker": "Your_Broker.local",
+        "broker": "your_mqtt_broker",
         "port": 1883,
         "clientid": "",
         "autoConnect": true,
@@ -397,12 +473,12 @@
         "className": ""
     },
     {
-        "id": "77d8fef2679241c7",
+        "id": "63828a4d830c3f91",
         "type": "blynk-iot-client",
-        "name": "IoTextra Relay2",
+        "name": "IoTextra Combo",
         "path": "blynk.cloud",
-        "key": "x",
-        "tmpl": "x",
+        "key": "your_blynk_authentication_key",
+        "tmpl": "your_blynk_template_ID",
         "dbg_all": false,
         "dbg_log": false,
         "dbg_prop": false,
@@ -421,7 +497,7 @@
         "hidden": false
     },
     {
-        "id": "3cf6c647f698fb07",
+        "id": "8eafc0167adf2a89",
         "type": "global-config",
         "env": [],
         "modules": {
