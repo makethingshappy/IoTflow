@@ -112,3 +112,130 @@ IoTflow provides import-ready Node-RED flows demonstrating how to implement reli
 ### Event-Driven Automation Examples
 
 Examples are stored inside the repository:
+
+```
+/Node-RED Examples/
+```
+
+These flows are compatible with any Node-RED environment and illustrate how to structure topics, triggers, and actions for predictable, scalable automation. Ideal for learning and rapid prototyping.
+
+<!-- IOTEXTRA_NODERED_COMPATIBILITY_START -->
+<!-- IOTEXTRA_NODERED_COMPATIBILITY_END -->
+
+---
+
+## 🔗 MQTT Workflow Automation
+
+MQTT is the core transport layer used by IoTflow.
+
+### Features include:
+- Well-defined, hierarchical MQTT topics  
+- Event-driven reporting from IoTsmart and IoTbase nodes  
+- Structured commands for digital, analog and combo I/O
+- Consistent multi-module routing
+- Compatibility with Mosquitto, EMQX, Aedes, and similar brokers  
+
+This repository does **not** provide standalone MQTT client code, only the **automation structure** used to implement workflows.
+
+---
+
+## 📥 Installation & Quick Start
+
+See full setup instructions in:
+
+📄 **[`SETUP.md`](./Documentation/SETUP.md)**
+
+### Quick Start
+
+1. Clone or download this repository.  
+2. Upload IoTflow Kernel MicroPython files to your MCU (via Thonny or any IDE).  
+3. Use **IoTflow Forge** to configure workflow parameters and module definitions.  
+4. Ensure an MQTT broker is active on your network.  
+5. Install Node-RED on your gateway (Raspberry Pi or Linux host).  
+6. Import flows from `/Node-RED Examples/`.  
+7. Configure MQTT topics, device IDs, and automation logic.  
+8. Deploy to activate automation.
+
+IoTflow is intentionally lightweight and compatible with any MQTT + Node-RED stack.
+
+---
+
+## Demo Videos
+
+- [▶️ IoTflow Hardware Demo](https://youtu.be/kompyhVLjO0)
+- [▶️ IoTflow Workflow Demo](https://youtu.be/HO-ArWm3zr4)
+- [▶️ IoTflow Workflow Demo - IoTextra Analog](https://youtu.be/bXxVSv7MvlY)
+- [▶️ IoTflow Workflow Demo - IoTextra Analog 3](https://youtu.be/11e2om6UUQA)
+- [▶️ IoTflow Workflow Demo - IoTextra Combo](https://youtu.be/hguTGqt5nd8)
+
+---
+
+## 📁 Folder Structure
+
+```
+IoTflow/
+ ├─ Documentation/
+ ├─ IoTflow Forge/
+ ├─ IoTflow Kernel/
+ ├─ Node-RED Examples/
+ ├─ node-red-contrib-iotextra/
+ └─ Media/
+```
+
+### Directory Overview
+
+- **[`Documentation`](./Documentation/)** — Architecture notes, guides, and workflow documentation  
+- **[`IoTflow Forge`](./IoTflow%20Forge/)** — Configuration generator for MCU nodes  
+- **[`IoTflow Kernel`](./IoTflow%20Kernel/)** — Core MicroPython workflow engine  
+- **[`Node-RED Examples`](./Node-RED%20Examples/)** — Node-RED automation flows  
+- **[`node-red-contrib-iotextra`](./node-red-contrib-iotextra/)** — Node-RED IoTextra integration nodes  
+- **[`Media`](./Media/)** — Images and example materials  
+
+---
+
+## 🔗 Reference Materials
+
+### GPIO Examples for Device Integration
+
+GPIO reference examples for IoTextra and IoTsmart will be added in future updates by the development team.  
+
+These examples are not yet part of the hardware repositories.
+
+### Pinout Diagrams (MCU Hosts)
+
+Available inside each IoTsmart module folder:
+
+- `RP2040/docs/`  
+- `RP2350A/docs/`  
+- `ESP32-S3/docs/`  
+
+### SKU & Ordering Files
+
+- **[IoTextra-Digital:](https://github.com/makethingshappy/IoTextra-Digital/tree/main)** `SKU Digital IoTextra.pdf`  
+- **[IoTsmart:](https://github.com/makethingshappy/IoTsmart)** `SKU IoTsmart.pdf`
+
+(Located in each repository root.)
+
+---
+
+## 🔄 Planned Updates
+
+Future additions may include:
+
+- Extended automation templates  
+- Expanded MQTT topic models  
+- Enhanced IoTextra module integration  
+- Secure MQTT authentication options  
+- Additional distributed workflow examples  
+
+All updates will follow the unified documentation and versioning model.
+
+---
+
+## 📜 Licensing
+
+All IoTflow code, documentation, and media are licensed under:
+
+📄 **[`LICENSE`](./LICENSE)**
+
+Hardware licenses do not apply, this is a software-only repository.
