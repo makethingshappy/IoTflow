@@ -23,9 +23,57 @@ The tool creates configurations that can be stored in EEPROM on the device. The 
 The following tables show software compatibility for IoTbase/IoTsmart boards and IoTextra mezzanine modules:
 
 <!-- CARRIER_COMPATIBILITY_START -->
+# Carrier Board Software Compatibility
+
+| Carrier Board | IoTflow (Node-RED) | IoThome (Tasmota) |
+|---|:---:|:---:|
+| IoTbase PICO + Waveshare ESP32-S3-Pico | 🔶 Coming Soon | 🔶 Coming Soon |
+| IoTbase PICO + Waveshare ESP32-C6-Pico | 🔶 Coming Soon | 🔶 Coming Soon |
+| IoTbase PICO + RP2040 | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) | — |
+| IoTbase PICO + RP2350 | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) | — |
+| IoTbase NANO + Waveshare ESP32-S3-NANO | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoThome/blob/main/Documentation/Setup.md) |
+| IoTbase Feather + Adafruit ESP32-C6 Feather | 🔶 Coming Soon | 🔶 Coming Soon |
+| IoTbase Feather + FeatherS3[D] ESP32-S3 | 🔲 Planned | 🔲 Planned |
+| IoTsmart RP2040 | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) | — |
+| IoTsmart RP2350A | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) | — |
+| IoTsmart ESP32-S3 | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoThome/blob/main/Documentation/Setup.md) |
+| IoTsmart XIAO + XIAO RP2350 | 🔶 Coming Soon | — |
+| IoTsmart XIAO + XIAO ESP32-S3 | 🔶 Coming Soon | 🔶 Coming Soon |
+| IoTsmart XIAO + XIAO ESP32-C5 | 🔲 Planned | 🔲 Planned |
+| IoTsmart XIAO + XIAO ESP32-C6 | 🔲 Planned | 🔲 Planned |
+
+**Legend:**
+- [![Open](https://img.shields.io/badge/Open-green)]() — available, click to open
+- — — not applicable
+- 🔶 — Coming Soon
+- 🔲 — Planned
+
 <!-- CARRIER_COMPATIBILITY_END -->
 
 <!-- IOTEXTRA_NODERED_COMPATIBILITY_START -->
+# IoTextra Node-RED Compatibility
+
+| IoTextra Module | Node-RED | Blynk |
+|---|:---:|:---:|
+| Input | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/input_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/input_board_flow_with_blynk.json) |
+| Relay2 | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/relay2_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/relay2_board_flow_with_blynk.json) |
+| SSR Small | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/output_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/output_board_flow_with_blynk.json) |
+| MOSFET2 | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/output_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/output_board_flow_with_blynk.json) |
+| Quadro | 🔲 | 🔲 |
+| Octal | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/octal_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/octal_board_flow_with_blynk.json) |
+| Octal2 | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/octal_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/octal_board_flow_with_blynk.json) |
+| Octal3 | 🔲 | 🔲 |
+| Analog | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/analog_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/analog_board_flow_with_blynk.json) |
+| Analog2 | 🔲 | 🔲 |
+| Analog3 | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/analog_3_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/analog_3_board_flow_with_blynk.json) |
+| Combo | 🔶 | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/combo_board_flow_with_blynk.json) |
+| Combo2 | 🔲 | 🔲 |
+
+**Legend:**
+- [![Example](https://img.shields.io/badge/Example-yellowgreen)]() — available, click to open
+- 🔶 — Coming Soon
+- 🔲 — Planned
+
 <!-- IOTEXTRA_NODERED_COMPATIBILITY_END -->
 
 ### Supported Microcontrollers and System On Module (SOM) Microcontrollers
