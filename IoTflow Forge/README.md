@@ -20,6 +20,14 @@ The tool creates configurations that can be stored in EEPROM on the device. The 
 
 ## Features
 
+The following tables show software compatibility for IoTbase/IoTsmart boards and IoTextra mezzanine modules:
+
+<!-- CARRIER_COMPATIBILITY_START -->
+<!-- CARRIER_COMPATIBILITY_END -->
+
+<!-- IOTEXTRA_NODERED_COMPATIBILITY_START -->
+<!-- IOTEXTRA_NODERED_COMPATIBILITY_END -->
+
 ### Supported Microcontrollers and System On Module (SOM) Microcontrollers
 - **IoTbase PICO** - Compatible with Raspberry Pi Pico, Pico 2, Pico W, Pico 2W, Waveshare ESP32-S3 PICO
 - **IoTbase NANO** - Arduino Nano ESP32 or ESP32-S3 or Waveshare ESP32-S3 Nano
