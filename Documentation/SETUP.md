@@ -37,6 +37,12 @@ A universal framework for integrating IoTextra module series with Node-RED or si
 - 1 x USB Cable
 - *(Optional)* Computer to run Node-RED or a dedicated Edge device, e.g. Raspberry Pi 5
 
+<!-- CARRIER_COMPATIBILITY_START -->
+<!-- CARRIER_COMPATIBILITY_END -->
+
+<!-- IOTEXTRA_NODERED_COMPATIBILITY_START -->
+<!-- IOTEXTRA_NODERED_COMPATIBILITY_END -->
+
 ---
 
 ## Software Requirements
