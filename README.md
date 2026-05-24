@@ -310,6 +310,10 @@ Available inside each IoTsmart module folder:
 
 (Located in each repository root.)
 
+### Node-RED Flow Library
+
+- [node-red-contrib-iotextra on flows.nodered.org](https://flows.nodered.org/node/node-red-contrib-iotextra)
+
 ---
 
 ## 🔄 Planned Updates
