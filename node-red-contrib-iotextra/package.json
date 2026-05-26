@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-iotextra",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "A set of Node-RED nodes to control and monitor IoTextra hardware modules.",
     "author": "Arshia Keshvari",
     "contributors": [
