@@ -52,8 +52,8 @@ DIGITAL_INTERFACE_LABELS: Dict[str, str] = {
 ANALOG_INTERFACE_LABELS: Dict[str, str] = {
     "01": "IoTextra Analog",
     "21": "IoTextra Combo",
-    "02": "IoT Analog 2",
-    "03": "IoT Analog 3",
+    "02": "IoTextra Analog 2",
+    "03": "IoTextra Analog 3",
 }
 
 # Map common mezzanine names to their typical ADC count (used for analog modules)
@@ -91,7 +91,7 @@ ANALOG_INTERFACE_CODES = set(ANALOG_INTERFACE_LABELS.keys())
 # Mezzanines that do NOT support configurable ADC sampling rate
 UNCONFIGURABLE_ADC_SAMPLING_RATE_MEZZANINES = {
     "IoTextra Analog V3",
-    "IoT Analog 3",
+    "IoTextra Analog 3",
 }
 
 def mezzanine_supports_configurable_adc_sampling_rate(mezzanine_type: str) -> bool:
