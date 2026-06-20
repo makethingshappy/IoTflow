@@ -52,6 +52,7 @@ from mqtt_manager import MqttManager
 from EEPROM_driver import EEPROM
 from config_serializer import pack_config, unpack_config
 from analog_driver import AnalogDriver
+from iso1211_driver import Iso1211Driver
 
 # Constants for EEPROM
 EEPROM_ADDR = config.EEPROM_I2C_ADDR  # 0x57
@@ -66,6 +67,7 @@ END_MARKER = "<END>"
 
 driver = None
 analog_driver = None
+iso1211_driver = None
 mqtt = None
 eeprom = None
 last_input_state = -1
@@ -104,7 +106,7 @@ def send_data_back(data):
 
 def update_config(new_config):
     """Update config_dict and reinitialize driver/mqtt."""
-    global driver, mqtt, config_dict, analog_driver
+    global driver, mqtt, config_dict, analog_driver, iso1211_driver
     try:
         # Build hardware dict for AnalogDriver
         hardware_config = {
@@ -167,7 +169,17 @@ def update_config(new_config):
         
         # Reinitialize AnalogDriver
         analog_driver = AnalogDriver(i2c, analog_config)
-        
+
+        # Reinitialize ISO1211 sampled-mode DI driver.
+        # SAFETY: constructing this de-asserts every fgnd_gpio (TLP188 OFF) first.
+        if iso1211_driver:
+            iso1211_driver.deassert_all()
+        iso1211_driver = Iso1211Driver(
+            i2c,
+            config_dict['I2C_DEVICE_ADDR'],
+            config_dict['GPIO_HOST_PINS'],
+            config_dict.get('CHANNELS', [])
+        )
 
         # Reinitialize MqttManager
         if mqtt:
@@ -310,6 +322,22 @@ def check_and_publish_analog():
 #         if DEBUG:
 #             print(f"Error reading/publishing analog values: {e}")
 
+def check_and_publish_iso1211():
+    """
+    Advance the non-blocking ISO1211 sampled-mode scan by one step and publish
+    a DI value when a channel measurement completes (round-robin, one FGND
+    asserted at a time). Reuses the standard input topic structure.
+    """
+    if not iso1211_driver or not iso1211_driver.has_channels():
+        return
+    result = iso1211_driver.update()  # non-blocking; advances the state machine
+    if result is None:
+        return
+    channel, value, changed = result
+    if changed and mqtt:
+        topic = f"{config_dict['MQTT_BASE_TOPIC']}/input/{channel}"
+        mqtt.publish(topic, str(int(value)), retain=True)
+
 def read_eeprom_config():
     """Read configuration from EEPROM and return as dict."""
     global eeprom
@@ -332,7 +360,7 @@ def read_eeprom_config():
         return None
 
 def main():
-    global driver, mqtt, eeprom, buffer, analog_driver
+    global driver, mqtt, eeprom, buffer, analog_driver, iso1211_driver
     try:
         # Initialize I2C and EEPROM
         i2c = machine.I2C(config_dict['I2C_BUS_ID'], scl=machine.Pin(config_dict['I2C_SCL_PIN']), sda=machine.Pin(config_dict['I2C_SDA_PIN']), freq=400000)
@@ -380,6 +408,17 @@ def main():
         analog_driver = AnalogDriver(i2c, analog_config)
                          
         analog_driver.print_channel_configs()
+
+        # Initialize ISO1211 sampled-mode DI driver.
+        # SAFETY: its constructor de-asserts every fgnd_gpio (TLP188 OFF) as the
+        # absolute first action before any other ISO1211 initialisation.
+        iso1211_driver = Iso1211Driver(
+            i2c,
+            config_dict['I2C_DEVICE_ADDR'],
+            config_dict['GPIO_HOST_PINS'],
+            config_dict.get('CHANNELS', [])
+        )
+        iso1211_driver.print_channel_configs()
 
         mqtt = MqttManager(
             config_dict['MQTT_CLIENT_ID'],
@@ -481,6 +520,7 @@ def main():
                             print(f"Error checking MQTT messages: {e}")
                 check_and_publish_inputs()
                 check_and_publish_analog()
+                check_and_publish_iso1211()
                 if time.time() - last_status_update > config_dict['STATUS_UPDATE_INTERVAL_S']:
                     if mqtt:
                         mqtt.publish(f"{config_dict['MQTT_BASE_TOPIC']}/status", "online")

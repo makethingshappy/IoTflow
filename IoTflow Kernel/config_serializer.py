@@ -77,28 +77,38 @@ def pack_config(cfg: dict) -> bytes:
             ch["actions"]
         )
         
-        # ADC fields presence flag
-        adc_fields_present = 0
-        if "measurement_range" in ch: adc_fields_present |= 0x01
-        if "adc_hardware_gain" in ch: adc_fields_present |= 0x02
-        if "shunt_resistance" in ch: adc_fields_present |= 0x04
-        if "adc_offset" in ch: adc_fields_present |= 0x08
-        out += struct.pack("B", adc_fields_present)
+        # Channel fields presence flag
+        ch_fields_mask = 0
+        if "measurement_range" in ch: ch_fields_mask |= 0x01
+        if "adc_hardware_gain" in ch: ch_fields_mask |= 0x02
+        if "shunt_resistance" in ch: ch_fields_mask |= 0x04
+        if "adc_offset" in ch: ch_fields_mask |= 0x08
+        # sampled-mode channel fields
+        if ch.get("fgnd_gpio") is not None: ch_fields_mask |= 0x10
+        if ch.get("out_gpio") is not None: ch_fields_mask |= 0x20
+        out += struct.pack("B", ch_fields_mask)
 
-        # Pack ADC fields
-        if adc_fields_present & 0x01:
+        # Pack channel fields
+        if ch_fields_mask & 0x01:
             out += struct.pack("B", int(ch["measurement_range"], 2))
-        if adc_fields_present & 0x02:
+        if ch_fields_mask & 0x02:
             # 4-byte float
             out += struct.pack(">f", float(ch["adc_hardware_gain"]))
-        if adc_fields_present & 0x04:
+        if ch_fields_mask & 0x04:
             # 2-byte fixed point
             shunt = int(ch["shunt_resistance"] * 1000)
             out += struct.pack(">H", shunt)
-        if adc_fields_present & 0x08:
+        if ch_fields_mask & 0x08:
             # 2-byte fixed point
             offset_val = int(ch["adc_offset"] * 1000)
             out += struct.pack(">H", offset_val)
+        #   0x10 fgnd_gpio  -> ISO1211 sampled-mode DI
+        #   0x20 out_gpio   -> ISO1211 sampled-mode DI
+        if ch_fields_mask & 0x10:
+            out += struct.pack("B", int(ch["fgnd_gpio"]) & 0xFF)
+        if ch_fields_mask & 0x20:
+            out += struct.pack("B", int(ch["out_gpio"]) & 0xFF)
+
 
     # network
     out += pack_string(cfg["network"]["wifi_ssid"])
@@ -174,22 +184,30 @@ def unpack_config(buf: bytes) -> dict:
             "actions": actions
         }
 
-        adc_fields_present = buf[offset]; offset += 1
-        if adc_fields_present & 0x01:
+        ch_fields_mask = buf[offset]; offset += 1
+        if ch_fields_mask & 0x01:
             ch["measurement_range"] = "0b" + "{:08b}".format(buf[offset])
             offset += 1
-        if adc_fields_present & 0x02:
+        if ch_fields_mask & 0x02:
             gain = struct.unpack_from(">f", buf, offset)[0]
             ch["adc_hardware_gain"] = gain
             offset += 4
-        if adc_fields_present & 0x04:
+        if ch_fields_mask & 0x04:
             shunt = struct.unpack_from(">H", buf, offset)[0] / 1000.0
             ch["shunt_resistance"] = shunt
             offset += 2
-        if adc_fields_present & 0x08:
+        if ch_fields_mask & 0x08:
             offset_val = struct.unpack_from(">H", buf, offset)[0] / 1000.0
             ch["adc_offset"] = offset_val
             offset += 2
+        #   0x10 fgnd_gpio  -> ISO1211 sampled-mode DI
+        #   0x20 out_gpio   -> ISO1211 sampled-mode DI
+        if ch_fields_mask & 0x10:
+            ch["fgnd_gpio"] = buf[offset]
+            offset += 1
+        if ch_fields_mask & 0x20:
+            ch["out_gpio"] = buf[offset]
+            offset += 1
 
         cfg["channels"].append(ch)
 
