@@ -60,8 +60,8 @@ ANALOG_INTERFACE_LABELS: Dict[str, str] = {
 MEZZANINE_ADC_COUNT: Dict[str, int] = {
     "IoTextra Analog": 2,
     "IoTextra Combo": 1,
-    "IoTextra Analog V2": 2,
-    "IoTextra Analog V3": 1,
+    "IoTextra Analog 2": 2,
+    "IoTextra Analog 3": 1,
 }
 
 CHANNEL_TYPE_LABELS: Dict[str, str] = {
@@ -332,7 +332,7 @@ class Configuration:
     def get_max_channels(self):
         """Get maximum allowed channels based on mezzanine type"""
         # Combo and analog mezzanines limited to 4 channels
-        if self.mezzanine_type in ["IoTextra Combo", "IoTextra Analog", "IoTextra Analog V2"]:
+        if self.mezzanine_type in ["IoTextra Combo", "IoTextra Analog", "IoTextra Analog 2"]:
             return 4
         # Digital mezzanines allow 8 channels
         return 8
@@ -415,8 +415,8 @@ class Configurator:
             mezzanine_menu = [
                 "IoTextra Analog",
                 "IoTextra Combo",
-                "IoTextra Analog V2",
-                "IoTextra Analog V3",
+                "IoTextra Analog 2",
+                "IoTextra Analog 3",
             ]
         else:
             mezzanine_menu = [
@@ -424,7 +424,7 @@ class Configurator:
                 "IoTextra Octal",
                 "IoTextra Relay",
                 "IoTextra SSR Small",
-                "IoTextra MOSFET",
+                "IoTextra MOSFET 2",
                 "IoTextra Quadro",
             ]
 
@@ -722,7 +722,7 @@ class Configurator:
         print("IoTExtra Relay2: 0b11110000 (P4-P7 i.e. channels 5-8 are unused, 1-4 are outputs)")
         print("IoTExtra Input:  0b11111111 (all channels are inputs)")
         print("IoTExtra Octal:  0b00001111 (channels 0-3 outputs, 4-7 inputs)")
-        
+        print("IoTExtra Quadro: 0b11001111 (channels 0-3 and 6-7 inputs, 4-5 outputs)")
         # Get new configuration
         while True:
             config_input = input("\nEnter pin configuration (binary format preferred, e.g., 0b00001111, default: current): ").strip()
