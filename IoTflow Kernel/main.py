@@ -36,7 +36,7 @@ It handles:
 
 Author: Arshia Keshvari
 Role: Independent Developer, Engineer, and Project Author
-Last Updated: 2026-05-04
+Last Updated: 2026-06-21
 """
 
 import time
@@ -146,6 +146,8 @@ def update_config(new_config):
             freq=400000
         )
         
+        iso1211_channel_numbers = _build_iso1211_channel_set(config_dict.get('CHANNELS', []))
+
         # Reinitialize IotDriver
         driver = IotDriver(
             config_dict['I2C_BUS_ID'],
@@ -154,7 +156,8 @@ def update_config(new_config):
             config_dict['I2C_DEVICE_ADDR'],
             config_dict['GPIO_HOST_PINS'],
             config_dict['PIN_CONFIG'],
-            config_dict['HARDWARE_MODE']
+            config_dict['HARDWARE_MODE'],
+            iso1211_channels=iso1211_channel_numbers
         )
         
         # Build config for AnalogDriver with required fields
@@ -279,7 +282,7 @@ def check_and_publish_analog():
         if DEBUG:
             print(f"Error reading/publishing analog values: {e}")
 
-# Uncomment and comment above if you wish to publish values only when they change
+# Uncomment and comment above function if you wish to publish values only when they change
 # def check_and_publish_analog():
 #     """Reads analog channels and publishes their values only when they change."""
 #     global last_analog_values
@@ -297,12 +300,12 @@ def check_and_publish_analog():
 #                         # Try to get measurement_range, fallback to type if missing
 #                         if 'measurement_range' in ch_config:
 #                             range_code = int(ch_config['measurement_range'], 2)
-#                             range_config = analog_driver.range_configs.get(range_code)
+#                             config = analog_driver.range_configs.get(range_code)
 #                         else:
-#                             range_config = None
+#                             config = None
 #                         
 #                         # Determine unit based on type or config
-#                         if range_config and range_config['type'] == 'voltage':
+#                         if config and config['type'] == 'voltage':
 #                             unit = "V"
 #                         elif ch_config.get('type') == 'voltage':
 #                             unit = "V"
@@ -334,9 +337,24 @@ def check_and_publish_iso1211():
     if result is None:
         return
     channel, value, changed = result
-    if changed and mqtt:
-        topic = f"{config_dict['MQTT_BASE_TOPIC']}/input/{channel}"
+    if mqtt:
+        topic = f"{config_dict['MQTT_BASE_TOPIC']}/input/{channel + 1}"
         mqtt.publish(topic, str(int(value)), retain=True)
+        
+# Uncomment and comment above if statement, if you wish to publish values only when they change
+#     if changed and mqtt:
+#         topic = f"{config_dict['MQTT_BASE_TOPIC']}/input/{channel}"
+#         mqtt.publish(topic, str(int(value)), retain=True)
+        
+def _build_iso1211_channel_set(channels):
+    result = set()
+    for ch in channels:
+        try:
+            if int(ch.get('channel_type', -1)) == 3:  # ISO1211_CHANNEL_TYPE
+                result.add(int(ch['channel_number']))
+        except (TypeError, ValueError):
+            continue
+    return result
 
 def read_eeprom_config():
     """Read configuration from EEPROM and return as dict."""
@@ -383,6 +401,8 @@ def main():
         
         # print(config_dict)
 
+        iso1211_channel_numbers = _build_iso1211_channel_set(config_dict.get('CHANNELS', []))
+
         # Initialize Wi-Fi, IotDriver, and MqttManager
         driver = IotDriver(
             config_dict['I2C_BUS_ID'],
@@ -391,7 +411,8 @@ def main():
             config_dict['I2C_DEVICE_ADDR'],
             config_dict['GPIO_HOST_PINS'],
             config_dict['PIN_CONFIG'],
-            config_dict['HARDWARE_MODE']
+            config_dict['HARDWARE_MODE'],
+            iso1211_channels=iso1211_channel_numbers
         )
         
         # Build config for AnalogDriver with required fields

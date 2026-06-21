@@ -31,7 +31,7 @@
 
  Author: Arshia Keshvari
  Role: Independent Developer, Engineer, and Project Author
- Last Updated: 2026/05/21
+ Last Updated: 2026/06/21
 ==============================================================
 """
 
@@ -135,7 +135,7 @@ STATUS_UPDATE_INTERVAL_S = 30 # How often to publish status updates (in seconds)
 
 # --- ISO1211 sampled-mode digital input channels (IoTextra Quadro) ---
 # Sampled-mode channels (90V DC, 110V AC, 220V AC; JM jumper OPEN) are handled
-# by iso1211_driver.Iso1211Driver, NOT by the standard DI driver. Direct-mode
+# by iso1211_driver.py, NOT by the standard DI driver. Direct-mode
 # channels (12-60V DC, JM closed) stay on the existing DI driver unchanged.
 #
 # A sampled-mode channel uses channel_type "3" and these fields:
@@ -157,7 +157,7 @@ STATUS_UPDATE_INTERVAL_S = 30 # How often to publish status updates (in seconds)
 #      "interface_type": "11",
 #      "channel_number": 0, 
 #      "actions": 0, 
-#      "fgnd_gpio": 16
+#      "fgnd_gpio": 17
 #      # OUT via TCA9534 bit 0
 #     },
 #     {"name": "IN2", 
@@ -165,8 +165,8 @@ STATUS_UPDATE_INTERVAL_S = 30 # How often to publish status updates (in seconds)
 #      "interface_type": "01",
 #      "channel_number": 1, 
 #      "actions": 0, 
-#      "fgnd_gpio": 17, 
-#      "out_gpio": 22   # OUT via GPIO 22
+#      "fgnd_gpio": 18, 
+#      "out_gpio": 10   # OUT via GPIO 10
 #     },
 # ]
 

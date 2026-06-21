@@ -27,7 +27,7 @@ IoTextra ISO1211 Sampled-Mode Digital Input Driver
 ================================================================================
 
 Author: Arshia Keshvari
-Last Updated: 2026-06-15
+Last Updated: 2026-06-20
 
 Description
 -----------
