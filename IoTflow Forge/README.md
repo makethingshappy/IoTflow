@@ -1,6 +1,6 @@
 # IoTflow Forge Configuration Tool
 
-A comprehensive command-line interface tool for configuring digital and analog I/O nodes for IoTextra modules, managing configurations as JSON files, and communicating with devices via serial.
+A comprehensive command-line interface tool for configuring digital, analog, and combo I/O nodes for IoTextra modules, managing configurations as JSON files, and communicating with devices via serial.
 
 ## Overview
 
@@ -19,62 +19,6 @@ IoTflow Forge enables you to:
 The tool creates configurations that can be stored in EEPROM on the device. The firmware on the device uses these configurations to interact with channels via MQTT, enabling remote control and monitoring of I/O operations.
 
 ## Features
-
-The following tables show software compatibility for IoTbase/IoTsmart boards and IoTextra mezzanine modules:
-
-<!-- CARRIER_COMPATIBILITY_START -->
-# Carrier Board Software Compatibility
-
-| Carrier Board | IoTflow (Node-RED) | IoThome (Tasmota) |
-|---|:---:|:---:|
-| IoTbase PICO + Waveshare ESP32-S3-Pico | 🔶 Coming Soon | 🔶 Coming Soon |
-| IoTbase PICO + Waveshare ESP32-C6-Pico | 🔶 Coming Soon | 🔶 Coming Soon |
-| IoTbase PICO + RP2040 | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) | — |
-| IoTbase PICO + RP2350 | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) | — |
-| IoTbase NANO + Waveshare ESP32-S3-NANO | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoThome/blob/main/Documentation/Setup.md) |
-| IoTbase Feather + Adafruit ESP32-C6 Feather | 🔶 Coming Soon | 🔶 Coming Soon |
-| IoTbase Feather + FeatherS3[D] ESP32-S3 | 🔲 Planned | 🔲 Planned |
-| IoTsmart RP2040 | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) | — |
-| IoTsmart RP2350A | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) | — |
-| IoTsmart ESP32-S3 | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoThome/blob/main/Documentation/Setup.md) |
-| IoTsmart XIAO + XIAO RP2350 | 🔶 Coming Soon | — |
-| IoTsmart XIAO + XIAO ESP32-S3 | 🔶 Coming Soon | 🔶 Coming Soon |
-| IoTsmart XIAO + XIAO ESP32-C5 | 🔲 Planned | 🔲 Planned |
-| IoTsmart XIAO + XIAO ESP32-C6 | 🔲 Planned | 🔲 Planned |
-
-**Legend:**
-- [![Open](https://img.shields.io/badge/Open-green)]() — available, click to open
-- — — not applicable
-- 🔶 — Coming Soon
-- 🔲 — Planned
-
-<!-- CARRIER_COMPATIBILITY_END -->
-
-<!-- IOTEXTRA_NODERED_COMPATIBILITY_START -->
-# IoTextra Node-RED Compatibility
-
-| IoTextra Module | Node-RED | Blynk |
-|---|:---:|:---:|
-| Input | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/input_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/input_board_flow_with_blynk.json) |
-| Relay2 | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/relay2_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/relay2_board_flow_with_blynk.json) |
-| SSR Small | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/output_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/output_board_flow_with_blynk.json) |
-| MOSFET2 | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/output_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/output_board_flow_with_blynk.json) |
-| Quadro | 🔲 | 🔲 |
-| Octal | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/octal_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/octal_board_flow_with_blynk.json) |
-| Octal2 | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/octal_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/octal_board_flow_with_blynk.json) |
-| Octal3 | 🔲 | 🔲 |
-| Analog | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/analog_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/analog_board_flow_with_blynk.json) |
-| Analog2 | 🔲 | 🔲 |
-| Analog3 | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/analog_3_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/analog_3_board_flow_with_blynk.json) |
-| Combo | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/combo_board_flow.json) | [![Example](https://img.shields.io/badge/Example-yellowgreen)](https://github.com/makethingshappy/IoTflow/blob/main/Node-RED%20Examples/combo_board_flow_with_blynk.json) |
-| Combo2 | 🔲 | 🔲 |
-
-**Legend:**
-- [![Example](https://img.shields.io/badge/Example-yellowgreen)]() — available, click to open
-- 🔶 — Coming Soon
-- 🔲 — Planned
-
-<!-- IOTEXTRA_NODERED_COMPATIBILITY_END -->
 
 ### Supported Microcontrollers and System On Module (SOM) Microcontrollers
 - **IoTbase PICO** - Compatible with Raspberry Pi Pico, Pico 2, Pico W, Pico 2W, Waveshare ESP32-S3 PICO
@@ -95,10 +39,9 @@ Each module integrates a complete MCU environment, and different form factors (s
 #### Digital I/O Mezzanines
 - IoTextra Input
 - IoTextra Octal
-- IoTextra Quadro
 - IoTextra Relay
 - IoTextra SSR Small
-- IoTextra MOSFET 2
+- IoTextra Quadro (ISO1211 sampled-mode digital input support)
 - Custom digital mezzanines
 
 **Supported Digital Interface Types:**
@@ -110,16 +53,14 @@ Each module integrates a complete MCU environment, and different form factors (s
 - IoTextra Analog (2x TI ADC1115 ADCs)
 - IoTextra Combo (1 TI ADC1115 ADC + digital I/O)
 - IoTextra Analog2 (Coming Soon)
-- IoTextra Analog3 (1 TI ADS7828 ADC)
-- Note: IoTflow configures the I²C bus at **400 kHz (Fast mode)** by default.
+- IoTextra Analog3 (Future)
 - Custom analog mezzanines
 
 **Supported Analog Interface Types:**
 - **01** - IoTextra Analog
 - **21** - IoTextra Combo
-- **02** - IoTextra Analog 2
-- **03** - IoTextra Analog 3
-- Note: IoTextra Analog 3 (ADS7828 ADC) I²C bus is configured at **400 kHz (Fast mode)** by default
+- **02** - IoT Analog 2
+- **03** - IoT Analog 3
 
 ### Channel Configuration
 
@@ -144,6 +85,16 @@ Each channel supports:
   - Voltage: 0-0.5V, 0-5V, 0-10V, ±0.5V, ±5V, ±10V
   - Current: 0-20mA, ±20mA, 4-20mA, 0-40mA
 
+#### ISO1211 Sampled-Mode Channels (Type "3")
+- **Name**: Up to 8 alphanumeric characters (unique per configuration)
+- **Type**: "3" (ISO1211 sampled-mode digital input)
+- **Interface**: GPIO ("01") or I2C ("11")
+- **Channel Number**: 0-7
+- **Actions**: 0 = Read-only (sampled-mode channels are read-only)
+- **fgnd_gpio**: Required HOST pin controlling the TLP188 FGND line
+- **out_gpio**: Optional HOST pin to drive an output signal when using GPIO interface
+- **Supported on**: IoTextra Quadro and other boards that expose ISO1211 sampled DI
+
 #### Per-Channel ADC Calibration (Analog Only)
 Each analog channel can have individual calibration parameters:
 - **ADC Hardware Gain (K)**: Division factor set by hardware resistors
@@ -152,7 +103,7 @@ Each analog channel can have individual calibration parameters:
   - Custom values supported for specialized configurations
 - **Shunt Resistance**: Current measurement shunt value in Ohms
   - Default: 0.249Ω
-  - Old verions of IoTextra Analog boards typically use 0.12Ω (120 Ohms)
+  - IoTextra Analog V1 boards typically use 0.12Ω (120 Ohms)
   - Custom values supported if you want to change the hardware
 - **ADC Offset**: Voltage offset compensation in volts
   - Default: 0.0V
@@ -178,7 +129,6 @@ Each analog channel can have individual calibration parameters:
   - SDA pin (default: 20)
   - SCL pin (default: 21)
   - Device address for I/O expander (default: 0x3f or 0x27)
-  - Bus frequency: IoTflow firmware initializes I²C at **400 kHz** by default (I²C Fast mode / F/S mode @ 400 kHz)
 - **EEPROM Settings**: 
   - I2C address (default: 0x57)
   - Size in bytes (default: 1024)
@@ -199,8 +149,7 @@ Each analog channel can have individual calibration parameters:
   - Examples:
     - IoTExtra Relay2: "0b11110000" (channels 1-4 outputs, 5-8 unused)
     - IoTExtra Input: "0b11111111" (all inputs)
-    - IoTExtra Octal: "0b00001111" (channels 4-7 outputs, 0-3 inputs)
-    - IoTextra Quadro: "0b11001111" (channels 0-3 and 6-7 inputs, 4-5 outputs)
+    - IoTExtra Octal: "0b00001111" (channels 0-3 outputs, 4-7 inputs)
 - **Status Update Interval**: Frequency for publishing status updates in seconds (default: 30)
 
 ### Serial Communication
@@ -274,6 +223,14 @@ The tool guides you through:
   - Choose channel number (0-7)
   - Set actions (read-only or read+write)
   
+- **ISO1211 Sampled-Mode Channels**:
+  - Assign unique name (max 8 characters)
+  - Select interface type (GPIO or I2C)
+  - Choose channel number (0-7)
+  - Set required `fgnd_gpio` pin for TLP188 FGND
+  - Optionally set `out_gpio` pin when using GPIO interface
+  - Actions are always read-only
+
 - **Analog Channels**:
   - Assign unique name (max 8 characters)
   - Select measurement range (voltage/current)
@@ -329,6 +286,15 @@ Configurations are saved as JSON files with the following structure:
       "adc_hardware_gain": 0.23761904761904762,
       "shunt_resistance": 0.249,
       "adc_offset": 0.0
+    },
+    {
+      "name": "QuadA",
+      "channel_type": "3",
+      "interface_type": "01",
+      "channel_number": 1,
+      "actions": 0,
+      "fgnd_gpio": 5,
+      "out_gpio": 6
     }
   ],
   "network": {
@@ -389,7 +355,7 @@ Configurations are saved as JSON files with the following structure:
 
 #### Channel Settings
 - `name`: Channel identifier (max 8 chars)
-- `channel_type`: "1" (digital) or "2" (analog)
+- `channel_type`: "1" (digital), "2" (analog) or "3" (ISO1211 sampled-mode digital)
 - `interface_type`: Interface code
 - `channel_number`: Physical channel (0-7)
 - `actions`: 0 (read-only) or 1 (read+write)
@@ -397,6 +363,8 @@ Configurations are saved as JSON files with the following structure:
 - `adc_hardware_gain`: K factor (analog only)
 - `shunt_resistance`: Shunt value in Ω (analog only)
 - `adc_offset`: Offset in V (analog only)
+- `fgnd_gpio`: Required HOST pin for ISO1211 sampled-mode channels
+- `out_gpio`: Optional HOST pin for ISO1211 GPIO output
 
 #### Pin Configuration (Digital Only)
 - `pin_config`: Binary string (e.g., "0b00001111")
@@ -533,6 +501,8 @@ Compensates for systematic measurement errors:
 ## License
 
 This tool is part of the IoTflow project for IoTextra Hardware Modules.
+
+📄 **[`LICENSE`](./LICENSE)**
 
 ---
 
