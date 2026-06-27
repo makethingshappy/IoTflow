@@ -31,13 +31,13 @@ variants of the IoTextra Digital I/O boards.
 
 Author: Arshia Keshvari
 Role: Independent Developer, Engineer, and Project Author
-Last Updated: 2025-11-23
+Last Updated: 2026-06-21
 """
 
 import machine
 
 class IotDriver:
-    def __init__(self, bus_id, sda_pin, scl_pin, device_address, gpio_host_pins, pin_config, hardware_mode):
+    def __init__(self, bus_id, sda_pin, scl_pin, device_address, gpio_host_pins, pin_config, hardware_mode, iso1211_channels=None):
         self.device_address = device_address
         self.i2c = None
         self.gpio_host_pins = gpio_host_pins
@@ -46,6 +46,10 @@ class IotDriver:
         self.output_pin_state = 0b11111111 # All relays off initially -> this is to track state of the outputs on the firmware
         self.gpio_pins = {} # to store machine.Pin objects for GPIO mode through a HOST connector
 
+        # Channels owned by the ISO1211 driver (0-based channel_number).
+        # read_all_inputs() returns None for these, just like output pins.
+        self.iso1211_channels = set(iso1211_channels) if iso1211_channels else set()
+    
         # TCA9534 register addresses
         self.OUTPUT_PORT_REGISTER = 0x01
         self.INPUT_PORT_REGISTER = 0x00
@@ -113,7 +117,9 @@ class IotDriver:
                 result = []
                 # pin_config: 1 means input, 0 means output
                 for i in range(8):
-                    if (self.pin_config >> i) & 0x01:
+                    if i in self.iso1211_channels:   # owned by ISO1211 — don't touch
+                        result.append(None)
+                    elif (self.pin_config >> i) & 0x01:
                         # input pin: get its state
                         state = (byte_val >> i) & 0x01
                         # reversing state so that 1 means there is signal and 0 means no signal
@@ -130,7 +136,9 @@ class IotDriver:
             result = []
             for i in range(8):
                 channel = i + 1
-                if (self.pin_config >> i) & 0x01:
+                if i in self.iso1211_channels:   # owned by ISO1211 — don't touch
+                    result.append(None)
+                elif (self.pin_config >> i) & 0x01:
                     # It's an input, read its value
                     if channel in self.gpio_pins:
                         state = self.gpio_pins[channel].value()
@@ -145,6 +153,3 @@ class IotDriver:
         
 
         return None
-
-
-
