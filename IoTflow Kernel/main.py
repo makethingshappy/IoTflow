@@ -91,7 +91,7 @@ config_dict = {
     'STATUS_UPDATE_INTERVAL_S': config.STATUS_UPDATE_INTERVAL_S,
     'ADC_I2C_ADDRS': [hex(addr) for addr in config.ADC_I2C_ADDRS],
     'ADC_SAMPLING_RATE': config.ADC_SAMPLING_RATE,
-    'CHANNELS': config.CHANNELS,
+    'channels': config.CHANNELS,
 }
 
 def send_data_back(data):
@@ -133,10 +133,9 @@ def update_config(new_config):
             'STATUS_UPDATE_INTERVAL_S': new_config['status_update_interval_s'],
             'ADC_I2C_ADDRS': new_config['hardware'].get('adc_i2c_addrs', []),
             'ADC_SAMPLING_RATE': new_config['hardware'].get('adc_sampling_rate', 128),
-            'CHANNELS': new_config.get('channels', []),
+            'channels': new_config.get('channels', []),
             'HARDWARE': hardware_config,
         })
-
 
         # Reinitialize I2C
         i2c = machine.I2C(
@@ -146,7 +145,7 @@ def update_config(new_config):
             freq=400000
         )
         
-        iso1211_channel_numbers = _build_iso1211_channel_set(config_dict.get('CHANNELS', []))
+        iso1211_channel_numbers = _build_iso1211_channel_set(config_dict.get('channels', []))
 
         # Reinitialize IotDriver
         driver = IotDriver(
@@ -163,7 +162,7 @@ def update_config(new_config):
         # Build config for AnalogDriver with required fields
         analog_config = {
             'mezzanine_type': new_config.get('mezzanine_type', ''),
-            'channels': config_dict.get('CHANNELS', []),
+            'channels': config_dict.get('channels', []),
             'hardware': {
                 'adc_i2c_addrs': config_dict.get('ADC_I2C_ADDRS', []),
                 'adc_sampling_rate': config_dict.get('ADC_SAMPLING_RATE', 128),
@@ -181,7 +180,7 @@ def update_config(new_config):
             i2c,
             config_dict['I2C_DEVICE_ADDR'],
             config_dict['GPIO_HOST_PINS'],
-            config_dict.get('CHANNELS', [])
+            config_dict.get('channels', [])
         )
 
         # Reinitialize MqttManager
@@ -401,7 +400,7 @@ def main():
         
         # print(config_dict)
 
-        iso1211_channel_numbers = _build_iso1211_channel_set(config_dict.get('CHANNELS', []))
+        iso1211_channel_numbers = _build_iso1211_channel_set(config_dict.get('channels', []))
 
         # Initialize Wi-Fi, IotDriver, and MqttManager
         driver = IotDriver(
@@ -418,7 +417,7 @@ def main():
         # Build config for AnalogDriver with required fields
         analog_config = {
             'mezzanine_type': config_dict.get('MEZZANINE_TYPE', ''),
-            'channels': config_dict.get('CHANNELS', []),
+            'channels': config_dict.get('channels', []),
             'hardware': {
                 'adc_i2c_addrs': config_dict.get('ADC_I2C_ADDRS', []),
                 'adc_sampling_rate': config_dict.get('ADC_SAMPLING_RATE', 128),
@@ -437,7 +436,7 @@ def main():
             i2c,
             config_dict['I2C_DEVICE_ADDR'],
             config_dict['GPIO_HOST_PINS'],
-            config_dict.get('CHANNELS', [])
+            config_dict.get('channels', [])
         )
         iso1211_driver.print_channel_configs()
 
@@ -583,4 +582,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
