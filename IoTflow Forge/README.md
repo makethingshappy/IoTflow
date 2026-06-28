@@ -504,7 +504,7 @@ Compensates for systematic measurement errors:
 
 This tool is part of the IoTflow project for IoTextra Hardware Modules.
 
-📄 **[`LICENSE`](./LICENSE)**
+📄 **[`LICENSE`](../LICENSE)**
 
 ---
 
