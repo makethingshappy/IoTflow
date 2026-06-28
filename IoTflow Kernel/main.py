@@ -36,7 +36,7 @@ It handles:
 
 Author: Arshia Keshvari
 Role: Independent Developer, Engineer, and Project Author
-Last Updated: 2026-05-04
+Last Updated: 2026-06-21
 """
 
 import time
@@ -52,6 +52,7 @@ from mqtt_manager import MqttManager
 from EEPROM_driver import EEPROM
 from config_serializer import pack_config, unpack_config
 from analog_driver import AnalogDriver
+from iso1211_driver import Iso1211Driver
 
 # Constants for EEPROM
 EEPROM_ADDR = config.EEPROM_I2C_ADDR  # 0x57
@@ -66,6 +67,7 @@ END_MARKER = "<END>"
 
 driver = None
 analog_driver = None
+iso1211_driver = None
 mqtt = None
 eeprom = None
 last_input_state = -1
@@ -89,7 +91,7 @@ config_dict = {
     'STATUS_UPDATE_INTERVAL_S': config.STATUS_UPDATE_INTERVAL_S,
     'ADC_I2C_ADDRS': [hex(addr) for addr in config.ADC_I2C_ADDRS],
     'ADC_SAMPLING_RATE': config.ADC_SAMPLING_RATE,
-    'CHANNELS': config.CHANNELS,
+    'channels': config.CHANNELS,
 }
 
 def send_data_back(data):
@@ -104,7 +106,7 @@ def send_data_back(data):
 
 def update_config(new_config):
     """Update config_dict and reinitialize driver/mqtt."""
-    global driver, mqtt, config_dict, analog_driver
+    global driver, mqtt, config_dict, analog_driver, iso1211_driver
     try:
         # Build hardware dict for AnalogDriver
         hardware_config = {
@@ -131,10 +133,9 @@ def update_config(new_config):
             'STATUS_UPDATE_INTERVAL_S': new_config['status_update_interval_s'],
             'ADC_I2C_ADDRS': new_config['hardware'].get('adc_i2c_addrs', []),
             'ADC_SAMPLING_RATE': new_config['hardware'].get('adc_sampling_rate', 128),
-            'CHANNELS': new_config.get('channels', []),
+            'channels': new_config.get('channels', []),
             'HARDWARE': hardware_config,
         })
-
 
         # Reinitialize I2C
         i2c = machine.I2C(
@@ -144,6 +145,8 @@ def update_config(new_config):
             freq=400000
         )
         
+        iso1211_channel_numbers = _build_iso1211_channel_set(config_dict.get('channels', []))
+
         # Reinitialize IotDriver
         driver = IotDriver(
             config_dict['I2C_BUS_ID'],
@@ -152,13 +155,14 @@ def update_config(new_config):
             config_dict['I2C_DEVICE_ADDR'],
             config_dict['GPIO_HOST_PINS'],
             config_dict['PIN_CONFIG'],
-            config_dict['HARDWARE_MODE']
+            config_dict['HARDWARE_MODE'],
+            iso1211_channels=iso1211_channel_numbers
         )
         
         # Build config for AnalogDriver with required fields
         analog_config = {
             'mezzanine_type': new_config.get('mezzanine_type', ''),
-            'channels': config_dict.get('CHANNELS', []),
+            'channels': config_dict.get('channels', []),
             'hardware': {
                 'adc_i2c_addrs': config_dict.get('ADC_I2C_ADDRS', []),
                 'adc_sampling_rate': config_dict.get('ADC_SAMPLING_RATE', 128),
@@ -167,7 +171,17 @@ def update_config(new_config):
         
         # Reinitialize AnalogDriver
         analog_driver = AnalogDriver(i2c, analog_config)
-        
+
+        # Reinitialize ISO1211 sampled-mode DI driver.
+        # SAFETY: constructing this de-asserts every fgnd_gpio (TLP188 OFF) first.
+        if iso1211_driver:
+            iso1211_driver.deassert_all()
+        iso1211_driver = Iso1211Driver(
+            i2c,
+            config_dict['I2C_DEVICE_ADDR'],
+            config_dict['GPIO_HOST_PINS'],
+            config_dict.get('channels', [])
+        )
 
         # Reinitialize MqttManager
         if mqtt:
@@ -267,7 +281,7 @@ def check_and_publish_analog():
         if DEBUG:
             print(f"Error reading/publishing analog values: {e}")
 
-# Uncomment and comment above if you wish to publish values only when they change
+# Uncomment and comment above function if you wish to publish values only when they change
 # def check_and_publish_analog():
 #     """Reads analog channels and publishes their values only when they change."""
 #     global last_analog_values
@@ -285,12 +299,12 @@ def check_and_publish_analog():
 #                         # Try to get measurement_range, fallback to type if missing
 #                         if 'measurement_range' in ch_config:
 #                             range_code = int(ch_config['measurement_range'], 2)
-#                             range_config = analog_driver.range_configs.get(range_code)
+#                             config = analog_driver.range_configs.get(range_code)
 #                         else:
-#                             range_config = None
+#                             config = None
 #                         
 #                         # Determine unit based on type or config
-#                         if range_config and range_config['type'] == 'voltage':
+#                         if config and config['type'] == 'voltage':
 #                             unit = "V"
 #                         elif ch_config.get('type') == 'voltage':
 #                             unit = "V"
@@ -309,6 +323,37 @@ def check_and_publish_analog():
 #     except Exception as e:
 #         if DEBUG:
 #             print(f"Error reading/publishing analog values: {e}")
+
+def check_and_publish_iso1211():
+    """
+    Advance the non-blocking ISO1211 sampled-mode scan by one step and publish
+    a DI value when a channel measurement completes (round-robin, one FGND
+    asserted at a time). Reuses the standard input topic structure.
+    """
+    if not iso1211_driver or not iso1211_driver.has_channels():
+        return
+    result = iso1211_driver.update()  # non-blocking; advances the state machine
+    if result is None:
+        return
+    channel, value, changed = result
+    if mqtt:
+        topic = f"{config_dict['MQTT_BASE_TOPIC']}/input/{channel + 1}"
+        mqtt.publish(topic, str(int(value)), retain=True)
+        
+# Uncomment and comment above if statement, if you wish to publish values only when they change
+#     if changed and mqtt:
+#         topic = f"{config_dict['MQTT_BASE_TOPIC']}/input/{channel}"
+#         mqtt.publish(topic, str(int(value)), retain=True)
+        
+def _build_iso1211_channel_set(channels):
+    result = set()
+    for ch in channels:
+        try:
+            if int(ch.get('channel_type', -1)) == 3:  # ISO1211_CHANNEL_TYPE
+                result.add(int(ch['channel_number']))
+        except (TypeError, ValueError):
+            continue
+    return result
 
 def read_eeprom_config():
     """Read configuration from EEPROM and return as dict."""
@@ -332,7 +377,7 @@ def read_eeprom_config():
         return None
 
 def main():
-    global driver, mqtt, eeprom, buffer, analog_driver
+    global driver, mqtt, eeprom, buffer, analog_driver, iso1211_driver
     try:
         # Initialize I2C and EEPROM
         i2c = machine.I2C(config_dict['I2C_BUS_ID'], scl=machine.Pin(config_dict['I2C_SCL_PIN']), sda=machine.Pin(config_dict['I2C_SDA_PIN']), freq=400000)
@@ -355,6 +400,8 @@ def main():
         
         # print(config_dict)
 
+        iso1211_channel_numbers = _build_iso1211_channel_set(config_dict.get('channels', []))
+
         # Initialize Wi-Fi, IotDriver, and MqttManager
         driver = IotDriver(
             config_dict['I2C_BUS_ID'],
@@ -363,13 +410,14 @@ def main():
             config_dict['I2C_DEVICE_ADDR'],
             config_dict['GPIO_HOST_PINS'],
             config_dict['PIN_CONFIG'],
-            config_dict['HARDWARE_MODE']
+            config_dict['HARDWARE_MODE'],
+            iso1211_channels=iso1211_channel_numbers
         )
         
         # Build config for AnalogDriver with required fields
         analog_config = {
             'mezzanine_type': config_dict.get('MEZZANINE_TYPE', ''),
-            'channels': config_dict.get('CHANNELS', []),
+            'channels': config_dict.get('channels', []),
             'hardware': {
                 'adc_i2c_addrs': config_dict.get('ADC_I2C_ADDRS', []),
                 'adc_sampling_rate': config_dict.get('ADC_SAMPLING_RATE', 128),
@@ -380,6 +428,17 @@ def main():
         analog_driver = AnalogDriver(i2c, analog_config)
                          
         analog_driver.print_channel_configs()
+
+        # Initialize ISO1211 sampled-mode DI driver.
+        # SAFETY: its constructor de-asserts every fgnd_gpio (TLP188 OFF) as the
+        # absolute first action before any other ISO1211 initialisation.
+        iso1211_driver = Iso1211Driver(
+            i2c,
+            config_dict['I2C_DEVICE_ADDR'],
+            config_dict['GPIO_HOST_PINS'],
+            config_dict.get('channels', [])
+        )
+        iso1211_driver.print_channel_configs()
 
         mqtt = MqttManager(
             config_dict['MQTT_CLIENT_ID'],
@@ -481,6 +540,7 @@ def main():
                             print(f"Error checking MQTT messages: {e}")
                 check_and_publish_inputs()
                 check_and_publish_analog()
+                check_and_publish_iso1211()
                 if time.time() - last_status_update > config_dict['STATUS_UPDATE_INTERVAL_S']:
                     if mqtt:
                         mqtt.publish(f"{config_dict['MQTT_BASE_TOPIC']}/status", "online")
@@ -522,4 +582,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

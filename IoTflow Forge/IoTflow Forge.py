@@ -31,7 +31,7 @@ in JSON format for seamless integration with IoTflow systems.
 
 Author: Arshia Keshvari
 Role: Independent Developer, Engineer, and Project Author
-Last Updated: 2026-05-21
+Last Updated: 2026-06-20
 """
 
 import json
@@ -67,6 +67,7 @@ MEZZANINE_ADC_COUNT: Dict[str, int] = {
 CHANNEL_TYPE_LABELS: Dict[str, str] = {
     "1": "Bool (Digital I/O)",
     "2": "Int (Analog Input)",
+    "3": "ISO1211 Sampled DI",
 }
 
 ANALOG_MEASUREMENT_RANGES = [
@@ -89,8 +90,8 @@ ANALOG_INTERFACE_CODES = set(ANALOG_INTERFACE_LABELS.keys())
 
 # Mezzanines that do NOT support configurable ADC sampling rate
 UNCONFIGURABLE_ADC_SAMPLING_RATE_MEZZANINES = {
+    "IoTextra Analog V3",
     "IoTextra Analog 3",
-    "IoT Analog 3",
 }
 
 def mezzanine_supports_configurable_adc_sampling_rate(mezzanine_type: str) -> bool:
@@ -133,6 +134,7 @@ class ChannelType(Enum):
     """Channel types"""
     BIT = "1"  # Digital bit type
     ANALOG_INT = "2"  # Analog input (integer scaled)
+    ISO1211 = "3"  # ISO1211 sampled-mode digital input
 
 class HardwareMode(Enum):
     """Hardware modes"""
@@ -152,6 +154,8 @@ class Channel:
     adc_hardware_gain: Optional[float] = None
     shunt_resistance: Optional[float] = None
     adc_offset: Optional[float] = None
+    fgnd_gpio: Optional[int] = None
+    out_gpio: Optional[int] = None
     
     def __post_init__(self):
         # Validate channel name length
@@ -214,6 +218,44 @@ class Channel:
                     float(self.adc_offset)
                 except (TypeError, ValueError):
                     raise ValueError("adc_offset must be a numeric value")
+
+        elif self.channel_type == ChannelType.ISO1211.value:
+            if self.interface_type not in {InterfaceType.GPIO.value, InterfaceType.I2C_TCA9534.value}:
+                raise ValueError(f"Invalid ISO1211 interface type: {self.interface_type}")
+
+            if not 0 <= self.channel_number <= 7:
+                raise ValueError("ISO1211 channel number must be between 0 and 7")
+
+            if self.actions != 0:
+                raise ValueError("ISO1211 sampled-mode channels are read-only; actions must be 0")
+
+            # ISO1211 channels do not use analog measurement ranges or ADC calibration
+            self.measurement_range = None
+            self.adc_hardware_gain = None
+            self.shunt_resistance = None
+            self.adc_offset = None
+
+            if self.fgnd_gpio is None:
+                raise ValueError("ISO1211 sampled-mode channels require a valid fgnd_gpio")
+            try:
+                fgnd = int(self.fgnd_gpio)
+                if fgnd < 0:
+                    raise ValueError
+                self.fgnd_gpio = fgnd
+            except (TypeError, ValueError):
+                raise ValueError("fgnd_gpio must be a non-negative integer")
+
+            if self.interface_type == InterfaceType.GPIO.value:
+                if self.out_gpio is not None:
+                    try:
+                        out_pin = int(self.out_gpio)
+                        if out_pin < 0:
+                            raise ValueError
+                        self.out_gpio = out_pin
+                    except (TypeError, ValueError):
+                        raise ValueError("out_gpio must be a non-negative integer")
+            else:
+                self.out_gpio = None
 
         else:
             raise ValueError(f"Unknown channel type: {self.channel_type}")
@@ -380,10 +422,10 @@ class Configurator:
             mezzanine_menu = [
                 "IoTextra Input",
                 "IoTextra Octal",
-                "IoTextra Quadro",
                 "IoTextra Relay",
                 "IoTextra SSR Small",
                 "IoTextra MOSFET 2",
+                "IoTextra Quadro",
             ]
 
         print("\nAvailable mezzanine types:")
@@ -679,9 +721,8 @@ class Configurator:
         print("\nExamples:")
         print("IoTExtra Relay2: 0b11110000 (P4-P7 i.e. channels 5-8 are unused, 1-4 are outputs)")
         print("IoTExtra Input:  0b11111111 (all channels are inputs)")
-        print("IoTExtra Octal:  0b00001111 (channels 4-7 outputs, 0-3 inputs)")
-        print("IoTextra Quadro: 0b11001111 (channels 0-3 and 6-7 inputs, 4-5 outputs)")
-        
+        print("IoTExtra Octal:  0b00001111 (channels 0-3 outputs, 4-7 inputs)")
+        print("IoTExtra Quadro: 0b11001111 (channels 0-3 and 6-7 inputs, 4-5 outputs)")
         # Get new configuration
         while True:
             config_input = input("\nEnter pin configuration (binary format preferred, e.g., 0b00001111, default: current): ").strip()
@@ -795,6 +836,11 @@ class Configurator:
                 (ChannelType.BIT.value, CHANNEL_TYPE_LABELS[ChannelType.BIT.value]),
                 (ChannelType.ANALOG_INT.value, CHANNEL_TYPE_LABELS[ChannelType.ANALOG_INT.value])
             ]
+        elif self.config.mezzanine_type == "IoTextra Quadro":
+            channel_type_options = [
+                (ChannelType.BIT.value, CHANNEL_TYPE_LABELS[ChannelType.BIT.value]),
+                (ChannelType.ISO1211.value, CHANNEL_TYPE_LABELS[ChannelType.ISO1211.value])
+            ]
         elif self.is_analog_module:
             channel_type_options = [(ChannelType.ANALOG_INT.value, CHANNEL_TYPE_LABELS[ChannelType.ANALOG_INT.value])]
         else:
@@ -838,6 +884,20 @@ class Configurator:
             else:
                 # For non-combo (pure digital) mezzanines default to GPIO
                 interface_type = InterfaceType.GPIO.value
+        elif channel_type == ChannelType.ISO1211.value:
+            print("ISO1211 sampled-mode channels require a digital interface:")
+            print(f"1. {DIGITAL_INTERFACE_LABELS[InterfaceType.GPIO.value]} ({InterfaceType.GPIO.value})")
+            print(f"2. {DIGITAL_INTERFACE_LABELS[InterfaceType.I2C_TCA9534.value]} ({InterfaceType.I2C_TCA9534.value})")
+            while True:
+                choice = input("Select interface type for this ISO1211 channel (1-2): ").strip()
+                if choice == "1":
+                    interface_type = InterfaceType.GPIO.value
+                    break
+                elif choice == "2":
+                    interface_type = InterfaceType.I2C_TCA9534.value
+                    break
+                else:
+                    print("Please select 1 or 2.")
         else:
             # For analog channels prefer per-mezzanine defaults. If this is an
             # analog mezzanine and known to be the IoTextra Combo use that code,
@@ -885,7 +945,7 @@ class Configurator:
             except ValueError:
                 print("Please enter a valid number.")
 
-        # Actions / measurement range
+        # Actions / measurement range / sampled-mode fields
         if channel_type == ChannelType.BIT.value:
             print("Channel actions:")
             print("0. Read only")
@@ -900,6 +960,33 @@ class Configurator:
                 except ValueError:
                     print("Please enter a valid number.")
             measurement_range = None
+            fgnd_gpio = None
+            out_gpio = None
+        elif channel_type == ChannelType.ISO1211.value:
+            actions = 0
+            measurement_range = None
+            print("ISO1211 sampled-mode channels are read-only. Actions set to 0.")
+
+            while True:
+                fgnd_input = input("Enter fgnd_gpio pin number (HOST pin controlling TLP188 FGND): ").strip()
+                try:
+                    fgnd_gpio = int(fgnd_input)
+                    if fgnd_gpio < 0:
+                        raise ValueError
+                    break
+                except ValueError:
+                    print("Please enter a valid non-negative integer for fgnd_gpio.")
+
+            out_gpio = None
+            if interface_type == InterfaceType.GPIO.value:
+                out_input = input("Optional 'out_gpio pin' number (leave blank if not needed): ").strip()
+                if out_input:
+                    try:
+                        out_gpio = int(out_input)
+                        if out_gpio < 0:
+                            raise ValueError
+                    except ValueError:
+                        print("Invalid out_gpio value. It will be omitted and defaulted by the firmware.")
         else:
             actions = 0
             print("Analog input channels are read-only. Actions set to 0 (Read).")
@@ -927,7 +1014,7 @@ class Configurator:
             # shunt_resistance
             default_shunt = DEFAULT_SHUNT_RESISTANCE
             print("\n--- Current Shunt Resistance Settings ---")
-            print(f"Select the shunt resistance value used in your hardware (in Ohms).")
+            print("Select the shunt resistance value used in your hardware (in Ohms).")
             print(f"  Example: 0.12 = 120 Ohms, 0.249 = 249 Ohms")
             print(f"  IoTextra Analog V1 Boards use a 120 Ohm shunt which you can measure using a multimeter.")
             print(f"  You can set a different value according to your hardware setup of your IoTextra module.")
@@ -963,10 +1050,20 @@ class Configurator:
                 adc_hardware_gain = None
                 shunt_resistance = None
                 adc_offset = None
+                fgnd_gpio = None
+                out_gpio = None
+            elif channel_type == ChannelType.ISO1211.value:
+                adc_hardware_gain = None
+                shunt_resistance = None
+                adc_offset = None
+                fgnd_gpio = locals().get('fgnd_gpio')
+                out_gpio = locals().get('out_gpio')
             else:
                 adc_hardware_gain = locals().get('adc_hardware_gain', None)
                 shunt_resistance = locals().get('shunt_resistance', None)
                 adc_offset = locals().get('adc_offset', None)
+                fgnd_gpio = None
+                out_gpio = None
 
             channel = Channel(
                 name=name,
@@ -978,6 +1075,8 @@ class Configurator:
                 adc_hardware_gain=adc_hardware_gain,
                 shunt_resistance=shunt_resistance,
                 adc_offset=adc_offset,
+                fgnd_gpio=fgnd_gpio,
+                out_gpio=out_gpio,
             )
             self.config.channels.append(channel)
             print(f"\nChannel '{name}' added successfully!")
@@ -1094,7 +1193,102 @@ class Configurator:
                 else:
                     print("Invalid choice. Please select 1-5.")
 
-            else:
+            elif channel.channel_type == ChannelType.ISO1211.value:
+                print("1. Change name")
+                print("2. Change interface type")
+                print("3. Change channel number")
+                print("4. Change fgnd_gpio")
+                print("5. Change out_gpio")
+                print("6. Done")
+                action = input("Select action (1-6): ").strip()
+
+                if action == "1":
+                    while True:
+                        new_name = input("New channel name (max 8 chars): ").strip()
+                        if len(new_name) <= 8 and new_name:
+                            if any(ch.name == new_name for ch in self.config.channels if ch != channel):
+                                print("Channel name already exists. Please choose a different name.")
+                                continue
+                            channel.name = new_name
+                            print(f"Channel name changed to: {new_name}")
+                            break
+                        else:
+                            print("Channel name must be 1-8 characters long.")
+
+                elif action == "2":
+                    print("ISO1211 interface types available:")
+                    print(f"1. {DIGITAL_INTERFACE_LABELS[InterfaceType.GPIO.value]} ({InterfaceType.GPIO.value})")
+                    print(f"2. {DIGITAL_INTERFACE_LABELS[InterfaceType.I2C_TCA9534.value]} ({InterfaceType.I2C_TCA9534.value})")
+                    while True:
+                        choice = input("Select interface type for this ISO1211 channel (1-2): ").strip()
+                        if choice == "1":
+                            channel.interface_type = InterfaceType.GPIO.value
+                            print("Interface type changed to GPIO")
+                            break
+                        elif choice == "2":
+                            channel.interface_type = InterfaceType.I2C_TCA9534.value
+                            channel.out_gpio = None
+                            print("Interface type changed to I2C; out_gpio omitted.")
+                            break
+                        else:
+                            print("Please select 1 or 2.")
+
+                elif action == "3":
+                    used_numbers = [ch.channel_number for ch in self.config.channels if ch != channel]
+                    available_numbers = [i for i in range(8) if i not in used_numbers]
+                    available_numbers.append(channel.channel_number)
+                    available_numbers = sorted(set(available_numbers))
+
+                    print(f"Available channel numbers: {available_numbers}")
+                    while True:
+                        try:
+                            new_number = int(input("New channel number (0-7): "))
+                            if new_number in available_numbers:
+                                channel.channel_number = new_number
+                                print(f"Channel number changed to: {new_number}")
+                                break
+                            else:
+                                print(f"Please select from available numbers: {available_numbers}")
+                        except ValueError:
+                            print("Please enter a valid number.")
+
+                elif action == "4":
+                    while True:
+                        fgnd_input = input("New fgnd_gpio pin number: ").strip()
+                        try:
+                            fgnd_pin = int(fgnd_input)
+                            if fgnd_pin < 0:
+                                raise ValueError
+                            channel.fgnd_gpio = fgnd_pin
+                            print(f"fgnd_gpio changed to: {fgnd_pin}")
+                            break
+                        except ValueError:
+                            print("Please enter a valid non-negative integer.")
+
+                elif action == "5":
+                    if channel.interface_type == InterfaceType.GPIO.value:
+                        out_input = input("New out_gpio pin number (leave blank if not needed): ").strip()
+                        if out_input:
+                            try:
+                                out_pin = int(out_input)
+                                if out_pin < 0:
+                                    raise ValueError
+                                channel.out_gpio = out_pin
+                                print(f"out_gpio changed to: {out_pin}")
+                            except ValueError:
+                                print("Invalid out_gpio value. Keeping current setting.")
+                        else:
+                            channel.out_gpio = None
+                            print("out_gpio cleared; device will use GPIO_HOST_PINS default.")
+                    else:
+                        print("out_gpio is only applicable for GPIO interface types.")
+
+                elif action == "6":
+                    break
+                else:
+                    print("Invalid choice. Please select 1-6.")
+
+            elif channel.channel_type == ChannelType.ANALOG_INT.value:
                 print("1. Change name")
                 print("2. Change interface type")
                 print("3. Change channel number")
@@ -1233,6 +1427,13 @@ class Configurator:
                 interface_desc = DIGITAL_INTERFACE_LABELS.get(channel.interface_type, channel.interface_type)
                 actions_desc = "Read+Write" if channel.actions == 1 else "Read Only"
                 range_desc = "-"
+            elif channel.channel_type == ChannelType.ISO1211.value:
+                interface_desc = DIGITAL_INTERFACE_LABELS.get(channel.interface_type, channel.interface_type)
+                actions_desc = "Read Only"
+                details = [f"fgnd_gpio={channel.fgnd_gpio}"]
+                if channel.out_gpio is not None:
+                    details.append(f"out_gpio={channel.out_gpio}")
+                range_desc = ", ".join(details)
             else:
                 interface_desc = ANALOG_INTERFACE_LABELS.get(channel.interface_type, channel.interface_type)
                 actions_desc = "Read Only"
@@ -1302,23 +1503,20 @@ class Configurator:
             
             for channel in self.config.channels:
                 channel_dict = asdict(channel)
-                # Remove analog-only keys for digital channels, and drop None values
+                # Drop None values to keep JSON clean
+                channel_dict = {k: v for k, v in channel_dict.items() if v is not None}
+
                 if channel.channel_type == ChannelType.BIT.value:
+                    channel_dict.pop('measurement_range', None)
+                elif channel.channel_type == ChannelType.ANALOG_INT.value:
+                    # Keep defined analog calibration fields and measurement range
+                    pass
+                elif channel.channel_type == ChannelType.ISO1211.value:
+                    # ISO1211 channels purposely include fgnd_gpio/out_gpio if set
                     channel_dict.pop('measurement_range', None)
                     channel_dict.pop('adc_hardware_gain', None)
                     channel_dict.pop('shunt_resistance', None)
                     channel_dict.pop('adc_offset', None)
-                else:
-                    # analog channel: remove measurement_range only if None
-                    if channel_dict.get('measurement_range') is None:
-                        channel_dict.pop('measurement_range', None)
-                    # remove adc fields if None to keep JSON clean
-                    if channel_dict.get('adc_hardware_gain') is None:
-                        channel_dict.pop('adc_hardware_gain', None)
-                    if channel_dict.get('shunt_resistance') is None:
-                        channel_dict.pop('shunt_resistance', None)
-                    if channel_dict.get('adc_offset') is None:
-                        channel_dict.pop('adc_offset', None)
 
                 config_dict['channels'].append(channel_dict)
             
@@ -1358,6 +1556,8 @@ class Configurator:
                     adc_hardware_gain=ch_data.get('adc_hardware_gain'),
                     shunt_resistance=ch_data.get('shunt_resistance'),
                     adc_offset=ch_data.get('adc_offset'),
+                    fgnd_gpio=ch_data.get('fgnd_gpio'),
+                    out_gpio=ch_data.get('out_gpio'),
                 )
                 channels.append(channel)
 
