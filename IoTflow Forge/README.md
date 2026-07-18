@@ -39,6 +39,7 @@ Each module integrates a complete MCU environment, and different form factors (s
 #### Digital I/O Mezzanines
 - IoTextra Input
 - IoTextra Octal
+- IoTextra Octal3 (hybrid: 4× latching relays via I2C + 4× host GPIO inputs)
 - IoTextra Relay
 - IoTextra SSR Small
 - IoTextra MOSFET2
@@ -133,8 +134,13 @@ Each analog channel can have individual calibration parameters:
 - **EEPROM Settings**: 
   - I2C address (default: 0x57)
   - Size in bytes (default: 1024)
+  - **Octal3 note**: Kernel reserves the last 16 bytes (`0x3F0`–`0x3FF`) for latching-relay ON/OFF state. Physical size stays 1024; usable config space is 1008 bytes. Forge prints this reminder when configuring or sending an Octal3 profile.
 - **GPIO Pin Mapping**: Customizable mapping for HOST connector channels 1-8
   - Defaults: 10, 11, 12, 13, 14, 15, 18, 19 for channels 1-8
+  - **Octal3**: keys are HOST pin positions (not logical channels). Roles are fixed:
+    - Host pins 1–4 → CH5–CH8 digital inputs
+    - Host pin 6 → nSLEEP (DRV8837C)
+    - Host pins 5, 7, 8 → unused
 
 #### Analog-Specific Settings
 - **Number of ADCs**: 1-4 ADCs per mezzanine
@@ -151,8 +157,17 @@ Each analog channel can have individual calibration parameters:
     - IoTExtra Relay2: "0b11110000" (channels 1-4 outputs, 5-8 unused)
     - IoTExtra Input: "0b11111111" (all inputs)
     - IoTExtra Octal: "0b00001111" (channels 0-3 outputs, 4-7 inputs)
+    - IoTExtra Octal3: "0b11110000" (CH1-4 latching relay outputs, CH5-8 inputs)
     - IoTextra Quadro: "0b11001111" (channels 0-3 and 6-7 inputs, 4-5 outputs)
 - **Status Update Interval**: Frequency for publishing status updates in seconds (default: 30)
+
+### IoTextra Octal3
+Hybrid digital mezzanine for Kernel latching-relay support:
+- **Mezzanine type string** must be `IoTextra Octal3` (Kernel matches this name to enable pulse drivers + EEPROM state restore).
+- **Hardware mode** is forced to I2C (TCA9534 drives 4 relay H-bridges; host pin 6 is nSLEEP).
+- **Default channels** (Forge quick-fill / `octal.json`): Relay 1–4 (`interface_type` `11`, writable) + DIN1–4 (`interface_type` `01`, read-only).
+- **State persistence**: firmware stores relay ON/OFF in EEPROM and republishes MQTT state after reboot; contacts are not re-pulsed.
+- Example template: [`octal.json`](octal.json)
 
 ### Serial Communication
 - Send JSON configurations to devices over serial for EEPROM storage

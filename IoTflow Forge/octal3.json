@@ -1,0 +1,95 @@
+{
+  "module_type": "IoTsmart ESP32-S3",
+  "mezzanine_type": "IoTextra Octal3",
+  "channels": [
+    {
+      "name": "Relay 1",
+      "channel_type": "1",
+      "interface_type": "11",
+      "channel_number": 0,
+      "actions": 1
+    },
+    {
+      "name": "Relay 2",
+      "channel_type": "1",
+      "interface_type": "11",
+      "channel_number": 1,
+      "actions": 1
+    },
+    {
+      "name": "Relay 3",
+      "channel_type": "1",
+      "interface_type": "11",
+      "channel_number": 2,
+      "actions": 1
+    },
+    {
+      "name": "Relay 4",
+      "channel_type": "1",
+      "interface_type": "11",
+      "channel_number": 3,
+      "actions": 1
+    },
+    {
+      "name": "DIN1",
+      "channel_type": "1",
+      "interface_type": "01",
+      "channel_number": 4,
+      "actions": 0
+    },
+    {
+      "name": "DIN2",
+      "channel_type": "1",
+      "interface_type": "01",
+      "channel_number": 5,
+      "actions": 0
+    },
+    {
+      "name": "DIN3",
+      "channel_type": "1",
+      "interface_type": "01",
+      "channel_number": 6,
+      "actions": 0
+    },
+    {
+      "name": "DIN4",
+      "channel_type": "1",
+      "interface_type": "01",
+      "channel_number": 7,
+      "actions": 0
+    }
+  ],
+  "network": {
+    "wifi_ssid": "your_ssid",
+    "wifi_password": "your_password"
+  },
+  "mqtt": {
+    "broker": "your_broker.local",
+    "port": 1883,
+    "client_id": "pico-iotextra-controller-1",
+    "base_topic": "iotextra/device_1"
+  },
+  "hardware": {
+    "mode": "i2c",
+    "i2c_bus_id": 0,
+    "i2c_sda_pin": 16,
+    "i2c_scl_pin": 15,
+    "i2c_device_addr": "0x27",
+    "eeprom_i2c_addr": "0x57",
+    "eeprom_size": 1024,
+    "num_of_adcs": 0,
+    "adc_sampling_rate": 128,
+    "gpio_host_pins": {
+      "1": 8,
+      "2": 9,
+      "3": 10,
+      "4": 11,
+      "5": 4,
+      "6": 5,
+      "7": 6,
+      "8": 7
+    }
+  },
+  "pin_config": "0b11110000",
+  "status_update_interval_s": 30
+}

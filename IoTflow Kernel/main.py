@@ -36,7 +36,7 @@ It handles:
 
 Author: Arshia Keshvari
 Role: Independent Developer, Engineer, and Project Author
-Last Updated: 2026-06-21
+Last Updated: 2026-07-18
 """
 
 import time
@@ -57,6 +57,12 @@ from iso1211_driver import Iso1211Driver
 # Constants for EEPROM
 EEPROM_ADDR = config.EEPROM_I2C_ADDR  # 0x57
 EEPROM_SIZE = config.EEPROM_SIZE      # 1024
+EEPROM_OCTAL3_STATE_ADDR = config.EEPROM_OCTAL3_STATE_ADDR  # 0x3F0
+# Max packed config length so payload stays below the Octal3 state page
+EEPROM_CONFIG_MAX_PACKED = EEPROM_OCTAL3_STATE_ADDR - 2  # 0x3EE
+OCTAL3_STATE_MAGIC = b'O3'
+OCTAL3_STATE_VERSION = 0x01
+OCTAL3_NSLEEP_HOST_PIN = 6  # Fixed Octal3 host-pin role (AP5)
 DEBUG = False  # Disable debug prints to reduce serial noise
 
 os.dupterm(None, 0)
@@ -104,6 +110,114 @@ def send_data_back(data):
         if DEBUG:
             print("Error serializing/sending data:", e)
 
+# Octal3: host-pin position -> logical input channel (fixed board role).
+_OCTAL3_INPUT_HOST_PIN_TO_CHANNEL = {1: 5, 2: 6, 3: 7, 4: 8}
+
+
+def _is_octal3_mezzanine(mezzanine_type=None):
+    mt = mezzanine_type if mezzanine_type is not None else config_dict.get('MEZZANINE_TYPE', '')
+    return 'IoTextra Octal3' in (mt or '')
+
+
+def _octal3_channels_from_pin_config(pin_config):
+    """Logical output channels from pin_config (bit 0 = output), capped at 4."""
+    channels = []
+    for i in range(8):
+        if ((pin_config >> i) & 0x01) == 0:
+            channels.append(i + 1)
+            if len(channels) >= 4:
+                break
+    return channels
+
+
+def _host_pin_lookup(host_pins, position):
+    """Look up a host-pin GPIO by int or str key (Forge/EEPROM use string keys)."""
+    if position in host_pins:
+        return host_pins[position]
+    return host_pins.get(str(position))
+
+
+def _octal3_gpio_and_nsleep(host_pins):
+    """
+    Translate host-pin table (position 1-8 -> MCU GPIO) into the
+    gpio_host_pins + nsleep_pin IotDriver expects for Octal3.
+    """
+    gpio_host_pins = {}
+    for host_pin, channel in _OCTAL3_INPUT_HOST_PIN_TO_CHANNEL.items():
+        pin = _host_pin_lookup(host_pins, host_pin)
+        if pin is not None:
+            gpio_host_pins[channel] = pin
+    nsleep_pin = _host_pin_lookup(host_pins, OCTAL3_NSLEEP_HOST_PIN)
+    return gpio_host_pins, nsleep_pin
+
+
+def _iot_driver_kwargs(iso1211_channel_numbers):
+    """Build shared IotDriver constructor kwargs, including Octal3 when applicable."""
+    gpio_host_pins = config_dict['GPIO_HOST_PINS']
+    nsleep_pin = None
+    octal3_channels = None
+    if _is_octal3_mezzanine():
+        gpio_host_pins, nsleep_pin = _octal3_gpio_and_nsleep(gpio_host_pins)
+        octal3_channels = _octal3_channels_from_pin_config(config_dict['PIN_CONFIG'])
+    return {
+        'bus_id': config_dict['I2C_BUS_ID'],
+        'sda_pin': config_dict['I2C_SDA_PIN'],
+        'scl_pin': config_dict['I2C_SCL_PIN'],
+        'device_address': config_dict['I2C_DEVICE_ADDR'],
+        'gpio_host_pins': gpio_host_pins,
+        'pin_config': config_dict['PIN_CONFIG'],
+        'hardware_mode': config_dict['HARDWARE_MODE'],
+        'iso1211_channels': iso1211_channel_numbers,
+        'nsleep_pin': nsleep_pin,
+        'octal3_channels': octal3_channels,
+    }
+
+
+def read_octal3_output_state(eeprom_dev):
+    """Read Octal3 output bitmask from EEPROM, or None if missing/invalid."""
+    try:
+        raw = eeprom_dev.read_bytes(EEPROM_OCTAL3_STATE_ADDR, 4)
+        if raw[0:2] != OCTAL3_STATE_MAGIC or raw[2] != OCTAL3_STATE_VERSION:
+            return None
+        return raw[3]
+    except Exception as e:
+        if DEBUG:
+            print("Error reading Octal3 output state from EEPROM:", e)
+        return None
+
+
+def write_octal3_output_state(eeprom_dev, bitmask):
+    """Persist Octal3 output bitmask to the reserved EEPROM page."""
+    try:
+        payload = OCTAL3_STATE_MAGIC + bytes([OCTAL3_STATE_VERSION, bitmask & 0xFF])
+        eeprom_dev.write_bytes(EEPROM_OCTAL3_STATE_ADDR, payload)
+        if DEBUG:
+            print("Wrote Octal3 output state to EEPROM:", hex(bitmask & 0xFF))
+        return True
+    except Exception as e:
+        if DEBUG:
+            print("Error writing Octal3 output state to EEPROM:", e)
+        return False
+
+
+def restore_octal3_output_states(publish=True):
+    """Load Octal3 states from EEPROM into RAM and optionally publish MQTT (no re-pulse)."""
+    global driver, eeprom, mqtt
+    if not driver or not getattr(driver, 'is_octal3', False) or not eeprom:
+        return
+    bitmask = read_octal3_output_state(eeprom)
+    if bitmask is None:
+        bitmask = 0
+    driver.load_octal3_states(bitmask)
+    if publish and mqtt:
+        for channel in sorted(driver.octal3_channels):
+            state = bool(driver.get_output(channel))
+            topic = f"{config_dict['MQTT_BASE_TOPIC']}/output/{channel}/state"
+            mqtt.publish(topic, str(int(state)), retain=True)
+    if DEBUG:
+        print("Restored Octal3 output states from EEPROM:", hex(bitmask))
+
+
 def update_config(new_config):
     """Update config_dict and reinitialize driver/mqtt."""
     global driver, mqtt, config_dict, analog_driver, iso1211_driver
@@ -148,16 +262,8 @@ def update_config(new_config):
         iso1211_channel_numbers = _build_iso1211_channel_set(config_dict.get('channels', []))
 
         # Reinitialize IotDriver
-        driver = IotDriver(
-            config_dict['I2C_BUS_ID'],
-            config_dict['I2C_SDA_PIN'],
-            config_dict['I2C_SCL_PIN'],
-            config_dict['I2C_DEVICE_ADDR'],
-            config_dict['GPIO_HOST_PINS'],
-            config_dict['PIN_CONFIG'],
-            config_dict['HARDWARE_MODE'],
-            iso1211_channels=iso1211_channel_numbers
-        )
+        driver = IotDriver(**_iot_driver_kwargs(iso1211_channel_numbers))
+        restore_octal3_output_states(publish=False)
         
         # Build config for AnalogDriver with required fields
         analog_config = {
@@ -196,6 +302,7 @@ def update_config(new_config):
             command_topic = f"{config_dict['MQTT_BASE_TOPIC']}/output/+/set"
             mqtt.subscribe(command_topic)
             mqtt.publish(f"{config_dict['MQTT_BASE_TOPIC']}/status", "online", retain=True)
+            restore_octal3_output_states(publish=True)
         if DEBUG:
             print("Configuration updated and driver/mqtt reinitialized")
     except Exception as e:
@@ -215,7 +322,9 @@ def handle_mqtt_command(topic, msg):
             if DEBUG:
                 print(f"Received MQTT command for channel {channel}: {state}")
             if driver:
-                driver.set_output(channel, state)
+                changed = driver.set_output(channel, state)
+                if changed and eeprom and getattr(driver, 'is_octal3', False):
+                    write_octal3_output_state(eeprom, driver.octal3_states_bitmask())
             if mqtt:
                 state_topic = f"{config_dict['MQTT_BASE_TOPIC']}/output/{channel}/state"
                 mqtt.publish(state_topic, str(int(state)), retain=True)
@@ -363,7 +472,7 @@ def read_eeprom_config():
         length = struct.unpack(">H", length_bytes)[0]
         if DEBUG:
             print("EEPROM data length:", length)
-        if length > EEPROM_SIZE - 2:
+        if length > EEPROM_CONFIG_MAX_PACKED:
             if DEBUG:
                 print("Error: Invalid data length in EEPROM")
             return None
@@ -379,13 +488,22 @@ def read_eeprom_config():
 def main():
     global driver, mqtt, eeprom, buffer, analog_driver, iso1211_driver
     try:
-        # Initialize I2C and EEPROM
+        # Initialize I2C and EEPROM (EEPROM is optional — continue without it)
         i2c = machine.I2C(config_dict['I2C_BUS_ID'], scl=machine.Pin(config_dict['I2C_SCL_PIN']), sda=machine.Pin(config_dict['I2C_SDA_PIN']), freq=400000)
-        eeprom = EEPROM(i2c, EEPROM_ADDR)
         print("IoTflow script started")
+        try:
+            eeprom = EEPROM(i2c, EEPROM_ADDR)
+        except RuntimeError as e:
+            eeprom = None
+            print(f"Warning: {e}")
+            try:
+                print("I2C scan:", [hex(a) for a in i2c.scan()])
+            except Exception:
+                pass
+            print("Continuing without EEPROM (config.py defaults; Octal3 state will not persist)")
 
         # Read EEPROM configuration and update config_dict
-        eeprom_config = read_eeprom_config()
+        eeprom_config = read_eeprom_config() if eeprom else None
         if eeprom_config:
             update_config(eeprom_config)
             time.sleep(1)  # 1s delay for balance
@@ -403,16 +521,8 @@ def main():
         iso1211_channel_numbers = _build_iso1211_channel_set(config_dict.get('channels', []))
 
         # Initialize Wi-Fi, IotDriver, and MqttManager
-        driver = IotDriver(
-            config_dict['I2C_BUS_ID'],
-            config_dict['I2C_SDA_PIN'],
-            config_dict['I2C_SCL_PIN'],
-            config_dict['I2C_DEVICE_ADDR'],
-            config_dict['GPIO_HOST_PINS'],
-            config_dict['PIN_CONFIG'],
-            config_dict['HARDWARE_MODE'],
-            iso1211_channels=iso1211_channel_numbers
-        )
+        driver = IotDriver(**_iot_driver_kwargs(iso1211_channel_numbers))
+        restore_octal3_output_states(publish=False)
         
         # Build config for AnalogDriver with required fields
         analog_config = {
@@ -451,6 +561,7 @@ def main():
             command_topic = f"{config_dict['MQTT_BASE_TOPIC']}/output/+/set"
             mqtt.subscribe(command_topic)
             mqtt.publish(f"{config_dict['MQTT_BASE_TOPIC']}/status", "online", retain=True)
+            restore_octal3_output_states(publish=True)
     
         last_status_update = time.time()
         poller = uselect.poll()
@@ -494,7 +605,7 @@ def main():
                                         packed = pack_config(data)
                                         if DEBUG:
                                             print("Packed size:", len(packed), "bytes")
-                                        if len(packed) > EEPROM_SIZE - 2:
+                                        if len(packed) > EEPROM_CONFIG_MAX_PACKED:
                                             print("Error: Packed data too large for EEPROM")
                                             continue
                                         length_bytes = struct.pack(">H", len(packed))

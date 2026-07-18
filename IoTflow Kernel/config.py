@@ -31,7 +31,7 @@
 
  Author: Arshia Keshvari
  Role: Independent Developer, Engineer, and Project Author
- Last Updated: 2026/06/21
+ Last Updated: 2026-07-18
 ==============================================================
 """
 
@@ -66,6 +66,10 @@ I2C_DEVICE_ADDR = 0x3f # The I2C address of the I/O Expander for IoTextra digita
 EEPROM_I2C_ADDR = 0x57  # EEPROM I2C address (different from IoTExtra module) can be 0x27
 EEPROM_SIZE = 1024       # EEPROM size in bytes
 EEPROM_CONFIG_ADDR = 0   # Starting address for configuration storage
+# Last 16-byte page reserved for Octal3 latching-relay ON/OFF state (not config).
+# Config payload must not extend into this region.
+EEPROM_OCTAL3_STATE_ADDR = 0x3F0
+EEPROM_OCTAL3_STATE_SIZE = 16
 
 # ADS1115 ADC Configuration
 # | ADDR pin connected to | I²C address (7-bit) |
