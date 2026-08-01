@@ -5,7 +5,7 @@ A comprehensive command-line interface tool for configuring digital, analog, and
 ## Overview
 
 IoTflow Forge enables you to:
-- Create configurations for **digital I/O**, **analog I/O**, **Combo I/O**, and **IoTextra Octal3** nodes interactively
+- Create configurations for **digital I/O**, **analog I/O** and **Combo I/O** nodes interactively
 - Configure up to 8 channels per node with specific interface types and measurement ranges
 - Set network (Wi-Fi) and MQTT communication parameters
 - Configure hardware settings (GPIO/I2C modes, EEPROM, ADC settings, pin mappings)
@@ -16,7 +16,7 @@ IoTflow Forge enables you to:
 - Read configurations back from devices over serial
 - View detailed configuration summaries
 
-The tool creates configurations that can be stored in EEPROM on the device. The firmware on the device uses these configurations to interact with channels via MQTT, enabling remote control and monitoring of I/O operations. For **IoTextra Octal3**, the Kernel also uses a reserved EEPROM page to remember latching-relay ON/OFF across reboots.
+The tool creates configurations that can be stored in EEPROM on the device. The firmware on the device uses these configurations to interact with channels via MQTT, enabling remote control and monitoring of I/O operations.
 
 ## Features
 
@@ -39,7 +39,6 @@ Each module integrates a complete MCU environment, and different form factors (s
 #### Digital I/O Mezzanines
 - IoTextra Input
 - IoTextra Octal
-- IoTextra Octal3 (hybrid: 4× latching relays via I2C + 4× host GPIO inputs)
 - IoTextra Relay
 - IoTextra SSR Small
 - IoTextra MOSFET2
@@ -125,23 +124,17 @@ Each analog channel can have individual calibration parameters:
 ### Hardware Configuration
 
 #### Common Settings
-- **Hardware Mode**: "gpio" or "i2c" (`i2c` required for analog modules and **IoTextra Octal3**)
+- **Hardware Mode**: "gpio" or "i2c" (i2c required for analog modules)
 - **I2C Settings**: 
   - Bus ID (default: 0)
   - SDA pin (default: 20)
   - SCL pin (default: 21)
-  - Device address for I/O expander (default: 0x3f or 0x27; Octal3 examples often use `0x27`)
+  - Device address for I/O expander (default: 0x3f or 0x27)
 - **EEPROM Settings**: 
   - I2C address (default: 0x57)
-  - Size in bytes (default: 1024) — this is the physical chip size
-  - **Octal3 reserve**: Kernel keeps the last 16 bytes (`0x3F0`–`0x3FF`) for latching-relay ON/OFF state. Usable config space is therefore **1008 bytes**. Forge prints this reminder when configuring or sending an Octal3 profile.
-- **GPIO Pin Mapping**: Customizable mapping for HOST connector positions 1–8
-  - Defaults: 10, 11, 12, 13, 14, 15, 18, 19 for positions 1–8
-  - Generic boards: treat keys as channel/host positions used by firmware as configured
-  - **Octal3**: keys are **HOST pin positions** (Kernel remaps them to logical channels). Fixed roles:
-    - Host pins 1–4 → CH5–CH8 digital inputs
-    - Host pin 6 → nSLEEP (DRV8837C)
-    - Host pins 5, 7, 8 → unused
+  - Size in bytes (default: 1024)
+- **GPIO Pin Mapping**: Customizable mapping for HOST connector channels 1-8
+  - Defaults: 10, 11, 12, 13, 14, 15, 18, 19 for channels 1-8
 
 #### Analog-Specific Settings
 - **Number of ADCs**: 1-4 ADCs per mezzanine
@@ -158,37 +151,8 @@ Each analog channel can have individual calibration parameters:
     - IoTExtra Relay2: "0b11110000" (channels 1-4 outputs, 5-8 unused)
     - IoTExtra Input: "0b11111111" (all inputs)
     - IoTExtra Octal: "0b00001111" (channels 0-3 outputs, 4-7 inputs)
-    - IoTExtra Octal3: "0b11110000" (CH1-4 latching relay outputs, CH5-8 inputs)
     - IoTextra Quadro: "0b11001111" (channels 0-3 and 6-7 inputs, 4-5 outputs)
 - **Status Update Interval**: Frequency for publishing status updates in seconds (default: 30)
-
-### IoTextra Octal3
-
-Hybrid digital mezzanine with **4 latching relays** (I2C / TCA9534) and **4 digital inputs** (host GPIO). The Kernel cannot read latching-relay contact state over I²C, so it stores ON/OFF in EEPROM and restores software + MQTT state after reboot (contacts are **not** re-pulsed).
-
-| Item | Value |
-|------|--------|
-| Mezzanine type string | Must be exactly `IoTextra Octal3` (Kernel enables latching mode when this name is present) |
-| Hardware mode | Forced to `i2c` |
-| Recommended `pin_config` | `0b11110000` (CH1–4 outputs, CH5–8 inputs) |
-| Relay channels | `channel_number` 0–3, `interface_type` `11`, `actions` 1 |
-| Input channels | `channel_number` 4–7, `interface_type` `01`, `actions` 0 |
-| nSLEEP | Host pin position **6** in `gpio_host_pins` |
-| EEPROM state page | `0x3F0`–`0x3FF` (magic `O3`, version `0x01`, CH1–CH8 bitmask) |
-
-**Forge wizard behavior when Octal3 is selected:**
-1. Applies `pin_config = 0b11110000` and forces I2C mode
-2. Labels host pins by Octal3 role (inputs / nSLEEP / unused)
-3. Offers **Apply Octal3 channel defaults** (4 relays + 4 DINs)
-4. When adding channels manually, auto-selects interface and actions from channel number
-5. Summary and send paths remind you about the reserved EEPROM page
-
-**Example template:** [`octal3.json`](octal3.json) (IoTsmart ESP32-S3 pinout example; replace Wi‑Fi/MQTT placeholders before use).
-
-**MQTT (device firmware):**
-- Command: `<MQTT_BASE_TOPIC>/output/<N>/set` with payload `1` / `0`
-- Confirmed state (retained): `<MQTT_BASE_TOPIC>/output/<N>/state`
-- After reboot, Kernel republishes retained states from EEPROM without pulsing the relays
 
 ### Serial Communication
 - Send JSON configurations to devices over serial for EEPROM storage
@@ -203,7 +167,6 @@ Configured nodes enable firmware to handle digital and analog operations via MQT
   - Read channel status by name
   - Turn on/off channel by name
   - Switch (toggle) channel by name
-  - **Octal3 relays**: use `…/output/<N>/set` and observe retained `…/output/<N>/state` (state survives reboot via EEPROM)
 - **Analog Channels**:
   - Read current measurement value
   - Subscribe to periodic status updates
@@ -220,8 +183,7 @@ Configured nodes enable firmware to handle digital and analog operations via MQT
 
 ### Running the Tool
 ```bash
-cd "IoTflow Forge"
-python3 "IoTflow Forge.py"
+python3 IoTflow_Forge.py
 ```
 
 ## Usage
@@ -243,17 +205,16 @@ The tool guides you through:
 
 1. **Module Selection**: Choose your microcontroller board type
 2. **Mezzanine Category**: Select Digital I/O or Analog Input
-3. **Mezzanine Type**: Pick specific board (including **IoTextra Octal3**) or enter a custom name
+3. **Mezzanine Type**: Pick specific board or enter custom name
 4. **Network Settings**: Configure Wi-Fi credentials
 5. **MQTT Settings**: Set broker details and topics
 6. **Hardware Settings**: 
-   - I2C bus configuration (forced for analog and Octal3)
-   - EEPROM parameters (with Octal3 reserve reminder when applicable)
+   - I2C bus configuration
+   - EEPROM parameters
    - For analog: ADC count, I2C addresses, sampling rate
-   - GPIO / host-pin mappings (Octal3 shows role labels)
-7. **Pin Configuration**: Set input/output directions (digital only; Octal3 defaults to `0b11110000`)
-8. **Channel Configuration**: Add, configure, and organize channels  
-   - Octal3: optional one-shot defaults for 4 relays + 4 DINs
+   - GPIO pin mappings
+7. **Pin Configuration**: Set input/output directions (digital only)
+8. **Channel Configuration**: Add, configure, and organize channels
 
 ### Channel Management
 
@@ -263,8 +224,6 @@ The tool guides you through:
   - Select interface type (GPIO or I2C)
   - Choose channel number (0-7)
   - Set actions (read-only or read+write)
-  - **Octal3 shortcut**: after you pick the channel number, Forge sets interface/actions automatically  
-    (`0–3` → I2C relay write; `4–7` → GPIO input read-only)
   
 - **ISO1211 Sampled-Mode Channels**:
   - Assign unique name (max 8 characters)
@@ -304,24 +263,11 @@ The tool guides you through:
 - Transmits via serial to device
 - Waits up to 20 seconds for device acknowledgment
 - Device stores configuration in EEPROM
-- For Octal3, prints a reminder that `0x3F0`–`0x3FF` is reserved for relay state (config must not overwrite that page)
 
 **Read Configuration (Option 7)**:
 - Sends read command to device
 - Receives and displays stored configuration
 - Useful for verification and backup
-
-## Example Configuration Files
-
-| File | Mezzanine | Notes |
-|------|-----------|--------|
-| [`Analog.json`](Analog.json) | IoTextra Analog | Analog template |
-| [`Combo.json`](Combo.json) | IoTextra Combo | Mixed analog/digital |
-| [`Digital.json`](Digital.json) | IoTextra Octal2 | Generic digital example |
-| [`Quadro.json`](Quadro.json) | IoTextra Quadro | ISO1211 sampled DI |
-| [`octal3.json`](octal3.json) | IoTextra Octal3 | Latching relays + host GPIO inputs |
-
-Replace `your_ssid` / `your_password` / broker placeholders before sending to a device.
 
 ## Configuration File Format
 
@@ -403,11 +349,11 @@ Configurations are saved as JSON files with the following structure:
 - `i2c_scl_pin`: SCL GPIO pin
 - `i2c_device_addr`: I/O expander address (hex)
 - `eeprom_i2c_addr`: EEPROM address (hex)
-- `eeprom_size`: EEPROM capacity in bytes (physical size; Octal3 still uses 1024 with 16 bytes reserved at the end)
+- `eeprom_size`: EEPROM capacity in bytes
 - `num_of_adcs`: Number of ADCs (analog only)
 - `adc_i2c_addrs`: Array of ADC addresses (analog only)
 - `adc_sampling_rate`: Sampling rate in SPS (analog only)
-- `gpio_host_pins`: HOST position → MCU GPIO mapping (for Octal3, see host-pin roles above)
+- `gpio_host_pins`: Channel-to-GPIO mapping
 
 #### Channel Settings
 - `name`: Channel identifier (max 8 chars)
@@ -429,12 +375,9 @@ Configurations are saved as JSON files with the following structure:
 ## EEPROM Requirements
 
 - **Minimum Size**: 8 Kbit (1024 bytes)
-- **Estimated Usage**: ~228–300 bytes depending on channel count and types
+- **Estimated Usage**: ~228-300 bytes depending on channel count and types
 - **Storage**: Device firmware handles EEPROM writing after receiving configuration
 - **Access**: EEPROM is device-internal; configuration tool doesn't directly program it
-- **Octal3 layout**:
-  - Config region: `0x000`–`0x3EF` (length prefix + packed config; Kernel max packed length `0x3EE`)
-  - Relay state page: `0x3F0`–`0x3FF` (not part of the Forge config blob; written by Kernel at runtime)
 
 ## Validation Rules
 
@@ -556,8 +499,6 @@ Compensates for systematic measurement errors:
 - Analog calibration supports per-channel values for maximum flexibility
 - Legacy hardware-level calibration values automatically migrated to per-channel settings
 - Compatible with Node-RED for MQTT-based automation
-- **IoTextra Octal3**: `mezzanine_type` string is the Kernel feature flag; keep the exact name `IoTextra Octal3`
-- Do not store real Wi‑Fi/MQTT secrets in committed example JSON files — use placeholders
 
 ## License
 
