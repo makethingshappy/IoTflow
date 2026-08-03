@@ -1,0 +1,68 @@
+{
+  "module_type": "IoTbase Nano",
+  "mezzanine_type": "IoTextra Relay2",
+  "channels": [
+    {
+      "name": "Output A",
+      "channel_type": "1",
+      "interface_type": "11",
+      "channel_number": 0,
+      "actions": 1
+    },
+    {
+      "name": "Output B",
+      "channel_type": "1",
+      "interface_type": "11",
+      "channel_number": 1,
+      "actions": 1
+    },
+    {
+      "name": "Output C",
+      "channel_type": "1",
+      "interface_type": "11",
+      "channel_number": 2,
+      "actions": 1
+    },
+    {
+      "name": "Output D",
+      "channel_type": "1",
+      "interface_type": "11",
+      "channel_number": 3,
+      "actions": 1
+    }
+  ],
+  "network": {
+    "wifi_ssid": "your_ssid",
+    "wifi_password": "your_password"
+  },
+  "mqtt": {
+    "broker": "your_broker.local",
+    "port": 1883,
+    "client_id": "pico-iotextra-controller-1",
+    "base_topic": "iotextra/device_1"
+  },
+  "hardware": {
+    "mode": "i2c",
+    "i2c_bus_id": 0,
+    "i2c_sda_pin": 11,
+    "i2c_scl_pin": 12,
+    "i2c_device_addr": "0x3f",
+    "eeprom_i2c_addr": "0x57",
+    "eeprom_size": 1024,
+    "num_of_adcs": 0,
+    "adc_sampling_rate": 128,
+    "gpio_host_pins": {
+      "1": 9,
+      "2": 10,
+      "3": 17,
+      "4": 18,
+      "5": 4,
+      "6": 3,
+      "7": 2,
+      "8": 5
+    }
+  },
+  "pin_config": "0b11110000",
+  "status_update_interval_s": 30
+}
+  

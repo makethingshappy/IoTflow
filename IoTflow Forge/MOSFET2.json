@@ -1,30 +1,30 @@
 {
   "module_type": "IoTbase PICO",
-  "mezzanine_type": "IoTextra Octal2",
+  "mezzanine_type": "IoTextra MOSFET2",
   "channels": [
     {
-      "name": "Input A",
+      "name": "Output A",
       "channel_type": "1",
       "interface_type": "01",
       "channel_number": 0,
       "actions": 0
     },
     {
-      "name": "Input B",
+      "name": "Output B",
       "channel_type": "1",
       "interface_type": "01",
       "channel_number": 1,
       "actions": 0
     },
     {
-      "name": "Input C",
+      "name": "Output C",
       "channel_type": "1",
       "interface_type": "01",
       "channel_number": 2,
       "actions": 0
     },
     {
-      "name": "Input D",
+      "name": "Output D",
       "channel_type": "1",
       "interface_type": "01",
       "channel_number": 3,
@@ -35,28 +35,28 @@
       "channel_type": "1",
       "interface_type": "01",
       "channel_number": 4,
-      "actions": 1
+      "actions": 0
     },
     {
       "name": "LED 2",
       "channel_type": "1",
       "interface_type": "01",
       "channel_number": 5,
-      "actions": 1
+      "actions": 0
     },
     {
       "name": "LED 3",
       "channel_type": "1",
       "interface_type": "01",
       "channel_number": 6,
-      "actions": 1
+      "actions": 0
     },
     {
       "name": "LED 4",
       "channel_type": "1",
       "interface_type": "01",
       "channel_number": 7,
-      "actions": 1
+      "actions": 0
     }
   ],
   "network": {
@@ -90,6 +90,6 @@
       "8": 19
     }
   },
-  "pin_config": "0b00001111",
+  "pin_config": "0b00000000",
   "status_update_interval_s": 30
 }
