@@ -97,7 +97,7 @@ class AnalogDriver:
         self.channel_configs = {}
 
         mezzanine_type = (self.config.get('mezzanine_type') or '').strip()
-        self._use_ads7828 = mezzanine_type == "IoTextra Analog V3"
+        self._use_ads7828 = mezzanine_type == "IoTextra Analog 3"
         
         # Rate mapping (SPS to rate index for ADS1x15 driver)
         self.rate_map = {
