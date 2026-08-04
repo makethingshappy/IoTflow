@@ -160,7 +160,6 @@ Each analog channel can have individual calibration parameters:
   - 1 = Input channel, 0 = Output channel
   - Examples:
     - IoTExtra Input: "0b11111111" (all inputs)
-    - IoTExtra Relay: "0b00000000" (all outputs)
     - IoTExtra Relay2: "0b11110000" (channels 1-4 outputs, 5-8 unused)
     - IoTExtra MOSFET2: "0b00000000" (all outputs)
     - IoTExtra SSR Small: "0b00000000" (all outputs)
