@@ -8,7 +8,7 @@
       "interface_type": "01",
       "channel_number": 0,
       "actions": 0,
-      "measurement_range": "0b10000001",
+      "measurement_range": "0b00000010",
       "adc_hardware_gain": 0.23761904761904762,
       "shunt_resistance": 0.249,
       "adc_offset": 0.0
@@ -19,7 +19,7 @@
       "interface_type": "01",
       "channel_number": 1,
       "actions": 0,
-      "measurement_range": "0b10100001",
+      "measurement_range": "0b00100001",
       "adc_hardware_gain": 0.23761904761904762,
       "shunt_resistance": 0.249,
       "adc_offset": 0.0
@@ -30,7 +30,7 @@
       "interface_type": "01",
       "channel_number": 2,
       "actions": 0,
-      "measurement_range": "0b10000011",
+      "measurement_range": "0b00000010",
       "adc_hardware_gain": 0.23761904761904762,
       "shunt_resistance": 0.249,
       "adc_offset": 0.0
@@ -41,7 +41,51 @@
       "interface_type": "01",
       "channel_number": 3,
       "actions": 0,
-      "measurement_range": "0b10100001",
+      "measurement_range": "0b00100001",
+      "adc_hardware_gain": 0.23761904761904762,
+      "shunt_resistance": 0.249,
+      "adc_offset": 0.0
+    },
+    {
+      "name": "Sensor E",
+      "channel_type": "2",
+      "interface_type": "01",
+      "channel_number": 4,
+      "actions": 0,
+      "measurement_range": "0b00000010",
+      "adc_hardware_gain": 0.23761904761904762,
+      "shunt_resistance": 0.249,
+      "adc_offset": 0.0
+    },
+    {
+      "name": "Sensor F",
+      "channel_type": "2",
+      "interface_type": "01",
+      "channel_number": 5,
+      "actions": 0,
+      "measurement_range": "0b00100001",
+      "adc_hardware_gain": 0.23761904761904762,
+      "shunt_resistance": 0.249,
+      "adc_offset": 0.0
+    },
+    {
+      "name": "Sensor G",
+      "channel_type": "2",
+      "interface_type": "01",
+      "channel_number": 6,
+      "actions": 0,
+      "measurement_range": "0b00000010",
+      "adc_hardware_gain": 0.23761904761904762,
+      "shunt_resistance": 0.249,
+      "adc_offset": 0.0
+    },
+    {
+      "name": "Sensor H",
+      "channel_type": "2",
+      "interface_type": "01",
+      "channel_number": 7,
+      "actions": 0,
+      "measurement_range": "0b00100010",
       "adc_hardware_gain": 0.23761904761904762,
       "shunt_resistance": 0.249,
       "adc_offset": 0.0
