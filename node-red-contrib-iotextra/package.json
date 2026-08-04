@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-iotextra",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "description": "A set of Node-RED nodes to control and monitor IoTextra hardware modules.",
     "author": "Arshia Keshvari",
     "contributors": [
@@ -10,8 +10,8 @@
     ],
     "license": "MIT",
    "keywords": [
-    "node-red", "iot", "iotextra", "mqtt", "relay", "gpio", "adc", "analog",
-    "ADS1115", "ADS1015", "ADS7828", "TCA9534", "ESP32", "ESP32-S3", "ESP32-C6", "RP2040", "RP2350",
+    "node-red", "iot", "iotextra", "mqtt", "relay", "latching-relay", "gpio", "adc", "analog",
+    "ADS1115", "ADS1015", "ADS7828", "ec2-5snu", "TCA9534", "ESP32", "ESP32-S3", "ESP32-C6", "RP2040", "RP2350",
     "i2c", "4-20mA", "modbus", "qwiic", "mikrobus",
     "industrial", "automation", "plc", "din-rail", "scada", "monitoring", "mezzanine", "smart-home", "smart-farming", "iiot", "embedded",
     "iotflow", "iothome", "iotsmart", "iotbase", "makethingshappy", "adafruit-feather", "raspberry-pico", "arduino-nano"
