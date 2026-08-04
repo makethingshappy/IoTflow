@@ -30,7 +30,7 @@
       "interface_type": "01",
       "channel_number": 2,
       "actions": 0,
-      "measurement_range": "0b00000010",
+      "measurement_range": "0b00000001",
       "adc_hardware_gain": 0.47523809523809524,
       "shunt_resistance": 0.249,
       "adc_offset": 0.0
@@ -52,7 +52,7 @@
       "interface_type": "01",
       "channel_number": 4,
       "actions": 0,
-      "measurement_range": "0b00000010",
+      "measurement_range": "0b00100010",
       "adc_hardware_gain": 0.47523809523809524,
       "shunt_resistance": 0.249,
       "adc_offset": 0.0
@@ -85,7 +85,7 @@
       "interface_type": "01",
       "channel_number": 7,
       "actions": 0,
-      "measurement_range": "0b00100010",
+      "measurement_range": "0b00100011",
       "adc_hardware_gain": 0.47523809523809524,
       "shunt_resistance": 0.249,
       "adc_offset": 0.0
