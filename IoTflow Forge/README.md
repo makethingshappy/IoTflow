@@ -321,15 +321,16 @@ The tool guides you through:
 - Receives and displays stored configuration
 - Useful for verification and backup
 
-## Example Configuration Files
-
 | File | Mezzanine | Notes |
 |------|-----------|--------|
+| [`Relay2.json`](Relay2.json) | IoTextra Relay2 | 4 relay outputs, channels 5-8 unused |
+| [`SSR_Small.json`](SSR_Small.json) | IoTextra SSR Small | All 8 channels output |
+| [`MOSFET2.json`](MOSFET2.json) | IoTextra MOSFET2 | All 8 channels output |
+| [`Quadro.json`](Quadro.json) | IoTextra Quadro | ISO1211 sampled DI |
+| [`Digital.json`](Digital.json) | IoTextra Octal / Octal2 | Generic digital example |
+| [`octal3.json`](octal3.json) | IoTextra Octal3 | Latching relays + host GPIO inputs |
 | [`Analog.json`](Analog.json) | IoTextra Analog | Analog template |
 | [`Combo.json`](Combo.json) | IoTextra Combo | Mixed analog/digital |
-| [`Digital.json`](Digital.json) | IoTextra Octal2 | Generic digital example |
-| [`Quadro.json`](Quadro.json) | IoTextra Quadro | ISO1211 sampled DI |
-| [`octal3.json`](octal3.json) | IoTextra Octal3 | Latching relays + host GPIO inputs |
 
 Replace `your_ssid` / `your_password` / broker placeholders before sending to a device.
 
