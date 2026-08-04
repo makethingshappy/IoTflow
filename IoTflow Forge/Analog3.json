@@ -1,6 +1,6 @@
 {
-  "module_type": "IoTsmart ESP32-S3",
-  "mezzanine_type": "IoTextra Analog",
+  "module_type": "IoTbase PICO",
+  "mezzanine_type": "IoTextra Analog 3",
   "channels": [
     {
       "name": "Sensor A",
@@ -48,8 +48,8 @@
     }
   ],
   "network": {
-    "wifi_ssid": "your_ssid",
-    "wifi_password": "your_password"
+    "wifi_ssid": "your_wifi_ssid",
+    "wifi_password": "your_wifi_password"
   },
   "mqtt": {
     "broker": "your_broker.local",
@@ -60,13 +60,12 @@
   "hardware": {
     "mode": "i2c",
     "i2c_bus_id": 0,
-    "i2c_sda_pin": 11,
-    "i2c_scl_pin": 12,
+    "i2c_sda_pin": 20,
+    "i2c_scl_pin": 21,
     "i2c_device_addr": "0x3f",
     "eeprom_i2c_addr": "0x57",
     "eeprom_size": 1024,
-    "num_of_adcs": 2,
-    "adc_sampling_rate": 128,
+    "num_of_adcs": 1,
     "gpio_host_pins": {
       "1": 10,
       "2": 11,
@@ -78,10 +77,9 @@
       "8": 19
     },
     "adc_i2c_addrs": [
-      "0x49",
       "0x4B"
     ]
   },
-  "pin_config": "0b00001111",
+  "pin_config": "0b11111111",
   "status_update_interval_s": 30
 }

@@ -1,0 +1,95 @@
+{
+  "module_type": "IoTbase PICO",
+  "mezzanine_type": "IoTextra Input",
+  "channels": [
+    {
+      "name": "Input A",
+      "channel_type": "1",
+      "interface_type": "01",
+      "channel_number": 0,
+      "actions": 0
+    },
+    {
+      "name": "Input B",
+      "channel_type": "1",
+      "interface_type": "01",
+      "channel_number": 1,
+      "actions": 0
+    },
+    {
+      "name": "Input C",
+      "channel_type": "1",
+      "interface_type": "01",
+      "channel_number": 2,
+      "actions": 0
+    },
+    {
+      "name": "Input D",
+      "channel_type": "1",
+      "interface_type": "01",
+      "channel_number": 3,
+      "actions": 0
+    },
+    {
+      "name": "Input E",
+      "channel_type": "1",
+      "interface_type": "01",
+      "channel_number": 4,
+      "actions": 0
+    },
+    {
+      "name": "Input F",
+      "channel_type": "1",
+      "interface_type": "01",
+      "channel_number": 5,
+      "actions": 0
+    },
+    {
+      "name": "Input G",
+      "channel_type": "1",
+      "interface_type": "01",
+      "channel_number": 6,
+      "actions": 0
+    },
+    {
+      "name": "Input H",
+      "channel_type": "1",
+      "interface_type": "01",
+      "channel_number": 7,
+      "actions": 0
+    }
+  ],
+  "network": {
+    "wifi_ssid": "your_ssid",
+    "wifi_password": "your_password"
+  },
+  "mqtt": {
+    "broker": "your_broker.local",
+    "port": 1883,
+    "client_id": "pico-iotextra-controller-1",
+    "base_topic": "iotextra/device_1"
+  },
+  "hardware": {
+    "mode": "i2c",
+    "i2c_bus_id": 0,
+    "i2c_sda_pin": 20,
+    "i2c_scl_pin": 21,
+    "i2c_device_addr": "0x3f",
+    "eeprom_i2c_addr": "0x57",
+    "eeprom_size": 1024,
+    "num_of_adcs": 0,
+    "adc_sampling_rate": 128,
+    "gpio_host_pins": {
+      "1": 10,
+      "2": 11,
+      "3": 12,
+      "4": 13,
+      "5": 14,
+      "6": 15,
+      "7": 18,
+      "8": 19
+    }
+  },
+  "pin_config": "0b11111111",
+  "status_update_interval_s": 30
+}
