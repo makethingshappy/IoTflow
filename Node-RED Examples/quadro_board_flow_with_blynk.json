@@ -2,7 +2,7 @@
     {
         "id": "8e7222813f39742f",
         "type": "tab",
-        "label": "Flow 9",
+        "label": "IoTextra Quadro",
         "disabled": false,
         "info": "",
         "env": []
@@ -392,7 +392,7 @@
         "name": "Digital Input 2",
         "pin": "3",
         "pinmode": 0,
-        "client": "bcb0cbf8899628db",
+        "client": "77d8fef2679241c7",
         "x": 500,
         "y": 320,
         "wires": []
@@ -470,7 +470,7 @@
         "id": "fd6c84efc18a868c",
         "type": "ui_group",
         "name": "Input on channel 1",
-        "tab": "e0fd32b3b617da56",
+        "tab": "8a457c098b44f9f3",
         "order": 1,
         "disp": true,
         "width": 6,
@@ -481,7 +481,7 @@
         "id": "553bc32743e6cbee",
         "type": "ui_group",
         "name": "Input on channel 2",
-        "tab": "e0fd32b3b617da56",
+        "tab": "8a457c098b44f9f3",
         "order": 2,
         "disp": true,
         "width": 6,
@@ -489,33 +489,9 @@
         "className": ""
     },
     {
-        "id": "bcb0cbf8899628db",
-        "type": "blynk-iot-client",
-        "name": "IoTextra Input",
-        "path": "blynk.cloud",
-        "key": "your_authentication_key",
-        "tmpl": "your_template_ID",
-        "dbg_all": false,
-        "dbg_log": false,
-        "dbg_prop": false,
-        "dbg_sync": false,
-        "dbg_low": false,
-        "dbg_pins": "",
-        "multi_cmd": false,
-        "enabled": true
-    },
-    {
         "id": "8a457c098b44f9f3",
         "type": "ui_tab",
-        "name": "IoTextra Relay2",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "e0fd32b3b617da56",
-        "type": "ui_tab",
-        "name": "IoTExtra Input board",
+        "name": "IoTextra Quadro",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false

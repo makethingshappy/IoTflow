@@ -2,7 +2,7 @@
     {
         "id": "3b7788ab57f07d54",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "IoTextra Input",
         "disabled": false,
         "info": "",
         "env": []
@@ -587,7 +587,7 @@
     {
         "id": "d4d067eadc763c4e",
         "type": "ui_group",
-        "name": "Input on channel 6",
+        "name": "Input on channel 7",
         "tab": "e0fd32b3b617da56",
         "order": 7,
         "disp": true,
@@ -625,7 +625,7 @@
     {
         "id": "e0fd32b3b617da56",
         "type": "ui_tab",
-        "name": "IoTExtra Input board",
+        "name": "IoTextra Input",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false

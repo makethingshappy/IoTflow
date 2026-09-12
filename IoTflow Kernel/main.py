@@ -116,7 +116,8 @@ _OCTAL3_INPUT_HOST_PIN_TO_CHANNEL = {1: 5, 2: 6, 3: 7, 4: 8}
 
 def _is_octal3_mezzanine(mezzanine_type=None):
     mt = mezzanine_type if mezzanine_type is not None else config_dict.get('MEZZANINE_TYPE', '')
-    return 'IoTextra Octal3' in (mt or '')
+    # Exact name only. IoTextra Octal4 is a standard 4DI+4DO expander board.
+    return (mt or '').strip() == 'IoTextra Octal3'
 
 
 def _octal3_channels_from_pin_config(pin_config):
