@@ -491,10 +491,9 @@ class Configurator:
             print("  hardware mode = i2c (required for TCA9534 relay drivers)")
         elif is_octal4_mezzanine(mezzanine_type):
             self.config.pin_config = "0b00001111"
-            self.config.hardware.mode = HardwareMode.I2C.value
             print("\nIoTextra Octal4 defaults applied:")
             print("  pin_config = 0b00001111 (CH1-4 ISO1211 DI inputs, CH5-8 SPST relay outputs)")
-            print("  hardware mode = i2c (required for TCA9534)")
+            print("  hardware mode = GPIO or I2C (selectable)")
         
         # Configure network settings
         self.configure_network()
@@ -572,10 +571,6 @@ class Configurator:
             self.config.hardware.mode = HardwareMode.I2C.value
         elif is_octal3_mezzanine(self.config.mezzanine_type):
             print("IoTextra Octal3 latching relays require I2C mode (TCA9534 + nSLEEP).")
-            print("Setting hardware mode to I2C.")
-            self.config.hardware.mode = HardwareMode.I2C.value
-        elif is_octal4_mezzanine(self.config.mezzanine_type):
-            print("IoTextra Octal4 uses the TCA9534 expander (ISO1211 DI + SPST relays).")
             print("Setting hardware mode to I2C.")
             self.config.hardware.mode = HardwareMode.I2C.value
         else:
@@ -871,13 +866,21 @@ class Configurator:
         ]
         print("Applied Octal3 defaults: Relay 1-4 (I2C write) + DIN1-4 (GPIO read).")
 
+    def octal4_interface_for_hardware_mode(self) -> str:
+        """Match Octal4 channel interface to the selected board hardware mode."""
+        if self.config.hardware.mode == HardwareMode.I2C.value:
+            return InterfaceType.I2C_TCA9534.value
+        return InterfaceType.GPIO.value
+
     def apply_octal4_channel_defaults(self):
         """Seed the standard Octal4 channel set (4 ISO1211 DIs + 4 SPST relays)."""
+        interface_type = self.octal4_interface_for_hardware_mode()
+        iface_label = "I2C" if interface_type == InterfaceType.I2C_TCA9534.value else "GPIO"
         self.config.channels = [
             Channel(
                 name=f"DIN{i + 1}",
                 channel_type=ChannelType.BIT.value,
-                interface_type=InterfaceType.I2C_TCA9534.value,
+                interface_type=interface_type,
                 channel_number=i,
                 actions=0,
             )
@@ -886,13 +889,13 @@ class Configurator:
             Channel(
                 name=f"Relay {i + 1}",
                 channel_type=ChannelType.BIT.value,
-                interface_type=InterfaceType.I2C_TCA9534.value,
+                interface_type=interface_type,
                 channel_number=4 + i,
                 actions=1,
             )
             for i in range(4)
         ]
-        print("Applied Octal4 defaults: DIN1-4 (I2C read) + Relay 1-4 (I2C write).")
+        print(f"Applied Octal4 defaults: DIN1-4 ({iface_label} read) + Relay 1-4 ({iface_label} write).")
 
     def configure_channels(self):
         """Configure channels for the node"""
@@ -1027,9 +1030,9 @@ class Configurator:
                 deferred_octal3_interface = True
                 interface_type = InterfaceType.GPIO.value  # placeholder until channel_number known
             elif is_octal4_mezzanine(self.config.mezzanine_type):
-                # Interface follows channel_number: 0-3 DIN (I2C), 4-7 relay (I2C)
+                # Interface follows the selected hardware mode (GPIO or I2C)
                 deferred_octal4_interface = True
-                interface_type = InterfaceType.I2C_TCA9534.value
+                interface_type = self.octal4_interface_for_hardware_mode()
             else:
                 # For non-combo (pure digital) mezzanines default to GPIO
                 interface_type = InterfaceType.GPIO.value
@@ -1102,11 +1105,12 @@ class Configurator:
                 interface_type = InterfaceType.GPIO.value
                 print(f"Octal3: CH{channel_number + 1} is a digital input -> interface {interface_type} (GPIO)")
         elif deferred_octal4_interface:
-            interface_type = InterfaceType.I2C_TCA9534.value
+            interface_type = self.octal4_interface_for_hardware_mode()
+            iface_label = "I2C" if interface_type == InterfaceType.I2C_TCA9534.value else "GPIO"
             if channel_number <= 3:
-                print(f"Octal4: CH{channel_number + 1} is an ISO1211 DI -> interface {interface_type} (I2C)")
+                print(f"Octal4: CH{channel_number + 1} is an ISO1211 DI -> interface {interface_type} ({iface_label})")
             else:
-                print(f"Octal4: CH{channel_number + 1} is an SPST relay -> interface {interface_type} (I2C)")
+                print(f"Octal4: CH{channel_number + 1} is an SPST relay -> interface {interface_type} ({iface_label})")
 
         # Actions / measurement range / sampled-mode fields
         if channel_type == ChannelType.BIT.value:
@@ -1318,18 +1322,18 @@ class Configurator:
                             else:
                                 print("Please select 1 or 2.")
                     elif is_octal4_mezzanine(self.config.mezzanine_type):
-                        print("IoTextra Octal4 channels use the TCA9534 by default:")
-                        print(f"1. {DIGITAL_INTERFACE_LABELS[InterfaceType.I2C_TCA9534.value]} ({InterfaceType.I2C_TCA9534.value})")
-                        print(f"2. {DIGITAL_INTERFACE_LABELS[InterfaceType.GPIO.value]} ({InterfaceType.GPIO.value})")
+                        print("IoTextra Octal4 channels can use GPIO or I2C:")
+                        print(f"1. {DIGITAL_INTERFACE_LABELS[InterfaceType.GPIO.value]} ({InterfaceType.GPIO.value})")
+                        print(f"2. {DIGITAL_INTERFACE_LABELS[InterfaceType.I2C_TCA9534.value]} ({InterfaceType.I2C_TCA9534.value})")
                         while True:
                             choice = input("Select interface type for this channel (1-2): ").strip()
                             if choice == "1":
-                                channel.interface_type = InterfaceType.I2C_TCA9534.value
-                                print("Interface type changed to I2C")
-                                break
-                            elif choice == "2":
                                 channel.interface_type = InterfaceType.GPIO.value
                                 print("Interface type changed to GPIO")
+                                break
+                            elif choice == "2":
+                                channel.interface_type = InterfaceType.I2C_TCA9534.value
+                                print("Interface type changed to I2C")
                                 break
                             else:
                                 print("Please select 1 or 2.")
@@ -1355,11 +1359,9 @@ class Configurator:
                                 channel.channel_number = new_number
                                 print(f"Channel number changed to: {new_number}")
                                 if is_octal4_mezzanine(self.config.mezzanine_type):
-                                    channel.interface_type = InterfaceType.I2C_TCA9534.value
                                     channel.actions = 0 if new_number <= 3 else 1
                                     print(
-                                        f"Octal4: interface {channel.interface_type}, "
-                                        f"actions {channel.actions} "
+                                        f"Octal4: actions {channel.actions} "
                                         f"({'Read+Write' if channel.actions else 'Read only'})"
                                     )
                                 break
