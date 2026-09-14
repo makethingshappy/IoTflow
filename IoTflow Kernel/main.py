@@ -110,8 +110,9 @@ def send_data_back(data):
         if DEBUG:
             print("Error serializing/sending data:", e)
 
-# Octal3: host-pin position -> logical input channel (fixed board role).
-_OCTAL3_INPUT_HOST_PIN_TO_CHANNEL = {1: 5, 2: 6, 3: 7, 4: 8}
+# Latching hybrid: host-pin position -> logical GPIO channel (fixed board role).
+# Octal3: these are digital inputs. IoTextra Relay: these are SPST GPIO outputs.
+_LATCHING_GPIO_HOST_PIN_TO_CHANNEL = {1: 5, 2: 6, 3: 7, 4: 8}
 
 
 def _is_octal3_mezzanine(mezzanine_type=None):
@@ -120,8 +121,18 @@ def _is_octal3_mezzanine(mezzanine_type=None):
     return (mt or '').strip() == 'IoTextra Octal3'
 
 
+def _is_relay_mezzanine(mezzanine_type=None):
+    mt = mezzanine_type if mezzanine_type is not None else config_dict.get('MEZZANINE_TYPE', '')
+    # Exact name only. IoTextra Relay2 is a standard TCA9534 4-output board.
+    return (mt or '').strip() == 'IoTextra Relay'
+
+
+def _uses_latching_relays(mezzanine_type=None):
+    return _is_octal3_mezzanine(mezzanine_type) or _is_relay_mezzanine(mezzanine_type)
+
+
 def _octal3_channels_from_pin_config(pin_config):
-    """Logical output channels from pin_config (bit 0 = output), capped at 4."""
+    """Logical latching-output channels from pin_config (bit 0 = output), capped at 4."""
     channels = []
     for i in range(8):
         if ((pin_config >> i) & 0x01) == 0:
@@ -141,10 +152,10 @@ def _host_pin_lookup(host_pins, position):
 def _octal3_gpio_and_nsleep(host_pins):
     """
     Translate host-pin table (position 1-8 -> MCU GPIO) into the
-    gpio_host_pins + nsleep_pin IotDriver expects for Octal3.
+    gpio_host_pins + nsleep_pin IotDriver expects for latching hybrid boards.
     """
     gpio_host_pins = {}
-    for host_pin, channel in _OCTAL3_INPUT_HOST_PIN_TO_CHANNEL.items():
+    for host_pin, channel in _LATCHING_GPIO_HOST_PIN_TO_CHANNEL.items():
         pin = _host_pin_lookup(host_pins, host_pin)
         if pin is not None:
             gpio_host_pins[channel] = pin
@@ -153,11 +164,11 @@ def _octal3_gpio_and_nsleep(host_pins):
 
 
 def _iot_driver_kwargs(iso1211_channel_numbers):
-    """Build shared IotDriver constructor kwargs, including Octal3 when applicable."""
+    """Build shared IotDriver constructor kwargs, including latching hybrid when applicable."""
     gpio_host_pins = config_dict['GPIO_HOST_PINS']
     nsleep_pin = None
     octal3_channels = None
-    if _is_octal3_mezzanine():
+    if _uses_latching_relays():
         gpio_host_pins, nsleep_pin = _octal3_gpio_and_nsleep(gpio_host_pins)
         octal3_channels = _octal3_channels_from_pin_config(config_dict['PIN_CONFIG'])
     return {
@@ -501,7 +512,7 @@ def main():
                 print("I2C scan:", [hex(a) for a in i2c.scan()])
             except Exception:
                 pass
-            print("Continuing without EEPROM (config.py defaults; Octal3 state will not persist)")
+            print("Continuing without EEPROM (config.py defaults; latching-relay state will not persist)")
 
         # Read EEPROM configuration and update config_dict
         eeprom_config = read_eeprom_config() if eeprom else None

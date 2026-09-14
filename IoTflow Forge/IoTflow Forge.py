@@ -99,8 +99,18 @@ def mezzanine_supports_configurable_adc_sampling_rate(mezzanine_type: str) -> bo
 
 
 def is_octal3_mezzanine(mezzanine_type: str) -> bool:
-    """True when Kernel should enable Octal3 latching-relay mode."""
+    """True when Kernel should enable Octal3 latching-relay + GPIO-input mode."""
     return (mezzanine_type or "").strip() == "IoTextra Octal3"
+
+
+def is_relay_mezzanine(mezzanine_type: str) -> bool:
+    """True for IoTextra Relay (4× latching I2C + 4× GPIO SPST). Not Relay2."""
+    return (mezzanine_type or "").strip() == "IoTextra Relay"
+
+
+def uses_latching_relays(mezzanine_type: str) -> bool:
+    """True when Kernel enables TCA9534 latching-pulse + nSLEEP + EEPROM state."""
+    return is_octal3_mezzanine(mezzanine_type) or is_relay_mezzanine(mezzanine_type)
 
 
 def is_octal4_mezzanine(mezzanine_type: str) -> bool:
@@ -108,7 +118,7 @@ def is_octal4_mezzanine(mezzanine_type: str) -> bool:
     return (mezzanine_type or "").strip() == "IoTextra Octal4"
 
 
-# Last EEPROM page reserved by Kernel for Octal3 latching-relay ON/OFF state.
+# Last EEPROM page reserved by Kernel for latching-relay ON/OFF state.
 # Physical eeprom_size stays 1024; config payload must stay below this region.
 EEPROM_OCTAL3_STATE_RESERVED = 16
 EEPROM_OCTAL3_STATE_ADDR = 0x3F0
@@ -124,6 +134,24 @@ OCTAL3_HOST_PIN_ROLES: Dict[int, str] = {
     7: "unused (AP6)",
     8: "unused (AP7)",
 }
+
+# Host-pin position -> role labels for IoTextra Relay (latching + GPIO SPST).
+RELAY_HOST_PIN_ROLES: Dict[int, str] = {
+    1: "CH5 SPST relay (AP0)",
+    2: "CH6 SPST relay (AP1)",
+    3: "CH7 SPST relay (AP2)",
+    4: "CH8 SPST relay (AP3)",
+    5: "unused (AP4)",
+    6: "nSLEEP / DRV8837C (AP5)",
+    7: "unused (AP6)",
+    8: "unused (AP7)",
+}
+
+
+def latching_host_pin_roles(mezzanine_type: str) -> Dict[int, str]:
+    if is_relay_mezzanine(mezzanine_type):
+        return RELAY_HOST_PIN_ROLES
+    return OCTAL3_HOST_PIN_ROLES
 
 # ADC sampling rate selection mapping (display value -> config code)
 ADC_SAMPLING_RATES: Dict[int, int] = {
@@ -489,6 +517,12 @@ class Configurator:
             print("\nIoTextra Octal3 defaults applied:")
             print("  pin_config = 0b11110000 (CH1-4 latching relay outputs, CH5-8 inputs)")
             print("  hardware mode = i2c (required for TCA9534 relay drivers)")
+        elif is_relay_mezzanine(mezzanine_type):
+            self.config.pin_config = "0b00000000"
+            self.config.hardware.mode = HardwareMode.I2C.value
+            print("\nIoTextra Relay defaults applied:")
+            print("  pin_config = 0b00000000 (CH1-4 latching I2C outputs, CH5-8 GPIO SPST outputs)")
+            print("  hardware mode = i2c (required for TCA9534 latching relay drivers)")
         elif is_octal4_mezzanine(mezzanine_type):
             self.config.pin_config = "0b00001111"
             print("\nIoTextra Octal4 defaults applied:")
@@ -569,8 +603,8 @@ class Configurator:
         if self.is_analog_module:
             print("Analog input mezzanines require I2C mode. Setting hardware mode to I2C.")
             self.config.hardware.mode = HardwareMode.I2C.value
-        elif is_octal3_mezzanine(self.config.mezzanine_type):
-            print("IoTextra Octal3 latching relays require I2C mode (TCA9534 + nSLEEP).")
+        elif uses_latching_relays(self.config.mezzanine_type):
+            print(f"{self.config.mezzanine_type} latching relays require I2C mode (TCA9534 + nSLEEP).")
             print("Setting hardware mode to I2C.")
             self.config.hardware.mode = HardwareMode.I2C.value
         else:
@@ -634,11 +668,11 @@ class Configurator:
 
             # EEPROM Configuration
             print("\nEEPROM Configuration:")
-            if is_octal3_mezzanine(self.config.mezzanine_type):
+            if uses_latching_relays(self.config.mezzanine_type):
                 usable = self.config.hardware.eeprom_size - EEPROM_OCTAL3_STATE_RESERVED
                 print(
                     f"Note: Kernel reserves the last {EEPROM_OCTAL3_STATE_RESERVED} bytes "
-                    f"(0x{EEPROM_OCTAL3_STATE_ADDR:03X}-0x3FF) for Octal3 latching-relay state."
+                    f"(0x{EEPROM_OCTAL3_STATE_ADDR:03X}-0x3FF) for latching-relay state."
                 )
                 print(f"Usable config region: {usable} bytes of {self.config.hardware.eeprom_size}.")
             
@@ -738,16 +772,17 @@ class Configurator:
         
         # GPIO Host Pins (always configurable)
         print("\nGPIO Host Pin Configuration:")
-        if is_octal3_mezzanine(self.config.mezzanine_type):
-            print("Octal3 uses HOST connector positions (Kernel remaps them):")
+        if uses_latching_relays(self.config.mezzanine_type):
+            roles = latching_host_pin_roles(self.config.mezzanine_type)
+            print(f"{self.config.mezzanine_type} uses HOST connector positions (Kernel remaps them):")
             for host_pin in range(1, 9):
-                role = OCTAL3_HOST_PIN_ROLES[host_pin]
+                role = roles[host_pin]
                 pin = self.config.hardware.gpio_host_pins.get(host_pin)
                 print(f"  Host pin {host_pin}: GPIO {pin}  ({role})")
             change_pins = input("Change GPIO pin mapping? (y/n, default: n): ").strip().lower()
             if change_pins in ['y', 'yes']:
                 for host_pin in range(1, 9):
-                    role = OCTAL3_HOST_PIN_ROLES[host_pin]
+                    role = roles[host_pin]
                     current = self.config.hardware.gpio_host_pins[host_pin]
                     pin_input = input(
                         f"GPIO for host pin {host_pin} [{role}] (current: {current}): "
@@ -793,6 +828,7 @@ class Configurator:
         # Show examples
         print("\nExamples:")
         print("IoTExtra Relay2: 0b11110000 (P4-P7 i.e. channels 5-8 are unused, 1-4 are outputs)")
+        print("IoTExtra Relay:  0b00000000 (CH1-4 latching I2C outputs, CH5-8 GPIO SPST outputs)")
         print("IoTExtra Input:  0b11111111 (all channels are inputs)")
         print("IoTExtra Octal:  0b00001111 (channels 0-3 inputs, 4-7 outputs)")
         print("IoTExtra Octal3: 0b11110000 (CH1-4 latching relay outputs, CH5-8 inputs)")
@@ -800,6 +836,8 @@ class Configurator:
         print("IoTExtra Quadro: 0b11001111 (channels 0-3 and 6-7 inputs, 4-5 outputs)")
         if is_octal3_mezzanine(self.config.mezzanine_type):
             print("\nOctal3 default/recommended: 0b11110000")
+        elif is_relay_mezzanine(self.config.mezzanine_type):
+            print("\nIoTextra Relay default/recommended: 0b00000000")
         elif is_octal4_mezzanine(self.config.mezzanine_type):
             print("\nOctal4 default/recommended: 0b00001111")
         # Get new configuration
@@ -866,6 +904,29 @@ class Configurator:
         ]
         print("Applied Octal3 defaults: Relay 1-4 (I2C write) + DIN1-4 (GPIO read).")
 
+    def apply_relay_channel_defaults(self):
+        """Seed the standard IoTextra Relay channel set (4 latching + 4 GPIO SPST)."""
+        self.config.channels = [
+            Channel(
+                name=f"RL{i + 1}",
+                channel_type=ChannelType.BIT.value,
+                interface_type=InterfaceType.I2C_TCA9534.value,
+                channel_number=i,
+                actions=1,
+            )
+            for i in range(4)
+        ] + [
+            Channel(
+                name=f"RS{i + 1}",
+                channel_type=ChannelType.BIT.value,
+                interface_type=InterfaceType.GPIO.value,
+                channel_number=4 + i,
+                actions=1,
+            )
+            for i in range(4)
+        ]
+        print("Applied IoTextra Relay defaults: RL1-4 (I2C latching write) + RS1-4 (GPIO SPST write).")
+
     def octal4_interface_for_hardware_mode(self) -> str:
         """Match Octal4 channel interface to the selected board hardware mode."""
         if self.config.hardware.mode == HardwareMode.I2C.value:
@@ -907,6 +968,10 @@ class Configurator:
             apply = input("Apply Octal3 channel defaults (4 relays + 4 DINs)? (Y/n): ").strip().lower()
             if apply in ("", "y", "yes"):
                 self.apply_octal3_channel_defaults()
+        elif is_relay_mezzanine(self.config.mezzanine_type) and not self.config.channels:
+            apply = input("Apply IoTextra Relay channel defaults (4 latching + 4 SPST)? (Y/n): ").strip().lower()
+            if apply in ("", "y", "yes"):
+                self.apply_relay_channel_defaults()
         elif is_octal4_mezzanine(self.config.mezzanine_type) and not self.config.channels:
             apply = input("Apply Octal4 channel defaults (4 DINs + 4 relays)? (Y/n): ").strip().lower()
             if apply in ("", "y", "yes"):
@@ -1008,6 +1073,7 @@ class Configurator:
 
         # Interface type for this channel
         deferred_octal3_interface = False
+        deferred_relay_interface = False
         deferred_octal4_interface = False
         if channel_type == ChannelType.BIT.value:
             # Digital channels on combo mezzanines need to choose GPIO or I2C
@@ -1028,6 +1094,10 @@ class Configurator:
             elif is_octal3_mezzanine(self.config.mezzanine_type):
                 # Interface follows channel_number: 0-3 relay (I2C), 4-7 DIN (GPIO)
                 deferred_octal3_interface = True
+                interface_type = InterfaceType.GPIO.value  # placeholder until channel_number known
+            elif is_relay_mezzanine(self.config.mezzanine_type):
+                # Interface follows channel_number: 0-3 latching (I2C), 4-7 SPST (GPIO)
+                deferred_relay_interface = True
                 interface_type = InterfaceType.GPIO.value  # placeholder until channel_number known
             elif is_octal4_mezzanine(self.config.mezzanine_type):
                 # Interface follows the selected hardware mode (GPIO or I2C)
@@ -1104,6 +1174,13 @@ class Configurator:
             else:
                 interface_type = InterfaceType.GPIO.value
                 print(f"Octal3: CH{channel_number + 1} is a digital input -> interface {interface_type} (GPIO)")
+        elif deferred_relay_interface:
+            if channel_number <= 3:
+                interface_type = InterfaceType.I2C_TCA9534.value
+                print(f"Relay: CH{channel_number + 1} is a latching relay -> interface {interface_type} (I2C)")
+            else:
+                interface_type = InterfaceType.GPIO.value
+                print(f"Relay: CH{channel_number + 1} is an SPST GPIO output -> interface {interface_type} (GPIO)")
         elif deferred_octal4_interface:
             interface_type = self.octal4_interface_for_hardware_mode()
             iface_label = "I2C" if interface_type == InterfaceType.I2C_TCA9534.value else "GPIO"
@@ -1118,6 +1195,9 @@ class Configurator:
                 # Relays are writable; DINs are read-only
                 actions = 1 if channel_number <= 3 else 0
                 print(f"Octal3: actions set to {actions} ({'Read+Write' if actions else 'Read only'})")
+            elif is_relay_mezzanine(self.config.mezzanine_type):
+                actions = 1
+                print("Relay: actions set to 1 (Read+Write)")
             elif is_octal4_mezzanine(self.config.mezzanine_type):
                 # DINs are read-only; relays are writable
                 actions = 0 if channel_number <= 3 else 1
@@ -1337,6 +1417,10 @@ class Configurator:
                                 break
                             else:
                                 print("Please select 1 or 2.")
+                    elif is_octal3_mezzanine(self.config.mezzanine_type):
+                        print("Octal3 interface is determined by channel number (0-3 I2C latching, 4-7 GPIO input).")
+                    elif is_relay_mezzanine(self.config.mezzanine_type):
+                        print("Relay interface is determined by channel number (0-3 I2C latching, 4-7 GPIO SPST).")
                     elif not self.is_analog_module:
                         # Pure digital mezzanines default to GPIO
                         print("Only GPIO interface available for this configuration.")
@@ -1363,6 +1447,24 @@ class Configurator:
                                     print(
                                         f"Octal4: actions {channel.actions} "
                                         f"({'Read+Write' if channel.actions else 'Read only'})"
+                                    )
+                                elif is_octal3_mezzanine(self.config.mezzanine_type):
+                                    channel.interface_type = (
+                                        InterfaceType.I2C_TCA9534.value if new_number <= 3
+                                        else InterfaceType.GPIO.value
+                                    )
+                                    channel.actions = 1 if new_number <= 3 else 0
+                                    print(
+                                        f"Octal3: interface {channel.interface_type}, actions {channel.actions}"
+                                    )
+                                elif is_relay_mezzanine(self.config.mezzanine_type):
+                                    channel.interface_type = (
+                                        InterfaceType.I2C_TCA9534.value if new_number <= 3
+                                        else InterfaceType.GPIO.value
+                                    )
+                                    channel.actions = 1
+                                    print(
+                                        f"Relay: interface {channel.interface_type}, actions {channel.actions}"
                                     )
                                 break
                             else:
@@ -1869,10 +1971,10 @@ class Configurator:
         print(f"I2C Device Address: {self.config.hardware.i2c_device_addr}")
         print(f"EEPROM I2C Address: {self.config.hardware.eeprom_i2c_addr}")
         print(f"EEPROM Size: {self.config.hardware.eeprom_size} bytes")
-        if is_octal3_mezzanine(self.config.mezzanine_type):
+        if uses_latching_relays(self.config.mezzanine_type):
             usable = self.config.hardware.eeprom_size - EEPROM_OCTAL3_STATE_RESERVED
             print(
-                f"  (Octal3: last {EEPROM_OCTAL3_STATE_RESERVED} bytes @ "
+                f"  (Latching: last {EEPROM_OCTAL3_STATE_RESERVED} bytes @ "
                 f"0x{EEPROM_OCTAL3_STATE_ADDR:03X} reserved for latching-relay state; "
                 f"{usable} bytes usable for config)"
             )
@@ -1885,16 +1987,25 @@ class Configurator:
                 print(f"  ADC {adc_num} I2C Address: {self.config.hardware.adc_i2c_addresses[adc_num]}")
         
         print("\nGPIO Host Pin Configuration:")
-        if is_octal3_mezzanine(self.config.mezzanine_type):
+        if uses_latching_relays(self.config.mezzanine_type):
+            roles = latching_host_pin_roles(self.config.mezzanine_type)
             for host_pin in range(1, 9):
                 pin = self.config.hardware.gpio_host_pins.get(host_pin)
-                role = OCTAL3_HOST_PIN_ROLES[host_pin]
+                role = roles[host_pin]
                 print(f"  Host pin {host_pin}: GPIO {pin}  ({role})")
-            print("\nOctal3 notes:")
-            print("  - CH1-4: latching relays via TCA9534 (I2C); no hardware readback")
-            print("  - CH5-8: digital inputs on host GPIO")
-            print("  - Host pin 6: nSLEEP for DRV8837C")
-            print("  - Relay ON/OFF restored from EEPROM to software/MQTT after reboot (no re-pulse)")
+            if is_octal3_mezzanine(self.config.mezzanine_type):
+                print("\nOctal3 notes:")
+                print("  - CH1-4: latching relays via TCA9534 (I2C); no hardware readback")
+                print("  - CH5-8: digital inputs on host GPIO")
+                print("  - Host pin 6: nSLEEP for DRV8837C")
+                print("  - Relay ON/OFF restored from EEPROM to software/MQTT after reboot (no re-pulse)")
+            else:
+                print("\nIoTextra Relay notes:")
+                print("  - CH1-4: latching relays via TCA9534 (I2C); no hardware readback")
+                print("  - CH5-8: SPST relays on host GPIO (ordinary active-low outputs)")
+                print("  - Host pin 6: nSLEEP for DRV8837C")
+                print("  - Latching ON/OFF restored from EEPROM to software/MQTT after reboot (no re-pulse)")
+                print("  - SPST GPIO outputs start OFF after reboot (not re-driven from EEPROM)")
         else:
             for channel, pin in self.config.hardware.gpio_host_pins.items():
                 print(f"  Channel {channel}: GPIO {pin}")
@@ -1909,10 +2020,10 @@ class Configurator:
             print("No configuration loaded. Please create or load one first.")
             return False
 
-        if is_octal3_mezzanine(self.config.mezzanine_type):
+        if uses_latching_relays(self.config.mezzanine_type):
             print(
                 f"Note: Kernel reserves EEPROM 0x{EEPROM_OCTAL3_STATE_ADDR:03X}-0x3FF "
-                f"({EEPROM_OCTAL3_STATE_RESERVED} bytes) for Octal3 relay state; "
+                f"({EEPROM_OCTAL3_STATE_RESERVED} bytes) for latching-relay state; "
                 "config writes must not use that page."
             )
 
