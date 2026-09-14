@@ -62,7 +62,7 @@ EEPROM_OCTAL3_STATE_ADDR = config.EEPROM_OCTAL3_STATE_ADDR  # 0x3F0
 EEPROM_CONFIG_MAX_PACKED = EEPROM_OCTAL3_STATE_ADDR - 2  # 0x3EE
 OCTAL3_STATE_MAGIC = b'O3'
 OCTAL3_STATE_VERSION = 0x01
-OCTAL3_NSLEEP_HOST_PIN = 6  # Fixed Octal3 host-pin role (AP5)
+OCTAL3_NSLEEP_HOST_PIN = 5  # Fixed Octal3 host-pin role (AP5)
 DEBUG = False  # Disable debug prints to reduce serial noise
 
 os.dupterm(None, 0)
