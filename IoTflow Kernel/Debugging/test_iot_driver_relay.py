@@ -28,20 +28,20 @@ IoTextra Relay host-pin roles are FIXED, MCU-to-MCU (only the underlying
 GPIO numbers change between boards - the role of each host-pin position
 never does):
 
-    Host pin 1 (AP0) -> CH5 SPST GPIO output
-    Host pin 2 (AP1) -> CH6 SPST GPIO output
-    Host pin 3 (AP2) -> CH7 SPST GPIO output
-    Host pin 4 (AP3) -> CH8 SPST GPIO output
+    Host pin 1 (AP0) -> CH1 SPST GPIO output (RS1)
+    Host pin 2 (AP1) -> CH2 SPST GPIO output (RS2)
+    Host pin 3 (AP2) -> CH3 SPST GPIO output (RS3)
+    Host pin 4 (AP3) -> CH4 SPST GPIO output (RS4)
     Host pin 5 (AP4) -> unused
     Host pin 6 (AP5) -> nSLEEP  (always, every MCU)
     Host pin 7 (AP6) -> unused
     Host pin 8 (AP7) -> unused
 
-    CH1-4 latching outputs -> pure I2C via the TCA9534 (+ nSLEEP on host
-    pin 6). They have no host GPIO pin of their own at all.
+    CH1-4 SPST outputs (RS1-RS4) -> ordinary active-low host GPIO (same as
+    other digital GPIO outputs).
 
-    CH5-8 SPST outputs -> ordinary active-low host GPIO (same as other
-    digital GPIO outputs).
+    CH5-8 latching outputs (RL1-RL4) -> pure I2C via the TCA9534 (+ nSLEEP
+    on host pin 6). They have no host GPIO pin of their own at all.
 
 Configuration under test:
     Hardware mode : I2C (TCA9534 for latching relays)
@@ -61,10 +61,10 @@ from iot_driver import IotDriver
 # leaving them in the table keeps this consistent with your board's full
 # host-pin pinout documentation)
 GPIO_HOST_PINS = {
-    1: 8,     # AP0 -> CH5 SPST
-    2: 9,     # AP1 -> CH6 SPST
-    3: 10,    # AP2 -> CH7 SPST
-    4: 11,    # AP3 -> CH8 SPST
+    1: 8,     # AP0 -> CH1 SPST (RS1)
+    2: 9,     # AP1 -> CH2 SPST (RS2)
+    3: 10,    # AP2 -> CH3 SPST (RS3)
+    4: 11,    # AP3 -> CH4 SPST (RS4)
     5: None,  # AP4 -> unused
     6: 5,     # AP5 -> nSLEEP (always)
     7: None,  # AP6 -> unused
@@ -77,11 +77,11 @@ SCL_PIN = 15
 DEVICE_ADDRESS = 0x27
 
 PIN_CONFIG = 0b00000000  # all outputs
-LATCHING_CHANNELS = {1, 2, 3, 4}
-SPST_CHANNELS = [5, 6, 7, 8]
-LATCHING_OUTPUT_CHANNELS = [1, 2, 3, 4]
+LATCHING_CHANNELS = {5, 6, 7, 8}
+SPST_CHANNELS = [1, 2, 3, 4]
+LATCHING_OUTPUT_CHANNELS = [5, 6, 7, 8]
 
-_RELAY_GPIO_HOST_PIN_TO_CHANNEL = {1: 5, 2: 6, 3: 7, 4: 8}
+_RELAY_GPIO_HOST_PIN_TO_CHANNEL = {1: 1, 2: 2, 3: 3, 4: 4}
 _RELAY_NSLEEP_HOST_PIN = 6
 
 
@@ -119,7 +119,7 @@ def main():
         octal3_channels=LATCHING_CHANNELS,
     )
 
-    print("\n=== Cycling each latching relay (CH1-4) ON then OFF ===")
+    print("\n=== Cycling each latching relay (CH5-8 / RL1-4) ON then OFF ===")
     for ch in LATCHING_OUTPUT_CHANNELS:
         print(f"\n-- Latching CH{ch} --")
         print(f"Setting CH{ch} ON")
@@ -130,7 +130,7 @@ def main():
         driver.set_output(ch, False)
         time.sleep_ms(300)
 
-    print("\n=== Cycling each SPST GPIO relay (CH5-8) ON then OFF ===")
+    print("\n=== Cycling each SPST GPIO relay (CH1-4 / RS1-4) ON then OFF ===")
     for ch in SPST_CHANNELS:
         print(f"\n-- SPST CH{ch} --")
         print(f"Setting CH{ch} ON")

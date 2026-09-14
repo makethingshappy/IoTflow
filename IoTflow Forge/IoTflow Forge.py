@@ -137,10 +137,10 @@ OCTAL3_HOST_PIN_ROLES: Dict[int, str] = {
 
 # Host-pin position -> role labels for IoTextra Relay (latching + GPIO SPST).
 RELAY_HOST_PIN_ROLES: Dict[int, str] = {
-    1: "CH5 SPST relay (AP0)",
-    2: "CH6 SPST relay (AP1)",
-    3: "CH7 SPST relay (AP2)",
-    4: "CH8 SPST relay (AP3)",
+    1: "CH1 SPST relay RS1 (AP0)",
+    2: "CH2 SPST relay RS2 (AP1)",
+    3: "CH3 SPST relay RS3 (AP2)",
+    4: "CH4 SPST relay RS4 (AP3)",
     5: "unused (AP4)",
     6: "nSLEEP / DRV8837C (AP5)",
     7: "unused (AP6)",
@@ -521,7 +521,7 @@ class Configurator:
             self.config.pin_config = "0b00000000"
             self.config.hardware.mode = HardwareMode.I2C.value
             print("\nIoTextra Relay defaults applied:")
-            print("  pin_config = 0b00000000 (CH1-4 latching I2C outputs, CH5-8 GPIO SPST outputs)")
+            print("  pin_config = 0b00000000 (CH1-4 GPIO SPST outputs, CH5-8 latching I2C outputs)")
             print("  hardware mode = i2c (required for TCA9534 latching relay drivers)")
         elif is_octal4_mezzanine(mezzanine_type):
             self.config.pin_config = "0b00001111"
@@ -828,7 +828,7 @@ class Configurator:
         # Show examples
         print("\nExamples:")
         print("IoTExtra Relay2: 0b11110000 (P4-P7 i.e. channels 5-8 are unused, 1-4 are outputs)")
-        print("IoTExtra Relay:  0b00000000 (CH1-4 latching I2C outputs, CH5-8 GPIO SPST outputs)")
+        print("IoTExtra Relay:  0b00000000 (CH1-4 GPIO SPST outputs, CH5-8 latching I2C outputs)")
         print("IoTExtra Input:  0b11111111 (all channels are inputs)")
         print("IoTExtra Octal:  0b00001111 (channels 0-3 inputs, 4-7 outputs)")
         print("IoTExtra Octal3: 0b11110000 (CH1-4 latching relay outputs, CH5-8 inputs)")
@@ -908,24 +908,24 @@ class Configurator:
         """Seed the standard IoTextra Relay channel set (4 latching + 4 GPIO SPST)."""
         self.config.channels = [
             Channel(
-                name=f"RL{i + 1}",
+                name=f"RS{i + 1}",
                 channel_type=ChannelType.BIT.value,
-                interface_type=InterfaceType.I2C_TCA9534.value,
+                interface_type=InterfaceType.GPIO.value,
                 channel_number=i,
                 actions=1,
             )
             for i in range(4)
         ] + [
             Channel(
-                name=f"RS{i + 1}",
+                name=f"RL{i + 1}",
                 channel_type=ChannelType.BIT.value,
-                interface_type=InterfaceType.GPIO.value,
+                interface_type=InterfaceType.I2C_TCA9534.value,
                 channel_number=4 + i,
                 actions=1,
             )
             for i in range(4)
         ]
-        print("Applied IoTextra Relay defaults: RL1-4 (I2C latching write) + RS1-4 (GPIO SPST write).")
+        print("Applied IoTextra Relay defaults: RS1-4 (GPIO SPST write) + RL1-4 (I2C latching write).")
 
     def octal4_interface_for_hardware_mode(self) -> str:
         """Match Octal4 channel interface to the selected board hardware mode."""
@@ -1096,7 +1096,7 @@ class Configurator:
                 deferred_octal3_interface = True
                 interface_type = InterfaceType.GPIO.value  # placeholder until channel_number known
             elif is_relay_mezzanine(self.config.mezzanine_type):
-                # Interface follows channel_number: 0-3 latching (I2C), 4-7 SPST (GPIO)
+                # Interface follows channel_number: 0-3 SPST (GPIO), 4-7 latching (I2C)
                 deferred_relay_interface = True
                 interface_type = InterfaceType.GPIO.value  # placeholder until channel_number known
             elif is_octal4_mezzanine(self.config.mezzanine_type):
@@ -1176,11 +1176,11 @@ class Configurator:
                 print(f"Octal3: CH{channel_number + 1} is a digital input -> interface {interface_type} (GPIO)")
         elif deferred_relay_interface:
             if channel_number <= 3:
-                interface_type = InterfaceType.I2C_TCA9534.value
-                print(f"Relay: CH{channel_number + 1} is a latching relay -> interface {interface_type} (I2C)")
-            else:
                 interface_type = InterfaceType.GPIO.value
                 print(f"Relay: CH{channel_number + 1} is an SPST GPIO output -> interface {interface_type} (GPIO)")
+            else:
+                interface_type = InterfaceType.I2C_TCA9534.value
+                print(f"Relay: CH{channel_number + 1} is a latching relay -> interface {interface_type} (I2C)")
         elif deferred_octal4_interface:
             interface_type = self.octal4_interface_for_hardware_mode()
             iface_label = "I2C" if interface_type == InterfaceType.I2C_TCA9534.value else "GPIO"
@@ -1420,7 +1420,7 @@ class Configurator:
                     elif is_octal3_mezzanine(self.config.mezzanine_type):
                         print("Octal3 interface is determined by channel number (0-3 I2C latching, 4-7 GPIO input).")
                     elif is_relay_mezzanine(self.config.mezzanine_type):
-                        print("Relay interface is determined by channel number (0-3 I2C latching, 4-7 GPIO SPST).")
+                        print("Relay interface is determined by channel number (0-3 GPIO SPST, 4-7 I2C latching).")
                     elif not self.is_analog_module:
                         # Pure digital mezzanines default to GPIO
                         print("Only GPIO interface available for this configuration.")
@@ -1459,8 +1459,8 @@ class Configurator:
                                     )
                                 elif is_relay_mezzanine(self.config.mezzanine_type):
                                     channel.interface_type = (
-                                        InterfaceType.I2C_TCA9534.value if new_number <= 3
-                                        else InterfaceType.GPIO.value
+                                        InterfaceType.GPIO.value if new_number <= 3
+                                        else InterfaceType.I2C_TCA9534.value
                                     )
                                     channel.actions = 1
                                     print(
@@ -2001,8 +2001,8 @@ class Configurator:
                 print("  - Relay ON/OFF restored from EEPROM to software/MQTT after reboot (no re-pulse)")
             else:
                 print("\nIoTextra Relay notes:")
-                print("  - CH1-4: latching relays via TCA9534 (I2C); no hardware readback")
-                print("  - CH5-8: SPST relays on host GPIO (ordinary active-low outputs)")
+                print("  - CH1-4: SPST relays on host GPIO (ordinary active-low outputs)")
+                print("  - CH5-8: latching relays via TCA9534 (I2C); no hardware readback")
                 print("  - Host pin 6: nSLEEP for DRV8837C")
                 print("  - Latching ON/OFF restored from EEPROM to software/MQTT after reboot (no re-pulse)")
                 print("  - SPST GPIO outputs start OFF after reboot (not re-driven from EEPROM)")

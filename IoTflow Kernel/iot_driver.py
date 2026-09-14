@@ -42,10 +42,11 @@ Latching hybrid note (Octal3 and IoTextra Relay):
     describe the TCA9534's physical pin directions, which are always
     all-output.
 
-    Octal3: remaining host GPIO channels are digital INPUTS.
-    IoTextra Relay: remaining host GPIO channels are ordinary GPIO OUTPUTS
-    (SPST relays). Those outputs use the same active-low GPIO path as other
-    digital boards; they are not pulsed.
+    Octal3: remaining host GPIO channels (CH5-8) are digital INPUTS.
+    IoTextra Relay: remaining host GPIO channels (CH1-4 / RS1-RS4) are
+    ordinary GPIO OUTPUTS (SPST relays). Latching relays are CH5-8 / RL1-RL4.
+    Those SPST outputs use the same active-low GPIO path as other digital
+    boards; they are not pulsed.
 
     Which logical channels are latching outputs is given by octal3_channels;
     the relay pin-pair (IN1/IN2) each one drives is assigned dynamically in

@@ -111,8 +111,10 @@ def send_data_back(data):
             print("Error serializing/sending data:", e)
 
 # Latching hybrid: host-pin position -> logical GPIO channel (fixed board role).
-# Octal3: these are digital inputs. IoTextra Relay: these are SPST GPIO outputs.
-_LATCHING_GPIO_HOST_PIN_TO_CHANNEL = {1: 5, 2: 6, 3: 7, 4: 8}
+# Octal3: host pins 1-4 are CH5-8 digital inputs.
+# IoTextra Relay: host pins 1-4 are CH1-4 SPST GPIO outputs (RS1-RS4).
+_OCTAL3_GPIO_HOST_PIN_TO_CHANNEL = {1: 5, 2: 6, 3: 7, 4: 8}
+_RELAY_GPIO_HOST_PIN_TO_CHANNEL = {1: 1, 2: 2, 3: 3, 4: 4}
 
 
 def _is_octal3_mezzanine(mezzanine_type=None):
@@ -133,6 +135,9 @@ def _uses_latching_relays(mezzanine_type=None):
 
 def _octal3_channels_from_pin_config(pin_config):
     """Logical latching-output channels from pin_config (bit 0 = output), capped at 4."""
+    if _is_relay_mezzanine():
+        # RL1-RL4 are fixed as CH5-8; CH1-4 are RS1-RS4 GPIO SPST.
+        return [5, 6, 7, 8]
     channels = []
     for i in range(8):
         if ((pin_config >> i) & 0x01) == 0:
@@ -154,8 +159,12 @@ def _octal3_gpio_and_nsleep(host_pins):
     Translate host-pin table (position 1-8 -> MCU GPIO) into the
     gpio_host_pins + nsleep_pin IotDriver expects for latching hybrid boards.
     """
+    mapping = (
+        _RELAY_GPIO_HOST_PIN_TO_CHANNEL if _is_relay_mezzanine()
+        else _OCTAL3_GPIO_HOST_PIN_TO_CHANNEL
+    )
     gpio_host_pins = {}
-    for host_pin, channel in _LATCHING_GPIO_HOST_PIN_TO_CHANNEL.items():
+    for host_pin, channel in mapping.items():
         pin = _host_pin_lookup(host_pins, host_pin)
         if pin is not None:
             gpio_host_pins[channel] = pin

@@ -126,7 +126,7 @@ GPIO_HOST_PINS = {
 # The channels are in this order 0b[P7][P6][P5][P4][P3][P2][P1][P0]
 # You can find the pin configuration of the module on the schematic of the IoTExtra board
 # IoTExtra Relay2 -> 0b11110000 ATTENTION: check the schematic (P4-P7 i.e. channels 5-8 are unused)
-# IoTExtra Relay -> 0b00000000 (CH1-4 latching I2C outputs, CH5-8 GPIO SPST outputs)
+# IoTExtra Relay -> 0b00000000 (CH1-4 GPIO SPST outputs, CH5-8 latching I2C outputs)
 # IoTExtra Input -> 0b11111111
 # IoTExtra Octal / Octal2 / Octal4 -> 0b00001111 (P0-P3 inputs, P4-P7 outputs)
 # IoTExtra Combo -> 0b11000000
