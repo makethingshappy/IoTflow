@@ -27,7 +27,13 @@ iot_driver – Hardware Abstraction Layer for Digital I/O
 This script provides a unified driver to control IoTextra Digital I/O hardware using
 either I2C (via a TCA9534 I/O expander) or GPIO mode through a HOST connector.
 It supports setting output states and reading inputs for multiple hardware
-variants of the IoTextra Digital I/O boards, including Octal3 with latching relays.
+variants of the IoTextra Digital I/O boards, including Octal3 with latching relays
+and Octal4 (standard TCA9534 4DI + 4DO, not latching).
+
+Octal4 note:
+    Octal4 maps 1:1 onto the TCA9534: P0-P3 are ISO1211 direct-mode digital
+    inputs, P4-P7 are SPST relay outputs. Use the standard I2C path with
+    pin_config 0b00001111. Do not enable Octal3 latching mode.
 
 Octal3 note:
     Octal3 is a HYBRID board: 4 relay outputs are driven via the TCA9534

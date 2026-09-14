@@ -40,7 +40,8 @@ optocoupler driven by a dedicated HOST connector pin (`fgnd_gpio`).
 
 Direct-mode channels (12-60V DC, JM closed) are electrically identical to any
 other isolated DI input and remain handled by the existing `iot_driver.IotDriver`
-without any changes. This module never touches them.
+without any changes. This module never touches them. IoTextra Octal4 ISO1211
+inputs are direct-mode and use channel_type "1", not this driver.
 
 Channel configuration (read from the same EEPROM source as all other channels)
 ------------------------------------------------------------------------------

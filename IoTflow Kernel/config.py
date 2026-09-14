@@ -127,7 +127,7 @@ GPIO_HOST_PINS = {
 # You can find the pin configuration of the module on the schematic of the IoTExtra board
 # IoTExtra Relay2 -> 0b11110000 ATTENTION: check the schematic (P4-P7 i.e. channels 5-8 are unused)
 # IoTExtra Input -> 0b11111111
-# IoTExtra Octal -> 0b00001111
+# IoTExtra Octal / Octal2 / Octal4 -> 0b00001111 (P0-P3 inputs, P4-P7 outputs)
 # IoTExtra Combo -> 0b11000000
 # IoTExtra Analog -> 0b00000000
 # IoTextra Quadro -> 0b11001111
@@ -141,6 +141,8 @@ STATUS_UPDATE_INTERVAL_S = 30 # How often to publish status updates (in seconds)
 # Sampled-mode channels (90V DC, 110V AC, 220V AC; JM jumper OPEN) are handled
 # by iso1211_driver.py, NOT by the standard DI driver. Direct-mode
 # channels (12-60V DC, JM closed) stay on the existing DI driver unchanged.
+# IoTextra Octal4 ISO1211 inputs are direct-mode (channel_type "1") — there is
+# no MCU-driven FGND/TLP188 pin, so do not use channel_type "3" on Octal4.
 #
 # A sampled-mode channel uses channel_type "3" and these fields:
 #   "channel_type":   "3"            -> ISO1211 sampled-mode DI

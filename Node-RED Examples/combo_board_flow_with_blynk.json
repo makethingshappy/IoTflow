@@ -2,7 +2,7 @@
     {
         "id": "b557adcced9a7890",
         "type": "tab",
-        "label": "Flow 4",
+        "label": "IoTextra Combo",
         "disabled": false,
         "info": "",
         "env": []
@@ -491,7 +491,7 @@
     {
         "id": "8a457c098b44f9f3",
         "type": "ui_tab",
-        "name": "IoTextra Relay2",
+        "name": "IoTextra Combo",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false

@@ -2,7 +2,7 @@
     {
         "id": "333a11262bf69e97",
         "type": "tab",
-        "label": "Flow 11",
+        "label": "IoTextra Quadro",
         "disabled": false,
         "info": "",
         "env": []
@@ -320,7 +320,7 @@
         "id": "fd6c84efc18a868c",
         "type": "ui_group",
         "name": "Input on channel 1",
-        "tab": "e0fd32b3b617da56",
+        "tab": "8a457c098b44f9f3",
         "order": 1,
         "disp": true,
         "width": 6,
@@ -331,7 +331,7 @@
         "id": "553bc32743e6cbee",
         "type": "ui_group",
         "name": "Input on channel 2",
-        "tab": "e0fd32b3b617da56",
+        "tab": "8a457c098b44f9f3",
         "order": 2,
         "disp": true,
         "width": 6,
@@ -341,15 +341,7 @@
     {
         "id": "8a457c098b44f9f3",
         "type": "ui_tab",
-        "name": "IoTextra Relay2",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "e0fd32b3b617da56",
-        "type": "ui_tab",
-        "name": "IoTExtra Input board",
+        "name": "IoTextra Quadro",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false

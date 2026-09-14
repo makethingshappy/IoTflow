@@ -2,7 +2,7 @@
     {
         "id": "be0c1f0cb2cdee5e",
         "type": "tab",
-        "label": "Flow 7",
+        "label": "IoTextra Output",
         "disabled": false,
         "info": "",
         "env": []
@@ -689,7 +689,7 @@
     {
         "id": "c11f51a2c8c604c3",
         "type": "ui_group",
-        "name": "Relay Out 1",
+        "name": "Output 1",
         "tab": "8a457c098b44f9f3",
         "order": 1,
         "disp": true,
@@ -700,7 +700,7 @@
     {
         "id": "caeecfe2eeae3e2e",
         "type": "ui_group",
-        "name": "Relay Out 2",
+        "name": "Output 2",
         "tab": "8a457c098b44f9f3",
         "order": 2,
         "disp": true,
@@ -711,7 +711,7 @@
     {
         "id": "c4d7282568f9c4a7",
         "type": "ui_group",
-        "name": "Relay Out 3",
+        "name": "Output 3",
         "tab": "8a457c098b44f9f3",
         "order": 3,
         "disp": true,
@@ -722,7 +722,7 @@
     {
         "id": "2d5bf652910a6287",
         "type": "ui_group",
-        "name": "Relay Out 4",
+        "name": "Output 4",
         "tab": "8a457c098b44f9f3",
         "order": 4,
         "disp": true,
@@ -733,7 +733,7 @@
     {
         "id": "06956921301a33cc",
         "type": "ui_group",
-        "name": "Relay Out 5",
+        "name": "Output 5",
         "tab": "8a457c098b44f9f3",
         "order": 5,
         "disp": true,
@@ -744,7 +744,7 @@
     {
         "id": "10be5ed0b8b8b6df",
         "type": "ui_group",
-        "name": "Relay Out 6",
+        "name": "Output 6",
         "tab": "8a457c098b44f9f3",
         "order": 6,
         "disp": true,
@@ -755,7 +755,7 @@
     {
         "id": "248fdbf6749f8070",
         "type": "ui_group",
-        "name": "Relay Out 7",
+        "name": "Output 7",
         "tab": "8a457c098b44f9f3",
         "order": 7,
         "disp": true,
@@ -766,7 +766,7 @@
     {
         "id": "bcc9c691d40b422d",
         "type": "ui_group",
-        "name": "Relay Out 8",
+        "name": "Output 8",
         "tab": "8a457c098b44f9f3",
         "order": 8,
         "disp": true,
@@ -777,7 +777,7 @@
     {
         "id": "8a457c098b44f9f3",
         "type": "ui_tab",
-        "name": "IoTextra Relay2",
+        "name": "IoTextra Output",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false

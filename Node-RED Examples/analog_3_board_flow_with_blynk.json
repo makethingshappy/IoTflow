@@ -2,7 +2,7 @@
     {
         "id": "f98097e805b60c84",
         "type": "tab",
-        "label": "Flow 8",
+        "label": "IoTextra Analog3",
         "disabled": false,
         "info": "",
         "env": []
@@ -409,7 +409,7 @@
     {
         "id": "f928fba135c3cd2b",
         "type": "blynk-iot-client",
-        "name": "IoTextra Analog",
+        "name": "IoTextra Analog3",
         "path": "blynk.cloud",
         "key": "YourBlynkAuthToken",
         "tmpl": "YourBlynkTemplateId",
