@@ -27,27 +27,30 @@ iot_driver – Hardware Abstraction Layer for Digital I/O
 This script provides a unified driver to control IoTextra Digital I/O hardware using
 either I2C (via a TCA9534 I/O expander) or GPIO mode through a HOST connector.
 It supports setting output states and reading inputs for multiple hardware
-variants of the IoTextra Digital I/O boards, including Octal3 with latching relays
-and Octal4 (standard TCA9534 4DI + 4DO, not latching).
+variants of the IoTextra Digital I/O boards, including Octal3 / Relay latching
+relays and Octal4 (standard TCA9534 4DI + 4DO, not latching).
 
 Octal4 note:
     Octal4 maps 1:1 onto the TCA9534: P0-P3 are ISO1211 direct-mode digital
     inputs, P4-P7 are SPST relay outputs. Use the standard I2C path with
     pin_config 0b00001111. Do not enable Octal3 latching mode.
 
-Octal3 note:
-    Octal3 is a HYBRID board: 4 relay outputs are driven via the TCA9534
-    over I2C (2 physical TCA pins per relay, all 8 TCA pins are outputs,
-    pure I2C - no host GPIO pin involved at all except nSLEEP), while the
-    4 input channels are wired to host MCU GPIO pins, NOT to the TCA9534.
-    `pin_config` describes the LOGICAL channel map (which of CH1-8 is an
-    input vs output) - it does not describe the TCA9534's physical pin
-    directions, which for Octal3 are always all-output.
+Latching hybrid note (Octal3 and IoTextra Relay):
+    Both boards drive 4 latching relays via the TCA9534 over I2C (2 physical
+    TCA pins per relay, all 8 TCA pins are outputs, plus nSLEEP on a host
+    GPIO). `pin_config` describes the LOGICAL channel map - it does not
+    describe the TCA9534's physical pin directions, which are always
+    all-output.
 
-    Which logical channels are outputs is given by octal3_channels; the
-    relay pin-pair (IN1/IN2) each one drives is assigned dynamically in
-    ascending channel order, so this works whether outputs are CH1-4,
-    CH5-8, or any other combination the caller configures.
+    Octal3: remaining host GPIO channels (CH5-8) are digital INPUTS.
+    IoTextra Relay: remaining host GPIO channels (CH1-4 / RS1-RS4) are
+    ordinary GPIO OUTPUTS (SPST relays). Latching relays are CH5-8 / RL1-RL4.
+    Those SPST outputs use the same active-low GPIO path as other digital
+    boards; they are not pulsed.
+
+    Which logical channels are latching outputs is given by octal3_channels;
+    the relay pin-pair (IN1/IN2) each one drives is assigned dynamically in
+    ascending channel order.
 
 Author: Arshia Keshvari
 Role: Independent Developer, Engineer, and Project Author
@@ -69,7 +72,7 @@ class IotDriver:
         self.hardware_mode = hardware_mode
         self.pin_config = pin_config  # pin_config: 1 means input, 0 means output (LOGICAL channel map)
         self.output_pin_state = 0b11111111  # All relays off initially
-        self.gpio_pins = {}  # host GPIO pins (GPIO mode, and Octal3 inputs in i2c mode)
+        self.gpio_pins = {}  # host GPIO pins (GPIO mode, and hybrid host I/O in i2c mode)
 
         # Channels owned by the ISO1211 driver
         self.iso1211_channels = set(iso1211_channels) if iso1211_channels else set()
@@ -123,8 +126,8 @@ class IotDriver:
             _reserve(nsleep_pin, "nsleep_pin")
             for channel, pin_num in self.gpio_host_pins.items():
                 is_input = (self.pin_config >> (channel - 1)) & 0x01
-                if is_input:
-                    _reserve(pin_num, f"CH{channel} (input host pin)")
+                role = "input" if is_input else "output"
+                _reserve(pin_num, f"CH{channel} ({role} host pin)")
 
         if self.hardware_mode == "i2c":
             try:
@@ -137,25 +140,28 @@ class IotDriver:
                     # pin directions, so force the TCA9534 config register
                     # to all-output (0x00) regardless of pin_config's value.
                     self.i2c.writeto(self.device_address, bytes([self.CONFIG_REGISTER, 0x00]))
-                    print(f"Octal3 TCA9534 configured as all-output (relay drivers) "
+                    print(f"Latching TCA9534 configured as all-output (relay drivers) "
                           f"at device_address {hex(device_address)}.")
 
                     if nsleep_pin is not None:
                         self.nsleep_pin = machine.Pin(nsleep_pin, machine.Pin.OUT)
                         self.nsleep_pin.value(0)  # Start in sleep
-                        print(f"Octal3 nSLEEP initialized on pin {nsleep_pin}")
+                        print(f"nSLEEP initialized on pin {nsleep_pin}")
 
-                    # Octal3 input channels live on host MCU GPIO pins,
-                    # NOT on the TCA9534 - initialize them here using the
-                    # LOGICAL pin_config to identify input channels. Output
-                    # channels are pure I2C (via _octal3_pulse_relay) and
-                    # are intentionally skipped even if a dict entry for
-                    # them is present.
+                    # Host GPIO channels live on the MCU, NOT on the TCA9534.
+                    # pin_config selects direction: Octal3 uses inputs here,
+                    # IoTextra Relay uses ordinary GPIO outputs (SPST).
+                    # Latching outputs are pure I2C (via _octal3_pulse_relay)
+                    # and are not present in gpio_host_pins.
                     for channel, pin_num in self.gpio_host_pins.items():
                         is_input = (self.pin_config >> (channel - 1)) & 0x01
                         if is_input:
                             self.gpio_pins[channel] = machine.Pin(pin_num, machine.Pin.IN, machine.Pin.PULL_UP)
-                            print(f"Octal3 input CH{channel} initialized on host GPIO pin {pin_num}")
+                            print(f"Hybrid input CH{channel} initialized on host GPIO pin {pin_num}")
+                        else:
+                            self.gpio_pins[channel] = machine.Pin(pin_num, machine.Pin.OUT)
+                            self.gpio_pins[channel].value(1)  # active-low off
+                            print(f"Hybrid GPIO output CH{channel} initialized on host GPIO pin {pin_num}")
 
                 else:
                     # Standard (non-Octal3) I2C expander: pin_config maps
@@ -214,32 +220,39 @@ class IotDriver:
                 self.nsleep_pin.value(0)
 
             state_str = "SET" if set_state else "RESET"
-            print(f"Octal3 Relay {relay_num} {state_str} pulsed ({pulse_ms}ms)")
+            print(f"Latching relay {relay_num} {state_str} pulsed ({pulse_ms}ms)")
             return True
         except OSError as e:
-            print(f"Error pulsing Octal3 relay: {e}")
+            print(f"Error pulsing latching relay: {e}")
             return False
 
     def set_output(self, channel, state):
-        """Set output state. For Octal3 latching relays, this triggers a pulse.
+        """Set output state. For latching relays, this triggers a pulse.
 
         Returns:
-            True if an Octal3 logical state changed (caller should persist),
+            True if a latching logical state changed (caller should persist),
             False/None otherwise.
         """
         # check the channel is set to output (0)
         if not ((self.pin_config >> (channel - 1)) & 0x01) == 0:
             return False
 
-        # Handle Octal3 latching relays specially
+        # Handle latching relays (Octal3 / IoTextra Relay) specially
         if self.is_octal3 and channel in self.octal3_channels and self.hardware_mode == "i2c":
             new_state = bool(state)
-            print(f"Setting Octal3 output for channel {channel} to {new_state}")
+            print(f"Setting latching output for channel {channel} to {new_state}")
             if not self._octal3_pulse_relay(channel, set_state=new_state):
                 return False
             changed = self.octal3_output_states.get(channel) != new_state
             self.octal3_output_states[channel] = new_state
             return changed
+
+        # Host GPIO outputs (IoTextra Relay SPST, or any hybrid GPIO out)
+        # even when hardware_mode is i2c for the latching expander.
+        if channel in self.gpio_pins and ((self.pin_config >> (channel - 1)) & 0x01) == 0:
+            print(f"Setting GPIO output for channel {channel} to {state}")
+            self.gpio_pins[channel].value(0 if state else 1)
+            return False
 
         if self.hardware_mode == "i2c":
             if not self.i2c:
@@ -295,10 +308,10 @@ class IotDriver:
                 return None
 
             if self.is_octal3:
-                # Octal3 output channels are latching relays on the TCA9534 -
-                # there is no readback for them. Octal3 input channels live
-                # on host MCU GPIO pins, not on the TCA9534, so read them
-                # from self.gpio_pins instead of the TCA INPUT_PORT_REGISTER.
+                # Latching output channels are on the TCA9534 - there is no
+                # readback for them. Host GPIO channels live on the MCU:
+                # inputs are read here; GPIO outputs (Relay SPST) have no
+                # input readback.
                 result = []
                 for i in range(8):
                     channel = i + 1
@@ -313,7 +326,7 @@ class IotDriver:
                         else:
                             result.append(None)
                     else:
-                        # output pin: latching relay, no readback
+                        # output pin: latching relay or GPIO SPST, no input readback
                         result.append(None)
                 return result
 
