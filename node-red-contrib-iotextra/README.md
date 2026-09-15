@@ -70,7 +70,7 @@ Ensure the **base topic** in each node matches your device configuration.
 ## Links
 
 - [Full setup guide](https://github.com/makethingshappy/IoTflow/blob/main/Documentation/SETUP.md) — hardware, firmware, Forge config, and Node-RED
-- [Node-RED flow examples](https://github.com/makethingshappy/IoTflow/tree/main/Node-RED%20Examples) — importable flows for Relay, Input, Analog, Combo, Octal, Octal3, Octal4, MOSFET and Quadro boards
+- [Node-RED flow examples](https://github.com/makethingshappy/IoTflow/tree/main/Node-RED%20Examples) — importable flows for Input, Relay2, SSR Small, MOSFET2, Octal, Octal2, Octal3, Octal4, Analog, Analog3, Combo and Quadro boards
 - [Make Things Happy](https://makethingshappy.io) — IoTextra products and documentation
 - [GitHub — IoTflow](https://github.com/makethingshappy/IoTflow) — source repository
 
