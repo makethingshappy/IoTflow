@@ -76,19 +76,21 @@ Each module integrates a complete MCU environment, and different form factors (s
 
 **Digital I/O Boards**
 * [**IoTextra Input**](https://makethingshappy.io/products/iotextra-input)
+* **IoTextra Relay** — Planned
 * [**IoTextra Relay2**](https://makethingshappy.io/products/iotextra-relay2)
 * [**IoTextra SSR Small**](https://makethingshappy.io/products/iotextra-ssr-small)
 * [**IoTextra MOSFET2**](https://makethingshappy.io/products/iotextra-mosfet2)
 * **IoTextra Quadro** — Planned
 * [**IoTextra Octal**](https://makethingshappy.io/products/iotextra-octal)
 * [**IoTextra Octal2**](https://makethingshappy.io/products/iotextra-octal2)
-* **IoTextra Octal3** — Planned
+* [**IoTextra Octal3**](https://makethingshappy.io/products/iotextra-octal3)
+* [**IoTextra Octal4**](https://makethingshappy.io/products/iotextra-octal4)
 * Custom digital mezzanines
 
 **Analog I/O Boards**
 * [**IoTextra Analog**](https://makethingshappy.io/products/iotextra-analog)
 * **IoTextra Analog2** — Coming Soon
-* **IoTextra Analog3** — Coming Soon
+* [**IoTextra Analog3**](https://makethingshappy.io/products/iotextra-analog3)
 * Custom analog mezzanines
 
 **Combo I/O Boards**
