@@ -17,7 +17,7 @@ IoTflow Forge enables you to:
 - View detailed configuration summaries
 
 The tool creates configurations that can be stored in EEPROM on the device. The firmware on the device uses these configurations to interact with channels via MQTT, enabling remote control and monitoring of I/O operations. 
-For **IoTextra Octal3**, the Kernel also uses a reserved EEPROM page to remember latching-relay ON/OFF across reboots.
+For **IoTextra Octal3**, the Kernel also uses a reserved EEPROM page to remember latching-relay ON/OFF across reboots. **IoTextra Octal4** does not use that reserved page: its SPST relays are standard (non-latching) outputs on GPIO or I2C via TCA9534.
 
 ## Features
 
@@ -47,7 +47,7 @@ Each module integrates a complete MCU environment, and different form factors (s
 - IoTextra Octal
 - IoTextra Octal2
 - IoTextra Octal3 (hybrid: 4× latching relays via I2C + 4× host GPIO inputs)
-- IoTextra Octal4
+- IoTextra Octal4 (4× ISO1211 direct-mode DI + 4× SPST relays; GPIO or I2C)
 - Custom digital mezzanines
 
 **Supported Digital Interface Types:**
@@ -100,6 +100,7 @@ Each channel supports:
 - **fgnd_gpio**: Required HOST pin controlling the TLP188 FGND line
 - **out_gpio**: Optional HOST pin to drive an output signal when using GPIO interface
 - **Supported on**: IoTextra Quadro and other boards that expose ISO1211 sampled DI
+- **Not used on IoTextra Octal4**: Octal4 ISO1211 inputs are **direct-mode** (`channel_type` `"1"`). There is no MCU-driven FGND/TLP188 pin, so do not configure Octal4 DINs as type `"3"`.
 
 #### Per-Channel ADC Calibration (Analog Only)
 Each analog channel can have individual calibration parameters:
@@ -129,7 +130,7 @@ Each analog channel can have individual calibration parameters:
 ### Hardware Configuration
 
 #### Common Settings
-- **Hardware Mode**: "gpio" or "i2c" (i2c required for analog modules and **IoTextra Octal3**)
+- **Hardware Mode**: "gpio" or "i2c" (i2c required for analog modules)
 - **I2C Settings**: 
   - Bus ID (default: 0)
   - SDA pin (default: 20)
@@ -165,10 +166,10 @@ Each analog channel can have individual calibration parameters:
     - IoTExtra MOSFET2: "0b00000000" (all outputs)
     - IoTExtra SSR Small: "0b00000000" (all outputs)
     - IoTextra Quadro: "0b11001111" (channels 0-3 and 6-7 inputs, 4-5 outputs)
-    - IoTExtra Octal: "0b00001111" (channels 0-3 outputs, 4-7 inputs)
-    - IoTExtra Octal2: "0b00001111" (channels 0-3 outputs, 4-7 inputs)
+    - IoTExtra Octal: "0b00001111" (channels 0-3 inputs, 4-7 outputs)
+    - IoTExtra Octal2: "0b00001111" (channels 0-3 inputs, 4-7 outputs)
     - IoTExtra Octal3: "0b11110000" (CH1-4 latching relay outputs, CH5-8 inputs)
-    - IoTExtra Octal4: "0b00001111" (channels 0-3 inputs, 4-7 outputs)
+    - IoTExtra Octal4: "0b00001111" (CH1-4 ISO1211 DI inputs, CH5-8 SPST relay outputs)
 - **Status Update Interval**: Frequency for publishing status updates in seconds (default: 30)
 
 ### IoTextra Octal3
@@ -202,6 +203,37 @@ so it stores ON/OFF in EEPROM and restores software + MQTT state after reboot
 - Confirmed state (retained): `<MQTT_BASE_TOPIC>/output/<N>/state`
 - After reboot, Kernel republishes retained states from EEPROM without pulsing the relays
 
+### IoTextra Octal4
+
+Digital mezzanine with **4 ISO1211 isolated digital inputs** (direct-mode) and **4 SPST relays**. Unlike Octal3, Octal4 relays are **not latching** and do **not** use nSLEEP or a reserved EEPROM state page. Unlike Quadro sampled-mode, Octal4 DINs use standard digital `channel_type` `"1"` (no FGND/TLP188 pin).
+
+Hardware mode is **GPIO or I2C**, same as other digital boards. I2C uses the TCA9534 expander; GPIO uses HOST connector pins.
+
+| Item | Value |
+|------|--------|
+| Mezzanine type string | Must be exactly `IoTextra Octal4` |
+| Hardware mode | `gpio` or `i2c` (user-selectable; wizard default is I2C) |
+| Recommended `pin_config` | `0b00001111` (CH1–4 inputs, CH5–8 outputs) |
+| DIN channels | `channel_number` 0–3, `channel_type` `1`, `actions` 0 |
+| Relay channels | `channel_number` 4–7, `channel_type` `1`, `actions` 1 |
+| Channel `interface_type` | Follows hardware mode: `01` (GPIO) or `11` (I2C / TCA9534) |
+| nSLEEP | Not used |
+| EEPROM | Full 1024-byte config space (no Octal3 reserve page) |
+
+**Forge wizard behavior when Octal4 is selected:**
+1. Applies `pin_config = 0b00001111`
+2. Offers **GPIO or I2C** (same hardware-mode prompt as other digital boards)
+3. Offers **Apply Octal4 channel defaults** (4 DINs + 4 relays) using the selected mode
+4. When adding channels manually, auto-selects interface from hardware mode and actions from channel number (`0–3` read-only DIN, `4–7` relay write)
+5. Channel interface can still be changed later (GPIO or I2C)
+
+**Example template:** [`octal4.json`](octal4.json) (IoTsmart ESP32-S3 I2C example; replace Wi‑Fi/MQTT placeholders before use). For GPIO, set `hardware.mode` to `"gpio"` and channel `interface_type` to `"01"`.
+
+**MQTT (device firmware):**
+- Inputs: `<MQTT_BASE_TOPIC>/input/<N>` with payload `1` / `0` (DIN1–4 → channels 1–4)
+- Command: `<MQTT_BASE_TOPIC>/output/<N>/set` with payload `1` / `0` (Relay 1–4 → channels 5–8)
+- Confirmed state: `<MQTT_BASE_TOPIC>/output/<N>/state`
+
 ### Serial Communication
 - Send JSON configurations to devices over serial for EEPROM storage
 - Read configurations back from devices
@@ -216,6 +248,7 @@ Configured nodes enable firmware to handle digital and analog operations via MQT
   - Turn on/off channel by name
   - Switch (toggle) channel by name
   - **Octal3 latching relays**: use `…/output/<N>/set` and observe retained `…/output/<N>/state` (state survives reboot via EEPROM)
+  - **Octal4 SPST relays**: use `…/output/<N>/set` and observe `…/output/<N>/state` (standard GPIO or TCA9534 readback; not latching)
 - **Analog Channels**:
   - Read current measurement value
   - Subscribe to periodic status updates
@@ -259,13 +292,14 @@ The tool guides you through:
 4. **Network Settings**: Configure Wi-Fi credentials
 5. **MQTT Settings**: Set broker details and topics
 6. **Hardware Settings**: 
-   - I2C bus configuration (forced for analog and Octal3)
+   - I2C bus configuration (forced for analog)
    - EEPROM parameters (with Octal3 reserve reminder when applicable)
    - For analog: ADC count, I2C addresses, sampling rate
    - GPIO / host-pin mappings (Octal3 shows role labels)
-7. **Pin Configuration**: Set input/output directions (digital only; Octal3 defaults to 0b11110000
+7. **Pin Configuration**: Set input/output directions (digital only; Octal3 defaults to 0b11110000; Octal4 defaults to 0b00001111)
 8. **Channel Configuration**: Add, configure, and organize channels  
    - Octal3: optional one-shot defaults for 4 relays + 4 DINs
+   - Octal4: optional one-shot defaults for 4 DINs + 4 relays (GPIO or I2C to match hardware mode)
 
 ### Channel Management
 
@@ -277,6 +311,8 @@ The tool guides you through:
   - Set actions (read-only or read+write)
   - **Octal3 shortcut**: after you pick the channel number, Forge sets interface/actions automatically  
     (`0–3` → I2C relay write; `4–7` → GPIO input read-only)
+  - **Octal4 shortcut**: after you pick the channel number, Forge sets actions automatically and interface from hardware mode  
+    (`0–3` → DIN read-only; `4–7` → relay write; GPIO `01` or I2C `11`)
   
 - **ISO1211 Sampled-Mode Channels**:
   - Assign unique name (max 8 characters)
@@ -334,7 +370,7 @@ The tool guides you through:
 | [`Quadro.json`](Quadro.json) | IoTextra Quadro | ISO1211 sampled DI |
 | [`Digital.json`](Digital.json) | IoTextra Octal / Octal2 | Generic digital example |
 | [`octal3.json`](octal3.json) | IoTextra Octal3 | Latching relays + host GPIO inputs |
-| [`octal4.json`](octal4.json) | IoTextra Octal4 | 4 I2C digital inputs (ISO1211) + 4 I2C relay outputs |
+| [`octal4.json`](octal4.json) | IoTextra Octal4 | ISO1211 direct-mode DI + SPST relays (I2C example) |
 | [`Analog.json`](Analog.json) | IoTextra Analog | Analog template |
 | [`Analog3.json`](Analog3.json) | IoTextra Analog3 | 8-channel ADS7828 template |
 | [`Combo.json`](Combo.json) | IoTextra Combo | Mixed analog/digital |
