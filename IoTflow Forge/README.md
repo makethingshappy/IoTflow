@@ -47,6 +47,7 @@ Each module integrates a complete MCU environment, and different form factors (s
 - IoTextra Octal
 - IoTextra Octal2
 - IoTextra Octal3 (hybrid: 4× latching relays via I2C + 4× host GPIO inputs)
+- IoTextra Octal4
 - Custom digital mezzanines
 
 **Supported Digital Interface Types:**
@@ -167,6 +168,7 @@ Each analog channel can have individual calibration parameters:
     - IoTExtra Octal: "0b00001111" (channels 0-3 outputs, 4-7 inputs)
     - IoTExtra Octal2: "0b00001111" (channels 0-3 outputs, 4-7 inputs)
     - IoTExtra Octal3: "0b11110000" (CH1-4 latching relay outputs, CH5-8 inputs)
+    - IoTExtra Octal4: "0b00001111" (channels 0-3 inputs, 4-7 outputs)
 - **Status Update Interval**: Frequency for publishing status updates in seconds (default: 30)
 
 ### IoTextra Octal3
@@ -332,6 +334,7 @@ The tool guides you through:
 | [`Quadro.json`](Quadro.json) | IoTextra Quadro | ISO1211 sampled DI |
 | [`Digital.json`](Digital.json) | IoTextra Octal / Octal2 | Generic digital example |
 | [`octal3.json`](octal3.json) | IoTextra Octal3 | Latching relays + host GPIO inputs |
+| [`octal4.json`](octal4.json) | IoTextra Octal4 | 4 I2C digital inputs (ISO1211) + 4 I2C relay outputs |
 | [`Analog.json`](Analog.json) | IoTextra Analog | Analog template |
 | [`Analog3.json`](Analog3.json) | IoTextra Analog3 | 8-channel ADS7828 template |
 | [`Combo.json`](Combo.json) | IoTextra Combo | Mixed analog/digital |
