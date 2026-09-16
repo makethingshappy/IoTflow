@@ -66,7 +66,7 @@ I2C_DEVICE_ADDR = 0x3f # The I2C address of the I/O Expander for IoTextra digita
 EEPROM_I2C_ADDR = 0x57  # EEPROM I2C address (different from IoTExtra module) can be 0x27
 EEPROM_SIZE = 1024       # EEPROM size in bytes
 EEPROM_CONFIG_ADDR = 0   # Starting address for configuration storage
-# Last 16-byte page reserved for Octal3 latching-relay ON/OFF state (not config).
+# Last 16-byte page reserved for latching-relay ON/OFF state (Octal3 / Relay; not config).
 # Config payload must not extend into this region.
 EEPROM_OCTAL3_STATE_ADDR = 0x3F0
 EEPROM_OCTAL3_STATE_SIZE = 16
@@ -126,6 +126,7 @@ GPIO_HOST_PINS = {
 # The channels are in this order 0b[P7][P6][P5][P4][P3][P2][P1][P0]
 # You can find the pin configuration of the module on the schematic of the IoTExtra board
 # IoTExtra Relay2 -> 0b11110000 ATTENTION: check the schematic (P4-P7 i.e. channels 5-8 are unused)
+# IoTExtra Relay -> 0b00000000 (CH1-4 GPIO SPST outputs, CH5-8 latching I2C outputs)
 # IoTExtra Input -> 0b11111111
 # IoTExtra Octal / Octal2 / Octal4 -> 0b00001111 (P0-P3 inputs, P4-P7 outputs)
 # IoTExtra Combo -> 0b11000000
