@@ -67,6 +67,10 @@ Each module integrates a complete MCU environment, and different form factors (s
 | IoTsmart XIAO v.1.02 + XIAO ESP32-S3 | [![yaml](https://img.shields.io/badge/yaml-blue)](https://github.com/makethingshappy/IoTsmart/blob/main/XIAO/v.1.02/host-map.yaml) | 🔶 Coming Soon | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoThome/blob/main/Documentation/Setup.md) | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/MTH-for-ESPHome/blob/main/Documentation/Setup.md) |
 | IoTsmart XIAO v.1.02 + XIAO ESP32-C5 | — | 🔲 Planned | 🔲 Planned | 🔲 Planned |
 | IoTsmart XIAO v.1.02 + XIAO ESP32-C6 | [![yaml](https://img.shields.io/badge/yaml-blue)](https://github.com/makethingshappy/IoTsmart/blob/main/XIAO/v.1.02/host-map.yaml) | 🔲 Planned | 🔲 Planned | 🔲 Planned |
+| IoTsmart XIAO v.2.01 + XIAO RP2350 | — | — | — | — |
+| IoTsmart XIAO v.2.01 + XIAO ESP32-S3 | [![yaml](https://img.shields.io/badge/yaml-blue)](https://github.com/makethingshappy/IoTsmart/blob/main/XIAO/v.2.01/host-map.yaml) | 🔶 Coming Soon | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/IoThome/blob/main/Documentation/Setup.md) | [![Open](https://img.shields.io/badge/Open-green)](https://github.com/makethingshappy/MTH-for-ESPHome/blob/main/Documentation/Setup.md) |
+| IoTsmart XIAO v.2.01 + XIAO ESP32-C5 | — | 🔲 Planned | 🔲 Planned | 🔲 Planned |
+| IoTsmart XIAO v.2.01 + XIAO ESP32-C6 | [![yaml](https://img.shields.io/badge/yaml-blue)](https://github.com/makethingshappy/IoTsmart/blob/main/XIAO/v.2.01/host-map.yaml) | 🔲 Planned | 🔲 Planned | 🔲 Planned |
 
 **Legend:**
 - [![Open](https://img.shields.io/badge/Open-green)]() — available, click to open
